@@ -23,20 +23,26 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""
-Reference material:
+"""Reference material:
 
 Prefixes for binary multiples:
 http://physics.nist.gov/cuu/Units/binary.html
 
 decimal and binary prefixes:
 man 7 units (from the Linux Documentation Project 'man-pages' package)
+
+
+Random side note: These are prefixes because they modify the 'byte' or
+'bit' unit. They don't appear before the numerical value they
+describe.
+
 """
 
 
 class Bit(object):
     """The base class for all the other prefix classes"""
     def __init__(self, value='0b'):
+        """If `value` is given without a prefix, we default to assuming bits."""
         self.value = value
 
     def _norm(self):
@@ -122,15 +128,16 @@ supplied arguments, it should return NotImplemented."""
     def __or__(self, other):
         pass
 
-    def __div__(self, other):
-        pass
-
-    def __truediv__(self, other):
-        """The division operator (/) is implemented by these methods. The
+    """The division operator (/) is implemented by these methods. The
 __truediv__() method is used when __future__.division is in effect,
 otherwise __div__() is used. If only one of these two methods is
 defined, the object will not support division in the alternate
 context; TypeError will be raised instead."""
+
+    def __div__(self, other):
+        pass
+
+    def __truediv__(self, other):
         pass
 
     def __neg__(self):
