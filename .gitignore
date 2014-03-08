@@ -1,3 +1,13 @@
+# Emacs backup garbage
+*~
+
+# setup/distutils
+MANIFEST
+build
+dist
+rpm-build
+
+# python
 *.py[cod]
 
 # C extensions
