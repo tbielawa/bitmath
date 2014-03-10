@@ -18,6 +18,7 @@ class TestBasicMath(TestCase):
         self.eib = self.EiB(1)
 
     def test_to_same_unit(self):
+        """bitmath type converted to the same unit is properly converted"""
         to_kib = self.kib.to_KiB()
         self.assertIsInstance(to_kib, self.KiB)
 

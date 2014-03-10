@@ -5,11 +5,9 @@ Test for basic math operations
 from . import TestCase
 
 class TestBasicMath(TestCase):
-    from bitmath import Byte, KiB
+    from bitmath import *
 
     def setUp(self):
-        self.num1 = self.KiB(3)
-        self.num2 = self.KiB(1337)
         self.kib_in_bytes = 1024
 
     def test_type_raw_int_equality(self):
