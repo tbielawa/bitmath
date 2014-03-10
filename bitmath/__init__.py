@@ -1,7 +1,7 @@
-# -*- coding: iso-8859-15 -*-
+# -*- coding: utf-8 -*-
 # The MIT License (MIT)
 #
-# Copyright © 2014 Tim Bielawa <timbielawa@gmail.com>
+# Copyright Â© 2014 Tim Bielawa <timbielawa@gmail.com>
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -78,43 +78,110 @@ Parsing rules:
   input is in bytes. For example, given 1024K, the module interprets
   this as 1024KiB.
 
-
-
 Therefore, 1kb and 1Kb will be equivalent. Whereas, 1kb and 1kB are
 different. The former represents 10^3 bits, the latter represents 10^3
 bytes. (10^3 * 8)
 
-Finally,
-
 """
 
 
-SI_PREFIXES = ['k', 'K', 'M']
+import re
+
+SI_PREFIXES = ['k', 'K', 'M', 'G', 'T', 'P', 'E']
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
+# OR all of those NIST prefixes together
+nist_prefix_str = '(' + '|'.join(NIST_PREFIXES) + ')'
+NIST_REGEX = re.compile(r"^(?P<integer_value>\d*)(?P<binary_prefix>%s)?(?P<base_unit>[bB])$" % nist_prefix_str)
+# Ki->Ei maps to xrange(1,7), which is the exponent part of the NIST
+# calculations. For each prefix, i, multiply it by 10 and raise 2 to
+# that power (2**(i*10)). These steps represent the size of each
+# successive order of magnitude.
+NIST_STEPS = {
+    'Byte': 1,
+    'Ki': 1024,
+    'Mi': 1048576,
+    'Gi': 1073741824,
+    'Ti': 1099511627776,
+    'Pi': 1125899906842624,
+    'Ei': 1152921504606846976
+}
+
+# BIT = 0
+# BYTE = 1
+
+# NIST_KIBI = 2010
+# NIST_MIBI = 2020
+# NIST_GIBI = 2030
+# NIST_TEBI = 2040
+# NIST_PEBI = 2050
+# NIST_EXBI = 2060
+
+# SI_KILO = 1030
+# SI_MEGA = 1060
+# SI_GIGA = 1090
+# SI_TERA = 1120
+# SI_PETA = 1150
+# SI_EXA = 1180
 
 
-def parse_size(size):
-    numeric_value
+def trimws(n):
+    return re.sub(r'\s', '', str(n))
 
 
-class Bit(object):
+# def parse_size(size):
+#     numeric_value = 0
+#     prefix_major = None
+#     prefix_minor = BYTE
+
+
+# XXX: Consider using slots here to really lock-down what attributes
+# we're setting on these instances?
+
+
+class Byte(object):
     """The base class for all the other prefix classes"""
-    def __init__(self, value='0b'):
-        """If `value` is given without a prefix, we default to assuming bits."""
-        self.intvalue = 0
-        self.prefix = 'b'
-        self._norm(
+    def __init__(self, value=0, bytes=None):
+        """Instantiate with the `value` by the unit, or in straight
+bytes. Don't supply both."""
 
-    def _norm(self):
-        """Normalize the input value into a common base value"""
-        raise NotImplementedError
+        self.__setup()
+        if bytes:
+            print "Creating %s from %s bytes" % (str(type(self)), bytes)
+            self.__byte_value = bytes
+        else:
+            self._byte_norm(value)
+        self.__set_unit_value():
 
-    def _parse(self):
+    def __sef_unit_value(self):
+        self.unit_value = self.__to_prefix_value(self.__byte_value)
 
-    def _guess_prefix(self, prefix):
-        """Figure out which system the number is given in: NIST Binary, or
-SI. Well... take our best shot at it anyway."""
-        raise NotImplementedError
+    def __to_prefix_value(self, value):
+        """Return the number of bytes as they would look like if we converted
+to this unit"""
+        print "converting %s bytes into the equivalent %s" % (value, str(type(self)))
+        return float(value)/float(self.__unit_value)
+
+    def _setup(self):
+        return (2, 0, 'Byte')
+
+    def __setup(self):
+        """Setup basic parameters for this class"""
+        """`base` is the numeric base which when raised to `power` is
+equivalent to 1 unit of the corresponding prefix. I.e., base=2,
+power=10 represents 2^10, which is the NIST Binary Prefix for 1 Kibibyte.
+
+Likewise, for the SI prefix classes `base` will be 10, and the `power`
+for the Kilobyte is 3."""
+        (self.__base, self.__power, self.__name) = self._setup()
+        self.__unit_value = self.__base ** self.__power
+
+    def _byte_norm(self, value):
+        """Normalize the input value into bytes"""
+        self.__byte_value = value * self.__unit_value
+
+    def bytes(self):
+        """Return the number of bytes in a measurement"""
+        return self.__byte_value
 
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#basic-customization
 
@@ -129,7 +196,8 @@ returned. The return value must be a string object. If a class defines
 __repr__() but not __str__(), then __repr__() is also used when an
 "informal" string representation of instances of that class is
 required."""
-        return "Bit(%s)" % self.value
+        return "%s(%s)" % \
+            (self.__name, self.unit_value)
 
     def __str__(self):
         """Called by the str() built-in function and by the print statement to
@@ -137,7 +205,32 @@ compute the "informal" string representation of an object. This
 differs from __repr__() in that it does not have to be a valid Python
 expression: a more convenient or concise representation may be used
 instead. The return value must be a string object."""
-        return "Bit(%s)" % self.value
+        return "%s(%s)" % \
+            (self.__name, self.unit_value)
+
+    def to_Byte(self):
+        return Byte(self.__byte_value/NIST_STEPS['Byte'])
+
+    def to_KiB(self):
+        return KiB(self.__byte_value/NIST_STEPS['Ki'])
+
+    def to_MiB(self):
+        return MiB(self.__byte_value/NIST_STEPS['Mi'])
+
+    def to_GiB(self):
+        return GiB(self.__byte_value/NIST_STEPS['Gi'])
+
+    def to_TiB(self):
+        return TiB(self.__byte_value/NIST_STEPS['Ti'])
+
+    def to_PiB(self):
+        return PiB(self.__byte_value/NIST_STEPS['Pi'])
+
+    def to_EiB(self):
+        return EiB(self.__byte_value/NIST_STEPS['Ei'])
+
+    def __eq__(self, other):
+        return self.__byte_value == other.bytes()
 
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#emulating-numeric-types
 
@@ -155,7 +248,10 @@ If one of those methods does not support the operation with the
 supplied arguments, it should return NotImplemented."""
 
     def __add__(self, other):
-        return NotImplemented
+        print "adding %s to %s" % (str(self), str(other))
+        total_bytes = self.__byte_value + other.bytes()
+        print "total bytes: %s:" % total_bytes
+        return (type(self))(bytes=total_bytes)
 
     def __sub__(self, other):
         return NotImplemented
@@ -213,5 +309,9 @@ context; TypeError will be raised instead."""
 
     def __invert__(self):
         """Called to implement the unary arithmetic operations (-, +, abs()
-and ~)."""
+        and ~)."""
         return NotImplemented
+
+class KiB(Byte):
+    def _setup(self):
+        return (2, 10, 'KiB')
