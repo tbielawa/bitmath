@@ -357,6 +357,9 @@ context; TypeError will be raised instead."""
         and ~)."""
         return NotImplemented
 
+######################################################################
+# NIST Prefixes
+
 class KiB(Byte):
     def _setup(self):
         return (2, 10, 'KiB')
@@ -380,3 +383,30 @@ class PiB(Byte):
 class EiB(Byte):
     def _setup(self):
         return (2, 60, 'EiB')
+
+######################################################################
+# SI Prefixes
+
+class kB(Byte):
+    def _setup(self):
+        return (10, 3, 'kB')
+
+class MB(Byte):
+    def _setup(self):
+        return (10, 6, 'MB')
+
+class GB(Byte):
+    def _setup(self):
+        return (10, 9, 'GB')
+
+class TB(Byte):
+    def _setup(self):
+        return (10, 12, 'TB')
+
+class PB(Byte):
+    def _setup(self):
+        return (10, 15, 'PB')
+
+class EB(Byte):
+    def _setup(self):
+        return (10, 18, 'EB')
