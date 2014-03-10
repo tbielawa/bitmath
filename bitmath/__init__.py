@@ -232,11 +232,41 @@ instead. The return value must be a string object."""
     def to_EiB(self):
         return EiB(self.__byte_value/float(NIST_STEPS['Ei']))
 
+    def __lt__(self, other):
+        if isinstance(other, numbers.Number):
+            return self.prefix_value < other
+        else:
+            return self.__byte_value < other.bytes()
+
+    def __le__(self, other):
+        if isinstance(other, numbers.Number):
+            return self.prefix_value <= other
+        else:
+            return self.__byte_value <= other.bytes()
+
     def __eq__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value == other
         else:
             return self.__byte_value == other.bytes()
+
+    def __ne__(self, other):
+        if isinstance(other, numbers.Number):
+            return self.prefix_value != other
+        else:
+            return self.__byte_value != other.bytes()
+
+    def __gt__(self, other):
+        if isinstance(other, numbers.Number):
+            return self.prefix_value > other
+        else:
+            return self.__byte_value > other.bytes()
+
+    def __ge__(self, other):
+        if isinstance(other, numbers.Number):
+            return self.prefix_value >= other
+        else:
+            return self.__byte_value >= other.bytes()
 
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#emulating-numeric-types
 
