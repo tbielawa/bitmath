@@ -23,65 +23,14 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Reference material:
+"""
+Reference material:
 
 Prefixes for binary multiples:
 http://physics.nist.gov/cuu/Units/binary.html
 
 decimal and binary prefixes:
 man 7 units (from the Linux Documentation Project 'man-pages' package)
-
-
-Random side note: These are prefixes because they modify the 'byte' or
-'bit' unit. They don't appear before the numerical value they
-describe.
-
-
-This is just me venting: people need to get their acts
-together. Really, what do these different things even mean? 5K, 5KB,
-5Kbit, 5Kb, 5kB. Is it even possible to figure out what mean intend to
-say? Lets lay down the ground rules for this module.
-
-Parsing rules:
-
-* All whitespace is removed before parsing begins.
-
-* Input should follow the pattern: INTEGER :: [PREFIX] :: [UNIT]
-- PREFIX and UNIT are optional. They are not mutually exclusive.
-
-* Explicitly spelling out 'bit' or 'byte' will have the desired
-  affect. This rule is case insensitive.
-
-* Values beginning with an item in NIST_PREFIXES are interpreted as
-  binary prefixes.
-
-* Prefixes followed by 'b' will assume 'bit'.
-
-* Prefixes followed by 'B' will assume 'byte' (8 bits).
-
-* If the previous rule doesn't match, then: after the integer
-  component, a grouping of all alphabetical characters is formed which
-  extends to the end of the string, or the first occurance of a 'b' or
-  'B' character. This grouping is searched for in SI_PREFIXES.
-
-- /\d+[ac-z]b?/i
-
-- For the purpose of this module, we will be ignoring the fact that
-  the SI standard which defines the 'kilo' prefix as the lower-case
-  'k' character. I.e., 1Kb and 1kb will be equivalent (both represent
-  10^3 bits)
-
-* Prefixes given without any following base unit (e.g., 1024K) assume
-  the input is intended to be interpreted as an NIST unit prefix.
-
-- Furthermore, to reward you for being lazy, the module assumes the
-  input is in bytes. For example, given 1024K, the module interprets
-  this as 1024KiB.
-
-Therefore, 1kb and 1Kb will be equivalent. Whereas, 1kb and 1kB are
-different. The former represents 10^3 bits, the latter represents 10^3
-bytes. (10^3 * 8)
-
 """
 
 
@@ -93,8 +42,9 @@ __all__ = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', '
 SI_PREFIXES = ['k', 'K', 'M', 'G', 'T', 'P', 'E']
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
 # OR all of those NIST prefixes together
-nist_prefix_str = '(' + '|'.join(NIST_PREFIXES) + ')'
-NIST_REGEX = re.compile(r"^(?P<integer_value>\d*)(?P<binary_prefix>%s)?(?P<base_unit>[bB])$" % nist_prefix_str)
+# TODO:
+# nist_prefix_str = '(' + '|'.join(NIST_PREFIXES) + ')'
+# NIST_REGEX = re.compile(r"^(?P<integer_value>\d*)(?P<binary_prefix>%s)?(?P<base_unit>[bB])$" % nist_prefix_str)
 # Ki->Ei maps to xrange(1,7), which is the exponent part of the NIST
 # calculations. For each prefix, i, multiply it by 10 and raise 2 to
 # that power (2**(i*10)). These steps represent the size of each
@@ -108,37 +58,6 @@ NIST_STEPS = {
     'Pi': 1125899906842624,
     'Ei': 1152921504606846976
 }
-
-# BIT = 0
-# BYTE = 1
-
-# NIST_KIBI = 2010
-# NIST_MIBI = 2020
-# NIST_GIBI = 2030
-# NIST_TEBI = 2040
-# NIST_PEBI = 2050
-# NIST_EXBI = 2060
-
-# SI_KILO = 1030
-# SI_MEGA = 1060
-# SI_GIGA = 1090
-# SI_TERA = 1120
-# SI_PETA = 1150
-# SI_EXA = 1180
-
-
-def trimws(n):
-    return re.sub(r'\s', '', str(n))
-
-
-# def parse_size(size):
-#     numeric_value = 0
-#     prefix_major = None
-#     prefix_minor = BYTE
-
-
-# XXX: Consider using slots here to really lock-down what attributes
-# we're setting on these instances?
 
 
 class Byte(object):
@@ -360,52 +279,65 @@ context; TypeError will be raised instead."""
 ######################################################################
 # NIST Prefixes
 
+
 class KiB(Byte):
     def _setup(self):
         return (2, 10, 'KiB')
+
 
 class MiB(Byte):
     def _setup(self):
         return (2, 20, 'MiB')
 
+
 class GiB(Byte):
     def _setup(self):
         return (2, 30, 'GiB')
+
 
 class TiB(Byte):
     def _setup(self):
         return (2, 40, 'TiB')
 
+
 class PiB(Byte):
     def _setup(self):
         return (2, 50, 'PiB')
+
 
 class EiB(Byte):
     def _setup(self):
         return (2, 60, 'EiB')
 
+
 ######################################################################
 # SI Prefixes
+
 
 class kB(Byte):
     def _setup(self):
         return (10, 3, 'kB')
 
+
 class MB(Byte):
     def _setup(self):
         return (10, 6, 'MB')
+
 
 class GB(Byte):
     def _setup(self):
         return (10, 9, 'GB')
 
+
 class TB(Byte):
     def _setup(self):
         return (10, 12, 'TB')
 
+
 class PB(Byte):
     def _setup(self):
         return (10, 15, 'PB')
+
 
 class EB(Byte):
     def _setup(self):
