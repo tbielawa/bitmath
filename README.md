@@ -2,17 +2,27 @@ bitmath
 =======
 
 Pythonic module for representing file sizes with different prefix
-notations.
+notations. Created to simplify basic math operations and conversions
+when working with file sizes.
 
-Note that if seeing 'KiB' or 'GiB' seems strange to you, that's
+**Note** that if seeing 'KiB' or 'GiB' seems strange to you, that's
 because we're using the proper NIST Binary Prefixs. Until I add more
 docs, you'll just have to look up what that means up online.
 
 
-Docs?
+Usage
 =====
 
-Docs coming soon. Module still under development.
+Supported operations:
+
+- Basic arithmetic: addition, subtraction, multiplication, division
+
+- Size comparison: LT, LE, EQ, NE, GT, GE
+
+- Unit conversion: from bytes to exibytes, converstion to any other unit (e.g., Megabytes to Kibibytes)
+
+
+
 
 
 Quick Examples
