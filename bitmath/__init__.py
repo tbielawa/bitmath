@@ -88,7 +88,7 @@ bytes. (10^3 * 8)
 import re
 import numbers
 
-__all__ = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB']
+__all__ = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB']
 
 SI_PREFIXES = ['k', 'K', 'M', 'G', 'T', 'P', 'E']
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
