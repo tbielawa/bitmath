@@ -27,15 +27,18 @@ Basic unit converstion:
     In [3]: fourty_two_mib_in_kib = fourty_two_mib.to_KiB()
 
     In [4]: fourty_two_mib_in_kib
+
     Out[4]: KiB(43008.0)
 
     In [5]: fourty_two_mib
+
     Out[5]: MiB(42.0)
 
 
 Equality testing:
 
     In [6]: fourty_two_mib == fourty_two_mib_in_kib
+
     Out[6]: True
 
 Basic math:
@@ -43,7 +46,9 @@ Basic math:
     In [7]: eighty_four_mib = fourty_two_mib + fourty_two_mib_in_kib
 
     In [8]: eighty_four_mib
+
     Out[8]: MiB(84.0)
 
     In [9]: eighty_four_mib == fourty_two_mib * 2
+
     Out[9]: True
