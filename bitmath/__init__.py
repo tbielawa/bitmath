@@ -88,6 +88,8 @@ bytes. (10^3 * 8)
 import re
 import numbers
 
+__all__ = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB']
+
 SI_PREFIXES = ['k', 'K', 'M', 'G', 'T', 'P', 'E']
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
 # OR all of those NIST prefixes together
@@ -210,25 +212,25 @@ instead. The return value must be a string object."""
             (self.__name, self.prefix_value)
 
     def to_Byte(self):
-        return Byte(self.__byte_value/NIST_STEPS['Byte'])
+        return Byte(self.__byte_value/float(NIST_STEPS['Byte']))
 
     def to_KiB(self):
-        return KiB(self.__byte_value/NIST_STEPS['Ki'])
+        return KiB(self.__byte_value/float(NIST_STEPS['Ki']))
 
     def to_MiB(self):
-        return MiB(self.__byte_value/NIST_STEPS['Mi'])
+        return MiB(self.__byte_value/float(NIST_STEPS['Mi']))
 
     def to_GiB(self):
-        return GiB(self.__byte_value/NIST_STEPS['Gi'])
+        return GiB(self.__byte_value/float(NIST_STEPS['Gi']))
 
     def to_TiB(self):
-        return TiB(self.__byte_value/NIST_STEPS['Ti'])
+        return TiB(self.__byte_value/float(NIST_STEPS['Ti']))
 
     def to_PiB(self):
-        return PiB(self.__byte_value/NIST_STEPS['Pi'])
+        return PiB(self.__byte_value/float(NIST_STEPS['Pi']))
 
     def to_EiB(self):
-        return EiB(self.__byte_value/NIST_STEPS['Ei'])
+        return EiB(self.__byte_value/float(NIST_STEPS['Ei']))
 
     def __eq__(self, other):
         if isinstance(other, numbers.Number):
@@ -328,3 +330,23 @@ context; TypeError will be raised instead."""
 class KiB(Byte):
     def _setup(self):
         return (2, 10, 'KiB')
+
+class MiB(Byte):
+    def _setup(self):
+        return (2, 20, 'MiB')
+
+class GiB(Byte):
+    def _setup(self):
+        return (2, 30, 'GiB')
+
+class TiB(Byte):
+    def _setup(self):
+        return (2, 40, 'TiB')
+
+class PiB(Byte):
+    def _setup(self):
+        return (2, 50, 'PiB')
+
+class EiB(Byte):
+    def _setup(self):
+        return (2, 60, 'EiB')
