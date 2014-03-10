@@ -86,6 +86,7 @@ bytes. (10^3 * 8)
 
 
 import re
+import numbers
 
 SI_PREFIXES = ['k', 'K', 'M', 'G', 'T', 'P', 'E']
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
@@ -146,19 +147,19 @@ bytes. Don't supply both."""
 
         self.__setup()
         if bytes:
-            print "Creating %s from %s bytes" % (str(type(self)), bytes)
+            #print "Creating %s from %s bytes" % (str(type(self)), bytes)
             self.__byte_value = bytes
         else:
             self._byte_norm(value)
-        self.__set_unit_value():
+        self.__set_prefix_value()
 
-    def __sef_unit_value(self):
-        self.unit_value = self.__to_prefix_value(self.__byte_value)
+    def __set_prefix_value(self):
+        self.prefix_value = self.__to_prefix_value(self.__byte_value)
 
     def __to_prefix_value(self, value):
         """Return the number of bytes as they would look like if we converted
 to this unit"""
-        print "converting %s bytes into the equivalent %s" % (value, str(type(self)))
+        #print "converting %s bytes into the equivalent %s" % (value, str(type(self)))
         return float(value)/float(self.__unit_value)
 
     def _setup(self):
@@ -197,7 +198,7 @@ __repr__() but not __str__(), then __repr__() is also used when an
 "informal" string representation of instances of that class is
 required."""
         return "%s(%s)" % \
-            (self.__name, self.unit_value)
+            (self.__name, self.prefix_value)
 
     def __str__(self):
         """Called by the str() built-in function and by the print statement to
@@ -206,7 +207,7 @@ differs from __repr__() in that it does not have to be a valid Python
 expression: a more convenient or concise representation may be used
 instead. The return value must be a string object."""
         return "%s(%s)" % \
-            (self.__name, self.unit_value)
+            (self.__name, self.prefix_value)
 
     def to_Byte(self):
         return Byte(self.__byte_value/NIST_STEPS['Byte'])
@@ -230,7 +231,10 @@ instead. The return value must be a string object."""
         return EiB(self.__byte_value/NIST_STEPS['Ei'])
 
     def __eq__(self, other):
-        return self.__byte_value == other.bytes()
+        if isinstance(other, numbers.Number):
+            return self.prefix_value == other
+        else:
+            return self.__byte_value == other.bytes()
 
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#emulating-numeric-types
 
@@ -248,16 +252,19 @@ If one of those methods does not support the operation with the
 supplied arguments, it should return NotImplemented."""
 
     def __add__(self, other):
-        print "adding %s to %s" % (str(self), str(other))
         total_bytes = self.__byte_value + other.bytes()
-        print "total bytes: %s:" % total_bytes
         return (type(self))(bytes=total_bytes)
 
     def __sub__(self, other):
-        return NotImplemented
+        total_bytes = self.__byte_value - other.bytes()
+        return (type(self))(bytes=total_bytes)
 
     def __mul__(self, other):
-        return NotImplemented
+        if isinstance(other, numbers.Number):
+            result = self.__byte_value * other
+            return (type(self))(bytes=result)
+        else:
+            return NotImplemented
 
     def __floordiv__(self, other):
         return NotImplemented
@@ -293,19 +300,25 @@ defined, the object will not support division in the alternate
 context; TypeError will be raised instead."""
 
     def __div__(self, other):
-        return NotImplemented
+        if isinstance(other, numbers.Number):
+            result = self.__byte_value / other
+            return (type(self))(bytes=result)
+        else:
+            # TODO: This should return an int/float of how many times
+            # other fits in self
+            return NotImplemented
 
     def __truediv__(self, other):
-        return NotImplemented
+        return self.__div__(other)
 
     def __neg__(self):
-        return NotImplemented
+        return (type(self))(-abs(self.prefix_value))
 
     def __pos__(self):
-        return NotImplemented
+        return (type(self))(abs(self.prefix_value))
 
     def __abs__(self):
-        return NotImplemented
+        return (type(self))(bytes=abs(self.prefix_value))
 
     def __invert__(self):
         """Called to implement the unary arithmetic operations (-, +, abs()
