@@ -9,4 +9,17 @@ setup(name='bitmath',
       license='MIT',
       package_dir={'bitmath': 'bitmath'},
       packages=['bitmath']
+      classifiers = [
+          'Development Status :: 4 - Beta',
+          'Environment :: Console',
+          'Intended Audience :: Information Technology',
+          'Intended Audience :: System Administrators',
+          'License :: OSI Approved :: MIT License',
+          'Operating System :: POSIX',
+          'Programming Language :: Python',
+          'Topic :: Scientific/Engineering :: Mathematics',
+          'Topic :: Software Development :: Libraries',
+          'Topic :: System :: Filesystems',
+          'Topic :: Utilities'
+      ]
 )
