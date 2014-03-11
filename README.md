@@ -8,8 +8,8 @@ way. Supports SI and NIST binary prefixes.
 In discussion we will refer to the NIST units primarily. I.e., instead
 of "megabyte" we will refer to "mibibyte". The former is 10^3 =
 1,000,000 bytes, whereas the second is 2^20 = 1,048,576 bytes. When
-you see file sizes in your file browser or transfer rates, what you're
-really seeing is the base-2 size/rate.
+you see file sizes in your file browser, or transfer rates in your web
+browser, what you're really seeing are the base-2 sizes/rates.
 
 
 Classes
