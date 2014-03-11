@@ -1,9 +1,15 @@
 bitmath
 =======
 
-Represents file sizes with different prefix notations. Created to
-simplify basic math operations and conversions in a Pythonic
-way. Supports SI and NIST binary prefixes.
+bitmath simplifies many facets of interacting with file sizes in
+various units. Examples include: converting between SI and NIST prefix
+units (GiB to kB), converting between units of the same type (SI to
+SI, or NIST to NIST), basic arithmetic operations (subtracting 42KiB
+from 50GiB), and rich comparison operations (1024 Bytes == 1KiB).
+
+In addition to the conversion and math operations, bitmath provides
+human readable representations of values which are suitable for use in
+interactive shells as well as larger scripts and applications.
 
 In discussion we will refer to the NIST units primarily. I.e., instead
 of "megabyte" we will refer to "mibibyte". The former is 10^3 =
@@ -15,25 +21,25 @@ browser, what you're really seeing are the base-2 sizes/rates.
 Classes
 =======
 
-- Byte
+- ``Byte``
 
 **NIST**
 
-- KiB
-- MiB
-- GiB
-- TiB
-- PiB
-- EiB
+- ``KiB``
+- ``MiB``
+- ``GiB``
+- ``TiB``
+- ``PiB``
+- ``EiB``
 
 **SI**
 
-- kB
-- MB
-- GB
-- TB
-- PB
-- EB
+- ``kB``
+- ``MB``
+- ``GB``
+- ``TB``
+- ``PB``
+- ``EB``
 
 **Note**: Yes, as per SI definition, the ``kB`` class begins with a lower-case 'k' character.
 
