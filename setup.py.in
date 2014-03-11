@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='bitmath',
-      version='1.0.0',
+      version='%VERSION%',
       description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
       maintainer='Tim Bielawa',
       maintainer_email='timbielawa@gmail.com',
