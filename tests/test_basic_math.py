@@ -78,8 +78,7 @@ class TestBasicMath(TestCase):
                          (result_kib, self.Byte(1024)))
 
     def test_divide_bitmath_type_with_bitmath(self):
-        """Dividing bitmath type with a bitmath type fails"""
-        # 4KiB = 4096 Bytes
-        kib4 = self.KiB(4)
-        kib1 = self.KiB(1)
-        self.assertRaises(TypeError, lambda x, y: x/y)
+        """Dividing bitmath type with a bitmath type succeeds"""
+        mib = self.MiB(1)
+        quarter_mib = self.KiB(256)
+        self.assertEqual(mib / quarter_mib, 4)
