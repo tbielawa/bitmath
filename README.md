@@ -1,9 +1,9 @@
 bitmath
 =======
 
-Represents file sizes with different prefix notations when working
-with file sizes. Created to simplify basic math operations and
-conversions in a Pythonic way. Supports SI and NIST binary prefixes.
+Represents file sizes with different prefix notations. Created to
+simplify basic math operations and conversions in a Pythonic
+way. Supports SI and NIST binary prefixes.
 
 In discussion we will refer to the NIST units primarily. I.e., instead
 of "megabyte" we will refer to "mibibyte". The former is 10^3 =
