@@ -34,7 +34,6 @@ man 7 units (from the Linux Documentation Project 'man-pages' package)
 """
 
 
-import re
 import numbers
 
 __all__ = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB']
@@ -81,7 +80,7 @@ bytes. Don't supply both."""
         """Return the number of bytes as they would look like if we converted
 to this unit"""
         #print "converting %s bytes into the equivalent %s" % (value, str(type(self)))
-        return float(value)/float(self.__unit_value)
+        return float(value) / float(self.__unit_value)
 
     def _setup(self):
         return (2, 0, 'Byte')
@@ -131,25 +130,25 @@ instead. The return value must be a string object."""
             (self.prefix_value, self.__name)
 
     def to_Byte(self):
-        return Byte(self.__byte_value/float(NIST_STEPS['Byte']))
+        return Byte(self.__byte_value / float(NIST_STEPS['Byte']))
 
     def to_KiB(self):
-        return KiB(self.__byte_value/float(NIST_STEPS['Ki']))
+        return KiB(self.__byte_value / float(NIST_STEPS['Ki']))
 
     def to_MiB(self):
-        return MiB(self.__byte_value/float(NIST_STEPS['Mi']))
+        return MiB(self.__byte_value / float(NIST_STEPS['Mi']))
 
     def to_GiB(self):
-        return GiB(self.__byte_value/float(NIST_STEPS['Gi']))
+        return GiB(self.__byte_value / float(NIST_STEPS['Gi']))
 
     def to_TiB(self):
-        return TiB(self.__byte_value/float(NIST_STEPS['Ti']))
+        return TiB(self.__byte_value / float(NIST_STEPS['Ti']))
 
     def to_PiB(self):
-        return PiB(self.__byte_value/float(NIST_STEPS['Pi']))
+        return PiB(self.__byte_value / float(NIST_STEPS['Pi']))
 
     def to_EiB(self):
-        return EiB(self.__byte_value/float(NIST_STEPS['Ei']))
+        return EiB(self.__byte_value / float(NIST_STEPS['Ei']))
 
     def __lt__(self, other):
         if isinstance(other, numbers.Number):
