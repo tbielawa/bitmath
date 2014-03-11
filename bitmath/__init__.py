@@ -127,8 +127,8 @@ compute the "informal" string representation of an object. This
 differs from __repr__() in that it does not have to be a valid Python
 expression: a more convenient or concise representation may be used
 instead. The return value must be a string object."""
-        return "%s(%s)" % \
-            (self.__name, self.prefix_value)
+        return "%s%s" % \
+            (self.prefix_value, self.__name)
 
     def to_Byte(self):
         return Byte(self.__byte_value/float(NIST_STEPS['Byte']))
@@ -255,9 +255,7 @@ context; TypeError will be raised instead."""
             result = self.__byte_value / other
             return (type(self))(bytes=result)
         else:
-            # TODO: This should return an int/float of how many times
-            # other fits in self
-            return NotImplemented
+            return self.__byte_value / float(other.bytes())
 
     def __truediv__(self, other):
         return self.__div__(other)
