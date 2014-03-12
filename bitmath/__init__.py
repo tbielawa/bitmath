@@ -61,14 +61,15 @@ NIST_STEPS = {
 
 class Byte(object):
     """The base class for all the other prefix classes"""
-    def __init__(self, value=0, bytes=None):
+    def __init__(self, value=0, bytes=None, bits=None):
         """Instantiate with the `value` by the unit, or in straight
 bytes. Don't supply both."""
 
         self.__setup()
         if bytes:
-            #print "Creating %s from %s bytes" % (str(type(self)), bytes)
             self.__byte_value = bytes
+        elif bits:
+            self.__byte_value = bits / 8
         else:
             self._byte_norm(value)
         self.__set_prefix_value()
