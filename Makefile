@@ -29,7 +29,7 @@ PKGNAME := python-$(NAME)
 
 # VERSION file provides one place to update the software version.
 VERSION := $(shell cat VERSION)
-RPMRELEASE = $(shell awk '/Release/{print $$2; exit}' < $(RPMSPEC).in | cut -d "%" -f1)
+RPMRELEASE = $(shell awk '/global _short_release/{print $$NF; exit}' $(RPMSPEC).in)
 
 RPMSPECDIR := .
 RPMSPEC := $(RPMSPECDIR)/$(PKGNAME).spec
@@ -40,7 +40,7 @@ python-bitmath.spec: python-bitmath.spec.in
 	sed "s/%VERSION%/$(VERSION)/" $< > $@
 
 # Build the distutils setup file on the fly.
-setup.py: setup.py.in VERSION
+setup.py: setup.py.in VERSION python-bitmath.spec.in
 	sed -e "s/%VERSION%/$(VERSION)/" -e "s/%RELEASE%/$(RPMRELEASE)/" $< > $@
 
 tag:
