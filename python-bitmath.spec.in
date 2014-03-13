@@ -5,7 +5,7 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 2
+%global _short_release 3
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
@@ -49,6 +49,9 @@ interactive shells as well as larger scripts and applications.
 %doc README.md LICENSE
 
 %changelog
+* Thu Mar 13 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.2-3%{?dist}
+- Bump release for new archive format
+
 * Thu Mar 13 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.2-2
 - Bump spec for proper Source0 versioning
 
