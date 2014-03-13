@@ -81,7 +81,7 @@ sdist: setup.py clean
 
 rpmcommon: python-bitmath.spec sdist
 	@mkdir -p rpm-build
-	@cp dist/*.gz rpm-build/
+	@cp dist/$(NAME)-$(VERSION)-$(RPMRELEASE).tar.gz rpm-build/$(VERSION)-$(RPMRELEASE).tar.gz
 
 srpm5: rpmcommon
 	rpmbuild --define "_topdir %(pwd)/rpm-build" \
