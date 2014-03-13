@@ -9,6 +9,7 @@ class TestBasicMath(TestCase):
     from bitmath import *
 
     def setUp(self):
+        self.bit = self.Bit(1)
         self.byte = self.Byte(1)
         self.kib = self.KiB(1)
         self.mib = self.MiB(1)
@@ -52,19 +53,23 @@ class TestBasicMath(TestCase):
         to_eib = self.pib.to_EiB()
         self.assertIsInstance(to_eib, self.EiB)
 
+    def test_to_mib_from_bit(self):
+        """Convert a bitmath Bit into a MiB"""
+        to_mib = self.bit.to_MiB()
+        self.assertIsInstance(to_mib, self.MiB)
+
     def test_converted_up_bitmath_value_equivalency(self):
-        """Converted bitmath type to a larger prefix unit has an equivalent
-value to the original"""
+        """Converted up type has an equivalent value to the original"""
         # Take a KiB, make a MiB from it. Test their equality
         to_mib = self.kib.to_MiB()
         self.assertEqual(self.kib, to_mib)
 
+        # Two tests, to be "thorough"
         to_gib = self.mib.to_GiB()
         self.assertEqual(self.mib, to_gib)
 
     def test_converted_down_bitmath_value_equivalency(self):
-        """Converted bitmath type to a smaller prefix unit has an equivalent
-value to the original"""
+        """Converted down type has an equivalent value to the original"""
         # Take a MiB, make a KiB from it. Test their equality
         to_kib = self.mib.to_KiB()
         self.assertEqual(to_kib, self.mib)

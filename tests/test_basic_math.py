@@ -9,6 +9,7 @@ class TestBasicMath(TestCase):
 
     def setUp(self):
         self.kib_in_bytes = 1024
+        self.kib_in_bits = 8192
 
     def test_type_raw_int_equality(self):
         """A bitmath type is equal to the value it's instanted with"""
@@ -40,6 +41,22 @@ class TestBasicMath(TestCase):
         two_kib_in_bytes = self.Byte(2048)
         self.assertEqual(added_different_types, two_kib_in_bytes)
 
+    def test_adding_with_different_base_units(self):
+        """Adding a bit based type with a byte based type"""
+        kib_sized_bit_from_bytes = self.Bit(self.kib_in_bits)
+        kib = self.KiB(1)
+        added = kib_sized_bit_from_bytes + kib
+        two_kib = self.KiB(2)
+        self.assertEqual(added, two_kib)
+
+    def test_subtracting_with_different_base_units(self):
+        """Subtracting a bit based type with a byte based type"""
+        kib_sized_bit_from_bytes = self.Bit(self.kib_in_bits)
+        kib = self.KiB(1)
+        subtracted = kib_sized_bit_from_bytes - kib
+        zero_kib = self.KiB(0)
+        self.assertEqual(subtracted, zero_kib)
+
     def test_subtract_bitmath_types(self):
         """Subtracting two bitmath types"""
         kib1 = self.KiB(2)
@@ -60,8 +77,7 @@ class TestBasicMath(TestCase):
         """Multiplying a bitmath type with a bitmath type fails"""
         kib1 = self.KiB(3)
         kib2 = self.KiB(3)
-        #kib_types_multiplied =
-        self.assertRaises(TypeError, lambda x, y: x* y)
+        self.assertRaises(TypeError, lambda x, y: x* y, kib1, kib2)
 
     def test_divide_bitmath_type_with_int(self):
         """Dividing a bitmath type by an integer"""
@@ -69,7 +85,6 @@ class TestBasicMath(TestCase):
         kib4 = self.KiB(4)
         # 4KiB / 4 = 1024 Bytes
         result_kib = kib4 / 4
-        #self.assertEqual(result_kib, self.kib_in_bytes,
         self.assertEqual(result_kib, 1,
                          msg="result KiB %s(bytes) not equal to %s bytes" %
                          (result_kib, 1))
