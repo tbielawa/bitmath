@@ -8,7 +8,7 @@
 %global _short_release 2
 
 Name: python-bitmath
-Summary: For manipulating file size/transfer rates/capacity in different prefix units
+Summary: Aids representing and manipulating sizes in various prefix notations
 Version: 1.0.2
 Release: %{_short_release}%{?dist}
 
