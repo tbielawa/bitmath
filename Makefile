@@ -44,7 +44,7 @@ setup.py: setup.py.in VERSION python-bitmath.spec.in
 	sed -e "s/%VERSION%/$(VERSION)/" -e "s/%RELEASE%/$(RPMRELEASE)/" $< > $@
 
 tag:
-	git tag -s -m $(TAG) $(NAME)-$(TAG)
+	git tag -s -m $(TAG) $(TAG)
 
 tests: unittests pep8 pyflakes
 	:
