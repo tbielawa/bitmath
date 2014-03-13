@@ -39,17 +39,21 @@ import numbers
 __all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb']
 
 
-SI_PREFIXES = ['k', 'K', 'M', 'G', 'T', 'P', 'E']
+SI_PREFIXES = ['k', 'M', 'G', 'T', 'P', 'E']
+SI_STEPS = {
+    'Bit': 1 / 8.0,
+    'Byte': 1,
+    'k': 1000,
+    'M': 1000000,
+    'G': 1000000000,
+    'T': 1000000000000,
+    'P': 1000000000000000,
+    'E': 1000000000000000000
+}
+
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
-# OR all of those NIST prefixes together
-# TODO:
-# nist_prefix_str = '(' + '|'.join(NIST_PREFIXES) + ')'
-# NIST_REGEX = re.compile(r"^(?P<integer_value>\d*)(?P<binary_prefix>%s)?(?P<base_unit>[bB])$" % nist_prefix_str)
-# Ki->Ei maps to xrange(1,7), which is the exponent part of the NIST
-# calculations. For each prefix, i, multiply it by 10 and raise 2 to
-# that power (2**(i*10)). These steps represent the size of each
-# successive order of magnitude.
 NIST_STEPS = {
+    'Bit': 1 / 8.0,
     'Byte': 1,
     'Ki': 1024,
     'Mi': 1048576,
@@ -65,32 +69,46 @@ NIST_STEPS = {
 
 
 class Byte(object):
-    """The base class for all the other prefix classes"""
+    """The base class for all the other prefix classes
+
+Byte based types fundamentally operate on self._bit_value"""
+
     def __init__(self, value=0, bytes=None, bits=None):
         """Instantiate with `value` by the unit, in plain bytes, or
 bits. Don't supply more than one keyword."""
-        self.__setup()
+        self._do_setup()
         if bytes:
-            self.__byte_value = bytes
+            # We were provided with the fundamental base unit, no need
+            # to normalize
+            self._byte_value = bytes
+            self._bit_value = bytes * 8.0
         elif bits:
-            self.__bit_value = bits
-            self.__byte_value = bits / 8
+            # We were *ALMOST* given the fundamental base
+            # unit. Translate it into the fundamental unit then
+            # normalize.
+            self._byte_value = bits / 8.0
+            self._bit_value = bits
         else:
+            # We were given a value representative of this *prefix
+            # unit*. We need to normalize it into the number of bytes
+            # it represents.
             self._norm(value)
-        self.__set_prefix_value()
 
-    def __set_prefix_value(self):
-        self.prefix_value = self.__to_prefix_value(self.__byte_value)
+        # We have the fundamental unit figured out. Set the 'pretty' unit
+        self._set_prefix_value()
 
-    def __to_prefix_value(self, value):
+    def _set_prefix_value(self):
+        self.prefix_value = self._to_prefix_value(self._byte_value)
+
+    def _to_prefix_value(self, value):
         """Return the number of bits/bytes as they would look like if we
 converted *to* this unit"""
-        return value / float(self.__unit_value)
+        return value / float(self._unit_value)
 
     def _setup(self):
         return (2, 0, 'Byte')
 
-    def __setup(self):
+    def _do_setup(self):
         """Setup basic parameters for this class"""
         """`base` is the numeric base which when raised to `power` is
 equivalent to 1 unit of the corresponding prefix. I.e., base=2,
@@ -98,20 +116,22 @@ power=10 represents 2^10, which is the NIST Binary Prefix for 1 Kibibyte.
 
 Likewise, for the SI prefix classes `base` will be 10, and the `power`
 for the Kilobyte is 3."""
-        (self.__base, self.__power, self.__name) = self._setup()
-        self.__unit_value = self.__base ** self.__power
+        (self._base, self._power, self._name) = self._setup()
+        self._unit_value = self._base ** self._power
 
     def _norm(self, value):
-        """Normalize the input value into bytes"""
-        self.__byte_value = value * self.__unit_value
+        """Normalize the input value into the fundamental unit for this prefix
+type"""
+        self._byte_value = value * self._unit_value
+        self._bit_value = self._byte_value * 8.0
 
     def bits(self):
         """Return the number of bits in a measurement"""
-        return self.__bit_value
+        return self._bit_value
 
     def bytes(self):
         """Return the number of bytes in a measurement"""
-        return self.__byte_value
+        return self._byte_value
 
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#basic-customization
 
@@ -119,72 +139,95 @@ for the Kilobyte is 3."""
         """Representation of this object as you would expect to see in an
 intrepreter"""
         return "%s(%s)" % \
-            (self.__name, self.prefix_value)
+            (self._name, self.prefix_value)
 
     def __str__(self):
         """String representation of this object"""
         return "%s%s" % \
-            (self.prefix_value, self.__name)
+            (self.prefix_value, self._name)
 
     def to_Bit(self):
-        return Bit(bytes=self.__byte_value)
+        return Bit(self._bit_value)
 
     def to_Byte(self):
-        return Byte(self.__byte_value / float(NIST_STEPS['Byte']))
+        return Byte(self._byte_value / float(NIST_STEPS['Byte']))
+
+    ##################################################################
 
     def to_KiB(self):
-        return KiB(self.__byte_value / float(NIST_STEPS['Ki']))
+        return KiB(self._byte_value / float(NIST_STEPS['Ki']))
+
+    def to_Kib(self):
+        return Kib(self._byte_value / float(NIST_STEPS['Ki']))
+
+    def to_kB(self):
+        return kB(self._byte_value / float(NIST_STEPS['Ki']))
+
+    def to_kb(self):
+        return kb(self._byte_value / float(NIST_STEPS['Ki']))
+
+    ##################################################################
 
     def to_MiB(self):
-        return MiB(self.__byte_value / float(NIST_STEPS['Mi']))
+        return MiB(self._byte_value / float(NIST_STEPS['Mi']))
+
+    ##################################################################
 
     def to_GiB(self):
-        return GiB(self.__byte_value / float(NIST_STEPS['Gi']))
+        return GiB(self._byte_value / float(NIST_STEPS['Gi']))
+
+    ##################################################################
 
     def to_TiB(self):
-        return TiB(self.__byte_value / float(NIST_STEPS['Ti']))
+        return TiB(self._byte_value / float(NIST_STEPS['Ti']))
+
+    ##################################################################
 
     def to_PiB(self):
-        return PiB(self.__byte_value / float(NIST_STEPS['Pi']))
+        return PiB(self._byte_value / float(NIST_STEPS['Pi']))
+
+    ##################################################################
 
     def to_EiB(self):
-        return EiB(self.__byte_value / float(NIST_STEPS['Ei']))
+        return EiB(self._byte_value / float(NIST_STEPS['Ei']))
+
+    ##################################################################
 
     def __lt__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value < other
         else:
-            return self.__byte_value < other.bytes()
+            return self._byte_value < other.bytes()
 
     def __le__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value <= other
         else:
-            return self.__byte_value <= other.bytes()
+            return self._byte_value <= other.bytes()
 
     def __eq__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value == other
         else:
-            return self.__byte_value == other.bytes()
+            return self._byte_value == other.bytes()
 
     def __ne__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value != other
         else:
-            return self.__byte_value != other.bytes()
+            return self._byte_value != other.bytes()
 
     def __gt__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value > other
         else:
-            return self.__byte_value > other.bytes()
+            return self._byte_value > other.bytes()
 
     def __ge__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value >= other
         else:
-            return self.__byte_value >= other.bytes()
+            return self._byte_value >= other.bytes()
 
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#emulating-numeric-types
 
@@ -202,16 +245,16 @@ If one of those methods does not support the operation with the
 supplied arguments, it should return NotImplemented."""
 
     def __add__(self, other):
-        total_bytes = self.__byte_value + other.bytes()
+        total_bytes = self._byte_value + other.bytes()
         return (type(self))(bytes=total_bytes)
 
     def __sub__(self, other):
-        total_bytes = self.__byte_value - other.bytes()
+        total_bytes = self._byte_value - other.bytes()
         return (type(self))(bytes=total_bytes)
 
     def __mul__(self, other):
         if isinstance(other, numbers.Number):
-            result = self.__byte_value * other
+            result = self._byte_value * other
             return (type(self))(bytes=result)
         else:
             return NotImplemented
@@ -251,13 +294,13 @@ context; TypeError will be raised instead."""
 
     def __div__(self, other):
         if isinstance(other, numbers.Number):
-            result = self.__byte_value / other
+            result = self._byte_value / other
             return (type(self))(bytes=result)
         else:
-            return self.__byte_value / float(other.bytes())
+            return self._byte_value / float(other.bytes())
 
     def __truediv__(self, other):
-        return self.__div__(other)
+        return self._div__(other)
 
     def __neg__(self):
         return (type(self))(-abs(self.prefix_value))
@@ -346,30 +389,19 @@ class EB(Byte):
 # And now the bit types
 
 class Bit(Byte):
-    def __init__(self, value=0, bytes=None, bits=None):
-        """Instantiate with `value` by the unit, in plain bytes, or
-bits. Don't supply more than one keyword."""
-        super(Bit, self).__init__()
-        self.__setup()
-        if bytes:
-            self.__byte_value = bytes
-            self._norm(bytes)
-        elif bits:
-            self.__byte_value = bits / 8
-        else:
-            self.__byte_value = value / 8
-        self.__set_prefix_value()
+    """Bit based types fundamentally operate on self._bit_value"""
 
-    def __set_prefix_value(self):
-        self.prefix_value = self.__to_prefix_value(self.__bit_value)
+    def _set_prefix_value(self):
+        self.prefix_value = self._to_prefix_value(self._bit_value)
 
     def _setup(self):
         return (2, 0, 'Bit')
 
     def _norm(self, value):
-        """Normalize the input value into bits"""
-        self.__bit_value = value * self.__unit_value
-
+        """Normalize the input value into the fundamental unit for this prefix
+type"""
+        self._bit_value = value * self._unit_value
+        self._byte_value = self._bit_value / 8.0
 
 ######################################################################
 # NIST Prefixes for Bit based types
