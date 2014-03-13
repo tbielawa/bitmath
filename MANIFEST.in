@@ -1,2 +1,3 @@
 include README.md LICENSE .pypi_notice
 graft bitmath
+graft tests

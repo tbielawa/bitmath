@@ -2,7 +2,6 @@
 %{!?__python2: %global __python2 /usr/bin/python2}
 %{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 %endif
 
 %global _short_name bitmath
@@ -33,14 +32,17 @@ human readable representations of values which are suitable for use in
 interactive shells as well as larger scripts and applications.
 
 
+%check
+%{__python2} -m unittest discover
+
 %prep
 %setup -n bitmath-%{version}-%{_short_release} -q
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 %install
-%{__python} setup.py install -O1 --root=$RPM_BUILD_ROOT --record=python-bitmath-files.txt
+%{__python2} setup.py install -O1 --root=$RPM_BUILD_ROOT --record=python-bitmath-files.txt
 
 %files -f python-bitmath-files.txt
 %doc README.md LICENSE
