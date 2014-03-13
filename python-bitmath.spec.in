@@ -7,11 +7,11 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Name: python-bitmath
 Summary: For manipulating file size/transfer rates/capacity in different prefix units
 Version: %VERSION%
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Group: Development/Libraries
 License: BSD
-Source0: bitmath-%{version}.tar.gz
+Source0: https://github.com/tbielawa/bitmath/archive/%{name}-%{version}-%{release}.tar.gz
 Url: https://github.com/tbielawa/bitmath
 
 BuildArch: noarch
@@ -42,6 +42,9 @@ interactive shells as well as larger scripts and applications.
 %doc README.md LICENSE
 
 %changelog
+* Thu Mar 13 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.2-2
+- Bump spec for proper Source0 versioning
+
 * Thu Mar 13 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.2-1
 - First real solid release with full functionality and documentation
 
