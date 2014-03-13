@@ -45,6 +45,7 @@ interactive shells as well as larger scripts and applications.
 %{__python2} setup.py install -O1 --root=$RPM_BUILD_ROOT --record=python-bitmath-files.txt
 
 %files -f python-bitmath-files.txt
+%{python2_sitelib}/%{_short_name}
 %doc README.md LICENSE
 
 %changelog
