@@ -146,6 +146,8 @@ intrepreter"""
         return "%s%s" % \
             (self.prefix_value, self._name)
 
+    ##################################################################
+
     def to_Bit(self):
         return Bit(self._bit_value)
 
@@ -155,41 +157,86 @@ intrepreter"""
     ##################################################################
 
     def to_KiB(self):
-        return KiB(self._byte_value / float(NIST_STEPS['Ki']))
+        return KiB(bits=self._bit_value)
 
     def to_Kib(self):
-        return Kib(self._byte_value / float(NIST_STEPS['Ki']))
+        return Kib(bits=self._bit_value)
 
     def to_kB(self):
-        return kB(self._byte_value / float(NIST_STEPS['Ki']))
+        return kB(bits=self._bit_values)
 
     def to_kb(self):
-        return kb(self._byte_value / float(NIST_STEPS['Ki']))
+        return kb(bits=self._bit_value)
 
     ##################################################################
 
     def to_MiB(self):
-        return MiB(self._byte_value / float(NIST_STEPS['Mi']))
+        return MiB(bits=self._bit_value)
+
+    def to_Mib(self):
+        return Mib(bits=self._bit_value)
+
+    def to_MB(self):
+        return MB(bits=self._bit_values)
+
+    def to_Mb(self):
+        return Mb(bits=self._bit_value)
 
     ##################################################################
 
     def to_GiB(self):
-        return GiB(self._byte_value / float(NIST_STEPS['Gi']))
+        return GiB(bits=self._bit_value)
+
+    def to_Gib(self):
+        return Gib(bits=self._bit_value)
+
+    def to_GB(self):
+        return GB(bits=self._bit_values)
+
+    def to_Gb(self):
+        return Gb(bits=self._bit_value)
 
     ##################################################################
 
     def to_TiB(self):
-        return TiB(self._byte_value / float(NIST_STEPS['Ti']))
+        return TiB(bits=self._bit_value)
+
+    def to_Tib(self):
+        return Tib(bits=self._bit_value)
+
+    def to_TB(self):
+        return TB(bits=self._bit_values)
+
+    def to_Tb(self):
+        return Tb(bits=self._bit_value)
 
     ##################################################################
 
     def to_PiB(self):
-        return PiB(self._byte_value / float(NIST_STEPS['Pi']))
+        return PiB(bits=self._bit_value)
+
+    def to_Pib(self):
+        return Pib(bits=self._bit_value)
+
+    def to_PB(self):
+        return PB(bits=self._bit_values)
+
+    def to_Pb(self):
+        return Pb(bits=self._bit_value)
 
     ##################################################################
 
     def to_EiB(self):
-        return EiB(self._byte_value / float(NIST_STEPS['Ei']))
+        return EiB(bits=self._bit_value)
+
+    def to_Eib(self):
+        return Eib(bits=self._bit_value)
+
+    def to_EB(self):
+        return EB(bits=self._bit_values)
+
+    def to_Eb(self):
+        return Eb(bits=self._bit_value)
 
     ##################################################################
 
