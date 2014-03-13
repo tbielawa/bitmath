@@ -36,7 +36,8 @@ man 7 units (from the Linux Documentation Project 'man-pages' package)
 
 import numbers
 
-__all__ = ['Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB']
+__all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb']
+
 
 SI_PREFIXES = ['k', 'K', 'M', 'G', 'T', 'P', 'E']
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
@@ -59,29 +60,32 @@ NIST_STEPS = {
 }
 
 
+######################################################################
+# First, the bytes...
+
+
 class Byte(object):
     """The base class for all the other prefix classes"""
     def __init__(self, value=0, bytes=None, bits=None):
-        """Instantiate with the `value` by the unit, or in straight
-bytes. Don't supply both."""
-
+        """Instantiate with `value` by the unit, in plain bytes, or
+bits. Don't supply more than one keyword."""
         self.__setup()
         if bytes:
             self.__byte_value = bytes
         elif bits:
+            self.__bit_value = bits
             self.__byte_value = bits / 8
         else:
-            self._byte_norm(value)
+            self._norm(value)
         self.__set_prefix_value()
 
     def __set_prefix_value(self):
         self.prefix_value = self.__to_prefix_value(self.__byte_value)
 
     def __to_prefix_value(self, value):
-        """Return the number of bytes as they would look like if we converted
-to this unit"""
-        #print "converting %s bytes into the equivalent %s" % (value, str(type(self)))
-        return float(value) / float(self.__unit_value)
+        """Return the number of bits/bytes as they would look like if we
+converted *to* this unit"""
+        return value / float(self.__unit_value)
 
     def _setup(self):
         return (2, 0, 'Byte')
@@ -97,9 +101,13 @@ for the Kilobyte is 3."""
         (self.__base, self.__power, self.__name) = self._setup()
         self.__unit_value = self.__base ** self.__power
 
-    def _byte_norm(self, value):
+    def _norm(self, value):
         """Normalize the input value into bytes"""
         self.__byte_value = value * self.__unit_value
+
+    def bits(self):
+        """Return the number of bits in a measurement"""
+        return self.__bit_value
 
     def bytes(self):
         """Return the number of bytes in a measurement"""
@@ -108,27 +116,18 @@ for the Kilobyte is 3."""
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#basic-customization
 
     def __repr__(self):
-        """Called by the repr() built-in function and by string conversions
-(reverse quotes) to compute the "official" string representation of an
-object. If at all possible, this should look like a valid Python
-expression that could be used to recreate an object with the same
-value (given an appropriate environment). If this is not possible, a
-string of the form <...some useful description...> should be
-returned. The return value must be a string object. If a class defines
-__repr__() but not __str__(), then __repr__() is also used when an
-"informal" string representation of instances of that class is
-required."""
+        """Representation of this object as you would expect to see in an
+intrepreter"""
         return "%s(%s)" % \
             (self.__name, self.prefix_value)
 
     def __str__(self):
-        """Called by the str() built-in function and by the print statement to
-compute the "informal" string representation of an object. This
-differs from __repr__() in that it does not have to be a valid Python
-expression: a more convenient or concise representation may be used
-instead. The return value must be a string object."""
+        """String representation of this object"""
         return "%s%s" % \
             (self.prefix_value, self.__name)
+
+    def to_Bit(self):
+        return Bit(bytes=self.__byte_value)
 
     def to_Byte(self):
         return Byte(self.__byte_value / float(NIST_STEPS['Byte']))
@@ -272,10 +271,11 @@ context; TypeError will be raised instead."""
     def __invert__(self):
         """Called to implement the unary arithmetic operations (-, +, abs()
         and ~)."""
-        return NotImplemented
+        return (type(self))(bytes=-self.prefix_value)
+
 
 ######################################################################
-# NIST Prefixes
+# NIST Prefixes for Byte based types
 
 
 class KiB(Byte):
@@ -309,7 +309,7 @@ class EiB(Byte):
 
 
 ######################################################################
-# SI Prefixes
+# SI Prefixes for Byte based types
 
 
 class kB(Byte):
@@ -340,3 +340,100 @@ class PB(Byte):
 class EB(Byte):
     def _setup(self):
         return (10, 18, 'EB')
+
+
+######################################################################
+# And now the bit types
+
+class Bit(Byte):
+    def __init__(self, value=0, bytes=None, bits=None):
+        """Instantiate with `value` by the unit, in plain bytes, or
+bits. Don't supply more than one keyword."""
+        super(Bit, self).__init__()
+        self.__setup()
+        if bytes:
+            self.__byte_value = bytes
+            self._norm(bytes)
+        elif bits:
+            self.__byte_value = bits / 8
+        else:
+            self.__byte_value = value / 8
+        self.__set_prefix_value()
+
+    def __set_prefix_value(self):
+        self.prefix_value = self.__to_prefix_value(self.__bit_value)
+
+    def _setup(self):
+        return (2, 0, 'Bit')
+
+    def _norm(self, value):
+        """Normalize the input value into bits"""
+        self.__bit_value = value * self.__unit_value
+
+
+######################################################################
+# NIST Prefixes for Bit based types
+
+
+class Kib(Bit):
+    def _setup(self):
+        return (2, 10, 'Kib')
+
+
+class Mib(Bit):
+    def _setup(self):
+        return (2, 20, 'Mib')
+
+
+class Gib(Bit):
+    def _setup(self):
+        return (2, 30, 'Gib')
+
+
+class Tib(Bit):
+    def _setup(self):
+        return (2, 40, 'Tib')
+
+
+class Pib(Bit):
+    def _setup(self):
+        return (2, 50, 'Pib')
+
+
+class Eib(Bit):
+    def _setup(self):
+        return (2, 60, 'Eib')
+
+
+######################################################################
+# SI Prefixes for Bit based types
+
+
+class kb(Bit):
+    def _setup(self):
+        return (10, 3, 'kb')
+
+
+class Mb(Bit):
+    def _setup(self):
+        return (10, 6, 'Mb')
+
+
+class Gb(Bit):
+    def _setup(self):
+        return (10, 9, 'Gb')
+
+
+class Tb(Bit):
+    def _setup(self):
+        return (10, 12, 'Tb')
+
+
+class Pb(Bit):
+    def _setup(self):
+        return (10, 15, 'Pb')
+
+
+class Eb(Bit):
+    def _setup(self):
+        return (10, 18, 'Eb')
