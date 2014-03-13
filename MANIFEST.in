@@ -1,2 +1,2 @@
-include README.md LICENSE
+include README.md LICENSE .pypi_notice
 graft bitmath

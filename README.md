@@ -60,8 +60,8 @@ Available Classes
 
 There are two **fundamental** classes available:
 
-- ``Bit(Byte)``
-- ``Byte(object)``
+- ``Bit``
+- ``Byte``
 
 There are 24 other classes available, representing all the prefix
 units from "k" through "e" (kilo/kibi through exa/exbi).
@@ -75,6 +75,11 @@ formally defined by any standards organization, they follow the
 International System of Units (SI) pattern (commonly used to
 abbreviate base 10 values). You may hear these referred to as the
 "Decimal" or "SI" prefixes.
+
+Classes ending with lower-case 'b' characters are **bit
+based**. Classes ending with upper-case 'B' characters are **byte
+based**. Class inheritance is shown below in parentheses to make this
+more apparent:
 
 - ``Eb(Bit)``
 - ``EB(Byte)``
@@ -101,7 +106,7 @@ abbreviate base 10 values). You may hear these referred to as the
 - ``Tib(Bit)``
 - ``TiB(Byte)``
 
-**Note**: Yes, as per SI definition, the ``kB`` class begins with a lower-case 'k' character.
+**Note**: Yes, as per SI definition, the ``kB`` and ``kb`` classes begins with a lower-case 'k' character.
 
 The majority of the functionality of bitmath object comes from their
 rich implementation of standard Python operations. You can use bitmath

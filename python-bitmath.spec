@@ -5,8 +5,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 %endif
 
 Name: python-bitmath
-Summary: Lib for converting file size/transfer rates/capacity in different prefix units
-Version: 1.0.0
+Summary: For manipulating file size/transfer rates/capacity in different prefix units
+Version: 1.0.2
 Release: 1%{?dist}
 
 Group: Development/Libraries
@@ -42,5 +42,8 @@ interactive shells as well as larger scripts and applications.
 %doc README.md LICENSE
 
 %changelog
+* Thu Mar 13 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.2-1
+- First real solid release with full functionality and documentation
+
 * Tue Mar 11 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.0-1
 - First release

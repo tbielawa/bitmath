@@ -26,9 +26,14 @@
 
 from distutils.core import setup
 
+pypi_notice = open('.pypi_notice', 'r').read()
+readme = open('README.md', 'r').read()
+long_description = pypi_notice + readme
+
 setup(name='bitmath',
       version='%VERSION%',
       description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
+      long_description=long_description,
       maintainer='Tim Bielawa',
       maintainer_email='timbielawa@gmail.com',
       url='https://github.com/tbielawa/bitmath',
