@@ -18,8 +18,8 @@ you see file sizes in your file browser, or transfer rates in your web
 browser, what you're really seeing are the base-2 sizes/rates.
 
 
-Classes
-=======
+Basics
+======
 
 **Class Initializer Signature**
 
@@ -55,29 +55,121 @@ Use the ``bits`` keyword
     one_kib = KiB(bits=8192)
 
 
-**Available Classes**
+Available Classes
+-----------------
 
-- ``Byte``
+There are two **fundamental** classes available:
 
-**NIST**
+- ``Bit(Byte)``
+- ``Byte(object)``
 
-- ``KiB``
-- ``MiB``
-- ``GiB``
-- ``TiB``
-- ``PiB``
-- ``EiB``
+There are 24 other classes available, representing all the prefix
+units from "k" through "e" (kilo/kibi through exa/exbi).
 
-**SI**
+Classes with 'i' in their names are **NIST** type classes. They were
+defined by the National Institute of Standards and Technolog (NIST) as
+the 'Binary Prefix Units'. They are defined by increasing powers of 2.
 
-- ``kB``
-- ``MB``
-- ``GB``
-- ``TB``
-- ``PB``
-- ``EB``
+Classes without the 'i' character are **SI** type classes. Though not
+formally defined by any standards organization, they follow the
+International System of Units (SI) pattern (commonly used to
+abbreviate base 10 values). You may hear these referred to as the
+"Decimal" or "SI" prefixes.
+
+- ``Eb(Bit)``
+- ``EB(Byte)``
+- ``Eib(Bit)``
+- ``EiB(Byte)``
+- ``Gb(Bit)``
+- ``GB(Byte)``
+- ``Gib(Bit)``
+- ``GiB(Byte)``
+- ``kb(Bit)``
+- ``kB(Byte)``
+- ``Kib(Bit)``
+- ``KiB(Byte)``
+- ``Mb(Bit)``
+- ``MB(Byte)``
+- ``Mib(Bit)``
+- ``MiB(Byte)``
+- ``Pb(Bit)``
+- ``PB(Byte)``
+- ``Pib(Bit)``
+- ``PiB(Byte)``
+- ``Tb(Bit)``
+- ``TB(Byte)``
+- ``Tib(Bit)``
+- ``TiB(Byte)``
 
 **Note**: Yes, as per SI definition, the ``kB`` class begins with a lower-case 'k' character.
+
+The majority of the functionality of bitmath object comes from their
+rich implementation of standard Python operations. You can use bitmath
+objects in **almost all** of the places you would normally use an
+integer or a float. See **Usage** below for more details.
+
+
+Instance Methods
+----------------
+
+bitmath objects come with one basic method: ``to_THING()``.
+
+Where ``THING`` is any of the bitmath types. You can even
+``to_THING()`` an instance into itself again:
+
+    In [1]: from bitmath import *
+
+    In [2]: one_mib = MiB(1)
+
+    In [3]: one_mib_in_kb = one_mib.to_kb()
+
+    In [4]: one_mib == one_mib_in_kb
+
+    Out[4]: True
+
+    In [5]: another_mib = one_mib.to_MiB()
+
+    In [6]: print one_mib, one_mib_in_kb, another_mib
+
+    1.0MiB 8388.608kb 1.0MiB
+
+    In [7]: six_TB = TB(6)
+
+    In [8]: six_TB_in_bits = six_TB.to_Bit()
+
+    In [9]: print six_TB, six_TB_in_bits
+
+    6.0TB 4.8e+13Bit
+
+    In [10]: six_TB == six_TB_in_bits
+
+    Out[10]: True
+
+
+Instance Attributes
+-------------------
+
+bitmath objects have three public instance attributes:
+
+- ``bytes`` - The number of bytes in the object
+- ``bits`` - The number of bits in the object
+- ``value`` - The value of the instance in **PREFIX** units
+
+For example:
+
+    In [13]: dvd_capacity = GB(4.7)
+
+    In [14]: print "Capacity in bits: %s\nbytes: %s\n" % \
+
+                 (dvd_capacity.bits, dvd_capacity.bytes)
+
+       Capacity in bits: 37600000000.0
+
+       bytes: 4700000000.0
+
+    In [15]: dvd_capacity.value
+
+    Out[16]: 4.7
 
 
 Usage
@@ -429,12 +521,46 @@ connections.
 On Units
 ========
 
-In this module you will find two very similar sets of classes
-available. These are the **NIST** and **SI** prefixes. The **NIST**
-prefixes are all base 2 and have an 'i' character in the middle. The
-**SI** prefixes are base 10 and have no 'i' character.
+As previously stated, in this module you will find two very similar
+sets of classes available. These are the **NIST** and **SI**
+prefixes. The **NIST** prefixes are all base 2 and have an 'i'
+character in the middle. The **SI** prefixes are base 10 and have no
+'i' character.
 
-Why? The Linux Documentation Project says the following:
+For smaller values, these two systems of unit prefixes are roughly
+equivalent. The ``round()`` operations below demonstrate how close in
+a percent one "unit" of SI is to one "unit" of NIST.
+
+    In [15]: one_kilo = 1 * 10**3
+
+    In [16]: one_kibi = 1 * 2**10
+
+    In [17]: round(one_kilo / float(one_kibi), 2)
+
+    Out[17]: 0.98
+
+    In [18]: one_tera = 1 * 10**12
+
+    In [19]: one_tebi = 1 * 2**40
+
+    In [20]: round(one_tera / float(one_tebi), 2)
+
+    Out[20]: 0.91
+
+    In [21]: one_exa = 1 * 10**18
+
+    In [22]: one_exbi = 1 * 2**60
+
+    In [23]: round(one_exa / float(one_exbi), 2)
+
+    Out[23]: 0.87
+
+They begin as roughly equivalent, however as you can see, they diverge
+significantly for higher values.
+
+Why two unit systems? Why take the time to point this difference out?
+Why should you care? The Linux Documentation Project comments on
+that:
 
     Before these binary prefixes were introduced, it was fairly common
     to use k=1000 and K=1024, just like b=bit, B=byte.  Unfortunately,
@@ -465,7 +591,10 @@ Why? The Linux Documentation Project says the following:
 
     the MB are megabytes and the KiB are kibibytes.
 
-Furthermore, to quote the National Institute of Standards and Technology:
+- Source: ``man 7 units`` - http://man7.org/linux/man-pages/man7/units.7.html
+
+Furthermore, to quote the National Institute of Standards and
+Technology (NIST):
 
     "Once upon a time, computer professionals noticed that 210 was
     very nearly equal to 1000 and started using the SI prefix "kilo"
@@ -501,6 +630,4 @@ Furthermore, to quote the National Institute of Standards and Technology:
     that prefixes for binary multiples are adopted by an appropriate
     standards body."
 
-Source: http://physics.nist.gov/cuu/Units/prefixes.html
-
-You may also be interested in ``man 7 units``: http://man7.org/linux/man-pages/man7/units.7.html
+Source: http://physics.nist.gov/cuu/Units/binary.html
