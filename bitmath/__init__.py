@@ -125,13 +125,20 @@ type"""
         self._byte_value = value * self._unit_value
         self._bit_value = self._byte_value * 8.0
 
+    @property
     def bits(self):
-        """Return the number of bits in a measurement"""
+        """Return the number of bits in an instance"""
         return self._bit_value
 
+    @property
     def bytes(self):
-        """Return the number of bytes in a measurement"""
+        """Return the number of bytes in an instance"""
         return self._byte_value
+
+    @property
+    def value(self):
+        """Returns the "prefix" value of an instance"""
+        return self.prefix_value
 
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#basic-customization
 
@@ -244,37 +251,37 @@ intrepreter"""
         if isinstance(other, numbers.Number):
             return self.prefix_value < other
         else:
-            return self._byte_value < other.bytes()
+            return self._byte_value < other.bytes
 
     def __le__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value <= other
         else:
-            return self._byte_value <= other.bytes()
+            return self._byte_value <= other.bytes
 
     def __eq__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value == other
         else:
-            return self._byte_value == other.bytes()
+            return self._byte_value == other.bytes
 
     def __ne__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value != other
         else:
-            return self._byte_value != other.bytes()
+            return self._byte_value != other.bytes
 
     def __gt__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value > other
         else:
-            return self._byte_value > other.bytes()
+            return self._byte_value > other.bytes
 
     def __ge__(self, other):
         if isinstance(other, numbers.Number):
             return self.prefix_value >= other
         else:
-            return self._byte_value >= other.bytes()
+            return self._byte_value >= other.bytes
 
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#emulating-numeric-types
 
@@ -292,11 +299,11 @@ If one of those methods does not support the operation with the
 supplied arguments, it should return NotImplemented."""
 
     def __add__(self, other):
-        total_bytes = self._byte_value + other.bytes()
+        total_bytes = self._byte_value + other.bytes
         return (type(self))(bytes=total_bytes)
 
     def __sub__(self, other):
-        total_bytes = self._byte_value - other.bytes()
+        total_bytes = self._byte_value - other.bytes
         return (type(self))(bytes=total_bytes)
 
     def __mul__(self, other):
@@ -344,7 +351,7 @@ context; TypeError will be raised instead."""
             result = self._byte_value / other
             return (type(self))(bytes=result)
         else:
-            return self._byte_value / float(other.bytes())
+            return self._byte_value / float(other.bytes)
 
     def __truediv__(self, other):
         return self._div__(other)
