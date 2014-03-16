@@ -11,12 +11,21 @@ class TestBasicMath(TestCase):
     def setUp(self):
         self.bit = self.Bit(1)
         self.byte = self.Byte(1)
+        # NIST units
         self.kib = self.KiB(1)
         self.mib = self.MiB(1)
         self.gib = self.GiB(1)
         self.tib = self.TiB(1)
         self.pib = self.PiB(1)
         self.eib = self.EiB(1)
+
+        # SI units
+        self.kb = self.kB(1)
+        self.mb = self.MB(1)
+        self.gb = self.GB(1)
+        self.tb = self.TB(1)
+        self.pb = self.PB(1)
+        self.eb = self.EB(1)
 
     def test_to_same_unit(self):
         """bitmath type converted to the same unit is properly converted"""
@@ -73,3 +82,13 @@ class TestBasicMath(TestCase):
         # Take a MiB, make a KiB from it. Test their equality
         to_kib = self.mib.to_KiB()
         self.assertEqual(to_kib, self.mib)
+
+    def test_convert_nist_to_si(self):
+        """Convert an NIST unit into an SI unit"""
+        kb_from_kib = self.kib.to_kB()
+        self.assertIs(type(kb_from_kib), self.kB)
+
+    def test_convert_si_to_nist(self):
+        """Convert an SI unit into an NIST unit"""
+        kib_from_kb = self.kb.to_KiB()
+        self.assertIs(type(kib_from_kb), self.KiB)

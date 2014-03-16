@@ -170,7 +170,7 @@ intrepreter"""
         return Kib(bits=self._bit_value)
 
     def to_kB(self):
-        return kB(bits=self._bit_values)
+        return kB(bits=self._bit_value)
 
     def to_kb(self):
         return kb(bits=self._bit_value)
@@ -184,7 +184,7 @@ intrepreter"""
         return Mib(bits=self._bit_value)
 
     def to_MB(self):
-        return MB(bits=self._bit_values)
+        return MB(bits=self._bit_value)
 
     def to_Mb(self):
         return Mb(bits=self._bit_value)
@@ -198,7 +198,7 @@ intrepreter"""
         return Gib(bits=self._bit_value)
 
     def to_GB(self):
-        return GB(bits=self._bit_values)
+        return GB(bits=self._bit_value)
 
     def to_Gb(self):
         return Gb(bits=self._bit_value)
@@ -212,7 +212,7 @@ intrepreter"""
         return Tib(bits=self._bit_value)
 
     def to_TB(self):
-        return TB(bits=self._bit_values)
+        return TB(bits=self._bit_value)
 
     def to_Tb(self):
         return Tb(bits=self._bit_value)
@@ -226,7 +226,7 @@ intrepreter"""
         return Pib(bits=self._bit_value)
 
     def to_PB(self):
-        return PB(bits=self._bit_values)
+        return PB(bits=self._bit_value)
 
     def to_Pb(self):
         return Pb(bits=self._bit_value)
@@ -240,7 +240,7 @@ intrepreter"""
         return Eib(bits=self._bit_value)
 
     def to_EB(self):
-        return EB(bits=self._bit_values)
+        return EB(bits=self._bit_value)
 
     def to_Eb(self):
         return Eb(bits=self._bit_value)
