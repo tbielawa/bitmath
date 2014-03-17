@@ -184,6 +184,29 @@ Supported operations:
 
 - Basic arithmetic: addition, subtraction, multiplication, division
 
+Math works mostly like you expect it to, except for the special cases
+where we mix bitmath types with Number types, and operations where two
+bitmath types would cancel out (like such as dividing two bitmath
+types)
+
+**Legend**
+
+- **Parameters:** ``BitMath()`` indicates a bitmath object is required
+in that position. ``<Num>`` indicates that an integer or decimal value
+is required.
+
+| Operation     | Parameters | Result Type |
+| -------------|-------------|-------------|
+| Addition | ``BitMath()`` + ``BitMath()`` | Left hand ``BitMath()`` type |
+| Subtraction | ``BitMath()`` - ``BitMath()`` | Left hand ``BitMath()`` type |
+| Multiplication | ``BitMath()`` * ``<Num>`` | ``BitMath()`` type |
+| Division | ``BitMath()`` / ``<Num>`` | ``<Num>`` type |
+| Division | ``BitMath()`` / ``BitMath()`` | ``<Num>`` type |
+| Inline Addition | ``BitMath()`` += ``BitMath()`` | No return value, left hand ``BitMath()`` is updated in place |
+| Inline Subtraction | ``BitMath()`` += ``BitMath()`` | No return value, left hand ``BitMath()`` is updated in place |
+| Inline Multiplication | ``BitMath()`` *= ``<Num>`` | No return value, left hand ``BitMath()`` is updated in place |
+| Inline Division | ``BitMath()`` /= ``<Num>`` | No return value, left hand ``BitMath()`` is updated in place |
+
 - Size comparison: LT, LE, EQ, NE, GT, GE
 
 - Unit conversion: from bytes through exibytes, supports conversion to any other unit (e.g., Megabytes to Kibibytes)

@@ -140,9 +140,29 @@ type"""
         """Returns the "prefix" value of an instance"""
         return self.prefix_value
 
+    @classmethod
+    def to_other(cls, item):
+        """Factory function to return instances of `item` converted in a new
+instance of `cls`. Can be called as `Byte.to_other()` without
+instantiating a Byte object ahead of time.
+
+- `cls` A bitmath class
+- `item` A bitmath class instance
+
+For example:
+
+>>> Byte.to_other(bitmath.KiB, MiB(1))
+KiB(1024.0)
+"""
+        return cls(bits=item.bits)
+
+    ######################################################################
+    # The following implement the Python datamodel customization methods
+    #
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#basic-customization
 
     def __repr__(self):
+
         """Representation of this object as you would expect to see in an
 intrepreter"""
         return "%s(%s)" % \
@@ -293,25 +313,79 @@ __divmod__() method should be the equivalent to using __floordiv__()
 and __mod__(); it should not be related to __truediv__() (described
 below). Note that __pow__() should be defined to accept an optional
 third argument if the ternary version of the built-in pow() function
-is to be supported.
-
-If one of those methods does not support the operation with the
-supplied arguments, it should return NotImplemented."""
+is to be supported.object.__complex__(self)
+"""
 
     def __add__(self, other):
-        total_bytes = self._byte_value + other.bytes
-        return (type(self))(bytes=total_bytes)
+        """Supported operations with result types:
+
+- bm + bm = bm
+- bm + num = num
+- num + bm = num (see radd)
+"""
+        if isinstance(other, numbers.Number):
+            # bm + num
+            return other + self.value
+        else:
+            # bm + bm
+            total_bytes = self._byte_value + other.bytes
+            return (type(self))(bytes=total_bytes)
 
     def __sub__(self, other):
-        total_bytes = self._byte_value - other.bytes
-        return (type(self))(bytes=total_bytes)
+        """Supported operations with result types:
+
+- bm - bm = bm
+- bm - num = num
+- num - bm = num (see rsub)
+"""
+        if isinstance(other, numbers.Number):
+            # bm - num
+            return other - self.value
+        else:
+            # bm - bm
+            total_bytes = self._byte_value - other.bytes
+            return (type(self))(bytes=total_bytes)
 
     def __mul__(self, other):
+        """Supported operations with result types:
+
+- bm1 * bm2 = bm1
+- bm * num = bm
+- num * bm = num (see rmul)
+"""
         if isinstance(other, numbers.Number):
+            # bm * num
             result = self._byte_value * other
             return (type(self))(bytes=result)
         else:
+            # bm1 * bm2
+            #
+            # Need to figure out exactly how to calculate this.
             return NotImplemented
+
+    """The division operator (/) is implemented by these methods. The
+__truediv__() method is used when __future__.division is in effect,
+otherwise __div__() is used. If only one of these two methods is
+defined, the object will not support division in the alternate
+context; TypeError will be raised instead."""
+
+    def __div__(self, other):
+        """Supported operations with result types:
+
+- bm1 / bm2 = num
+- bm / num = bm
+- num / bm = num (see rdiv)
+"""
+        if isinstance(other, numbers.Number):
+            # bm / num
+            result = self._byte_value / other
+            return (type(self))(bytes=result)
+        else:
+            # bm1 / bm2
+            return self._byte_value / float(other.bytes)
+
+    def __truediv__(self, other):
+        return self._div__(other)
 
     def __floordiv__(self, other):
         return NotImplemented
@@ -325,10 +399,70 @@ supplied arguments, it should return NotImplemented."""
     def __pow__(self, other, modulo=None):
         return NotImplemented
 
+    """These methods are called to implement the binary arithmetic
+operations (+, -, *, /, %, divmod(), pow(), **, <<, >>, &, ^, |) with
+reflected (swapped) operands. These functions are only called if the
+left operand does not support the corresponding operation and the
+operands are of different types. [2] For instance, to evaluate the
+expression x - y, where y is an instance of a class that has an
+__rsub__() method, y.__rsub__(x) is called if x.__sub__(y) returns
+NotImplemented.
+
+These are the add/sub/mul/div methods for syntax where a number type
+is given for the LTYPE and a bitmath object is given for the
+RTYPE. E.g., 3 * MiB(3), or 10 / GB(42)
+"""
+
+    def __radd__(self, other):
+        # num + bm = num
+        return other + self.value
+
+    def __rsub__(self, other):
+        # num - bm = num
+        return other - self.value
+
+    def __rmul__(self, other):
+        # num * bm = num
+        return other * self.value
+
+    def __rdiv__(self, other):
+        # num / bm = num
+        return other / float(self.value)
+
+    """Called to implement the built-in functions complex(), int(),
+long(), and float(). Should return a value of the appropriate type.
+
+If one of those methods does not support the operation with the
+supplied arguments, it should return NotImplemented.
+
+For bitmath purposes, these methods return the int/long/float
+equivalent of the this instances prefix unix value. That is to say:
+
+    - int(KiB(3.336)) would return 3
+    - long(KiB(3.336)) would return 3L
+    - float(KiB(3.336)) would return 3.336
+"""
+
+    def __int__(self):
+        """Return this instances prefix unit as an integer"""
+        return int(self.prefix_value)
+
+    def __long__(self):
+        """Return this instances prefix unit as a long integer"""
+        return long(self.prefix_value)
+
+    def __float__(self):
+        """Return this instances prefix unit as a floating point number"""
+        return float(self.prefix_value)
+
     def __lshift__(self, other):
+        """A left shift by n bits is equivalent to multiplication by pow(2,
+n). A long integer is returned if the result exceeds the range of
+plain integers."""
         return NotImplemented
 
     def __rshift__(self, other):
+        """A right shift by n bits is equivalent to division by pow(2, n)."""
         return NotImplemented
 
     def __and__(self, other):
@@ -340,23 +474,8 @@ supplied arguments, it should return NotImplemented."""
     def __or__(self, other):
         return NotImplemented
 
-    """The division operator (/) is implemented by these methods. The
-__truediv__() method is used when __future__.division is in effect,
-otherwise __div__() is used. If only one of these two methods is
-defined, the object will not support division in the alternate
-context; TypeError will be raised instead."""
-
-    def __div__(self, other):
-        if isinstance(other, numbers.Number):
-            result = self._byte_value / other
-            return (type(self))(bytes=result)
-        else:
-            return self._byte_value / float(other.bytes)
-
-    def __truediv__(self, other):
-        return self._div__(other)
-
     def __neg__(self):
+        """The negative version of this instance"""
         return (type(self))(-abs(self.prefix_value))
 
     def __pos__(self):
@@ -373,8 +492,6 @@ context; TypeError will be raised instead."""
 
 ######################################################################
 # NIST Prefixes for Byte based types
-
-
 class KiB(Byte):
     def _setup(self):
         return (2, 10, 'KiB')
@@ -407,8 +524,6 @@ class EiB(Byte):
 
 ######################################################################
 # SI Prefixes for Byte based types
-
-
 class kB(Byte):
     def _setup(self):
         return (10, 3, 'kB')
@@ -441,7 +556,6 @@ class EB(Byte):
 
 ######################################################################
 # And now the bit types
-
 class Bit(Byte):
     """Bit based types fundamentally operate on self._bit_value"""
 
@@ -457,10 +571,9 @@ type"""
         self._bit_value = value * self._unit_value
         self._byte_value = self._bit_value / 8.0
 
+
 ######################################################################
 # NIST Prefixes for Bit based types
-
-
 class Kib(Bit):
     def _setup(self):
         return (2, 10, 'Kib')
@@ -493,8 +606,6 @@ class Eib(Bit):
 
 ######################################################################
 # SI Prefixes for Bit based types
-
-
 class kb(Bit):
     def _setup(self):
         return (10, 3, 'kb')
