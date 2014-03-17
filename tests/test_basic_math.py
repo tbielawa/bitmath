@@ -59,62 +59,24 @@ class TestBasicMath(TestCase):
         zero_kib = self.KiB(0)
         self.assertEqual(subtracted, zero_kib)
 
-    # def test_subtract_bitmath_types(self):
-    #     """Subtracting two bitmath types"""
-    #     kib1 = self.KiB(2)
-    #     kib2 = self.Byte(512)
-    #     # Result of subtracting kib1-kib2 => 2048-512 = 1536 bytes
-    #     result_kib_in_bytes = self.Byte(1536)
-    #     self.assertEqual(kib1 - kib2, result_kib_in_bytes)
-
-    # def test_multiply_bitmath_with_int(self):
-    #     """Multiplying a bitmath types with an int"""
-    #     # 3 KiB = 3072 bytes
-    #     kib1 = self.KiB(3)
-    #     kib_multiplied = kib1 * 3
-    #     # 3 KiB * 3 = 9216 bytes
-    #     self.assertEqual(kib_multiplied, self.Byte(9216))
-
-    # def test_multiply_bitmath_with_bitmath(self):
-    #     """Multiplying a bitmath type with a bitmath type"""
-    #     kib1 = self.KiB(3)
-    #     kib2 = self.KiB(3)
-
-
-    # def test_divide_bitmath_type_with_int(self):
-    #     """Dividing a bitmath type by an integer"""
-    #     # 4KiB = 4096 Bytes
-    #     kib4 = self.KiB(4)
-    #     # 4KiB / 4 = 1024 Bytes
-    #     result_kib = kib4 / 4
-    #     self.assertEqual(result_kib, 1,
-    #                      msg="result KiB %s(bytes) not equal to %s bytes" %
-    #                      (result_kib, 1))
-    #     self.assertEqual(result_kib, self.Byte(1024),
-    #                      msg="result KiB %s(bytes) not equal to %s" %
-    #                      (result_kib, self.Byte(1024)))
-
-    # def test_divide_bitmath_type_with_bitmath(self):
-    #     """Dividing bitmath type with a bitmath type succeeds"""
-    #     mib = self.MiB(1)
-    #     quarter_mib = self.KiB(256)
-    #     self.assertEqual(mib / quarter_mib, 4)
-
     ##################################################################
     # add
     def bitmath_add_bitmath_is_bitmath(self):
+        """bitmath + bitmath = bitmath"""
         bm1 = self.KiB(1)
         bm2 = self.KiB(2)
         result = bm1 + bm2
         self.assertIsInstance(result, self.Byte)
 
     def test_bitmath_add_number_is_number(self):
+        """bitmath + number = number"""
         bm1 = self.KiB(1)
         num1 = 2
         result = bm1 + num1
         self.assertIsInstance(result, self.Number)
 
     def test_number_add_bitmath_is_number(self):
+        """number + bitmath = number"""
         num1 = 2
         bm1 = self.KiB(1)
         result = num1 + bm1
@@ -123,18 +85,21 @@ class TestBasicMath(TestCase):
     ##################################################################
     # sub
     def test_bitmath_sub_bitmath_is_bitmath(self):
+        """bitmath - bitmath = bitmath"""
         bm1 = self.KiB(1)
         bm2 = self.KiB(2)
         result = bm1 - bm2
         self.assertIsInstance(result, self.Byte)
 
     def test_bitmath_sub_number_is_number(self):
+        """bitmath - number = number"""
         bm1 = self.KiB(1)
         num1 = 2
         result = bm1 - num1
         self.assertIsInstance(result, self.Number)
 
     def test_number_sub_bitmath_is_number(self):
+        """number - bitmath = number"""
         num1 = 2
         bm1 = self.KiB(1)
         result = num1 - bm1
@@ -142,20 +107,23 @@ class TestBasicMath(TestCase):
 
     ##################################################################
     # mul
-    @unittest.skip
-    def test_bitmath_mul_bitmath_is_bitmath(self):
-        bm1 = self.KiB(1)
-        bm2 = self.KiB(2)
-        result = bm1 * bm2
-        self.assertIsInstance(result, self.Byte)
+    # @unittest.skip
+    # def test_bitmath_mul_bitmath_is_bitmath(self):
+    #     """bitmath * bitmath = bitmath"""
+    #     bm1 = self.KiB(1)
+    #     bm2 = self.KiB(2)
+    #     result = bm1 * bm2
+    #     self.assertIsInstance(result, self.Byte)
 
     def test_bitmath_mul_number_is_bitmath(self):
+        """bitmath * number = bitmath"""
         bm1 = self.KiB(1)
         num1 = 2
         result = bm1 * num1
         self.assertIsInstance(result, self.Byte)
 
     def test_number_mul_bitmath_is_number(self):
+        """number * bitmath = number"""
         num1 = 2
         bm1 = self.KiB(1)
         result = num1 * bm1
@@ -164,18 +132,21 @@ class TestBasicMath(TestCase):
     ##################################################################
     # div
     def test_bitmath_div_bitmath_is_number(self):
+        """bitmath / bitmath = number"""
         bm1 = self.KiB(1)
         bm2 = self.KiB(2)
         result = bm1 / bm2
         self.assertIsInstance(result, self.Number)
 
     def test_bitmath_div_number_is_bitmath(self):
+        """bitmath / number = bitmath"""
         bm1 = self.KiB(1)
         num1 = 2
         result = bm1 / num1
         self.assertIsInstance(result, self.Byte)
 
     def test_number_div_bitmath_is_number(self):
+        """number / bitmath = number"""
         num1 = 2
         bm1 = self.KiB(1)
         result = num1 / bm1
