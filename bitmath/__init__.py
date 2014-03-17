@@ -150,7 +150,7 @@ instantiating a Byte object ahead of time.
 - `item` A bitmath class instance
 
 For example:
-
+>>> import bitmath
 >>> Byte.to_other(bitmath.KiB, MiB(1))
 KiB(1024.0)
 """
