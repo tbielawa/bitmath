@@ -340,7 +340,7 @@ is to be supported.object.__complex__(self)
 """
         if isinstance(other, numbers.Number):
             # bm - num
-            return other - self.value
+            return self.value - other
         else:
             # bm - bm
             total_bytes = self._byte_value - other.bytes
