@@ -5,11 +5,11 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 3
+%global _short_release 1
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
-Version: 1.0.2
+Version: 1.0.3
 Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
@@ -49,7 +49,11 @@ interactive shells as well as larger scripts and applications.
 %doc README.md LICENSE
 
 %changelog
-* Thu Mar 13 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.2-3%{?dist}
+* Mon Mar 17 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.3-1
+- Big issue converting NIST to SI
+- Also, retroactively remove unexpanded macros from changelog
+
+* Thu Mar 13 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.2-3
 - Bump release for new archive format
 
 * Thu Mar 13 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.2-2
