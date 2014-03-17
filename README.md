@@ -191,21 +191,25 @@ types)
 
 **Legend**
 
-- **Parameters:** ``BitMath()`` indicates a bitmath object is required
-in that position. ``<Num>`` indicates that an integer or decimal value
+- **Parameters:** ``bm`` indicates a bitmath object is required
+in that position. ``num`` indicates that an integer or decimal value
 is required.
 
-| Operation     | Parameters | Result Type |
-| -------------|-------------|-------------|
-| Addition | ``BitMath()`` + ``BitMath()`` | Left hand ``BitMath()`` type |
-| Subtraction | ``BitMath()`` - ``BitMath()`` | Left hand ``BitMath()`` type |
-| Multiplication | ``BitMath()`` * ``<Num>`` | ``BitMath()`` type |
-| Division | ``BitMath()`` / ``<Num>`` | ``<Num>`` type |
-| Division | ``BitMath()`` / ``BitMath()`` | ``<Num>`` type |
-| Inline Addition | ``BitMath()`` += ``BitMath()`` | No return value, left hand ``BitMath()`` is updated in place |
-| Inline Subtraction | ``BitMath()`` += ``BitMath()`` | No return value, left hand ``BitMath()`` is updated in place |
-| Inline Multiplication | ``BitMath()`` *= ``<Num>`` | No return value, left hand ``BitMath()`` is updated in place |
-| Inline Division | ``BitMath()`` /= ``<Num>`` | No return value, left hand ``BitMath()`` is updated in place |
+| Operation      | Parameters        | Result Type         | Example                                   |
+| ---------------|-------------------|---------------------|-------------------------------------------|
+| Addition       | ``bm1`` + ``bm2`` | ``type(bm1)``       | ``KiB(1) + KiB(2)`` = ``3.0KiB``          |
+| Addition       | ``bm`` + ``num``  | ``type(num)``       | ``KiB(1) + 1`` = ``2.0``                  |
+| Addition       | ``num`` + ``bm``  | ``type(num)``       | ``1 + KiB(1)`` = ``2.0``                  |
+| Subtraction    | ``bm1`` - ``bm2`` | ``type(bm1)``       | ``KiB(1) - KiB(2)`` = ``-1.0KiB``         |
+| Subtraction    | ``bm`` - ``num``  | ``type(num)``       | ``KiB(4) - 1`` = ``-3.0``                 |
+| Subtraction    | ``num`` - ``bm``  | ``type(num)``       | ``10 - KiB(1)`` = ``9.0``                 |
+| Multiplication | ``bm1``* ``bm2``  | **not implemented** | ``KiB(1) * KiB(1)`` = ``Not implemented`` |
+| Multiplication | ``bm`` * ``num``  | ``type(bm)``        | ``KiB(2) * 3`` = ``6.0KiB``               |
+| Multiplication | ``num`` * ``bm``  | ``type(num)``       | ``1 * KiB(3)`` = ``6.0``                  |
+| Division       | ``bm1``/ ``bm2``  | ``type(num)``       | ``KiB(1) / KiB(2)`` = ``0.5``             |
+| Division       | ``bm`` / ``num``  | ``type(bm)``        | ``KiB(1) / 3`` = ``0.3330078125KiB``      |
+| Division       | ``num`` / ``bm``  | ``type(num)``       | ``3 / KiB(2)`` = ``1.5``                  |
+
 
 - Size comparison: LT, LE, EQ, NE, GT, GE
 
