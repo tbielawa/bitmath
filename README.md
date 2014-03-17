@@ -203,10 +203,10 @@ is required.
 | Subtraction    | ``bm1`` - ``bm2`` | ``type(bm1)``       | ``KiB(1) - KiB(2)`` = ``-1.0KiB``         |
 | Subtraction    | ``bm`` - ``num``  | ``type(num)``       | ``KiB(4) - 1`` = ``-3.0``                 |
 | Subtraction    | ``num`` - ``bm``  | ``type(num)``       | ``10 - KiB(1)`` = ``9.0``                 |
-| Multiplication | ``bm1``* ``bm2``  | **not implemented** | ``KiB(1) * KiB(1)`` = ``Not implemented`` |
+| Multiplication | ``bm1`` * ``bm2`` | **not implemented** | -                                         |
 | Multiplication | ``bm`` * ``num``  | ``type(bm)``        | ``KiB(2) * 3`` = ``6.0KiB``               |
-| Multiplication | ``num`` * ``bm``  | ``type(num)``       | ``1 * KiB(3)`` = ``6.0``                  |
-| Division       | ``bm1``/ ``bm2``  | ``type(num)``       | ``KiB(1) / KiB(2)`` = ``0.5``             |
+| Multiplication | ``num`` * ``bm``  | ``type(num)``       | ``2 * KiB(3)`` = ``6.0``                  |
+| Division       | ``bm1`` / ``bm2`` | ``type(num)``       | ``KiB(1) / KiB(2)`` = ``0.5``             |
 | Division       | ``bm`` / ``num``  | ``type(bm)``        | ``KiB(1) / 3`` = ``0.3330078125KiB``      |
 | Division       | ``num`` / ``bm``  | ``type(num)``       | ``3 / KiB(2)`` = ``1.5``                  |
 
