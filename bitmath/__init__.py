@@ -141,17 +141,23 @@ type"""
         return self.prefix_value
 
     @classmethod
-    def to_other(cls, item):
+    def from_other(cls, item):
         """Factory function to return instances of `item` converted in a new
-instance of `cls`. Can be called as `Byte.to_other()` without
-instantiating a Byte object ahead of time.
+instance of `cls`. Because this is a class method, it may be called
+from any bitmath class object without the need to explicitly
+instantiate the class ahead of time.
 
-- `cls` A bitmath class
+*Implicit Parameter:*
+- `cls` A bitmath class, implicitly set to the class of the class
+  object it is called on
+
+*User Supplied Parameter:*
 - `item` A bitmath class instance
 
-For example:
+*Example:*
 >>> import bitmath
->>> Byte.to_other(bitmath.KiB, MiB(1))
+>>> kib = bitmath.KiB.from_other(MiB(1))
+>>> print kib
 KiB(1024.0)
 """
         return cls(bits=item.bits)
@@ -162,7 +168,6 @@ KiB(1024.0)
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#basic-customization
 
     def __repr__(self):
-
         """Representation of this object as you would expect to see in an
 intrepreter"""
         return "%s(%s)" % \

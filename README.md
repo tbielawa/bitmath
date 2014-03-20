@@ -21,7 +21,7 @@ browser, what you're really seeing are the base-2 sizes/rates.
 Basics
 ======
 
-**Class Initializer Signature**
+### Class Initializer Signature
 
     BitMathType([value=0, [bytes=None, [bits=None]]])
 
@@ -53,6 +53,26 @@ Use the ``bytes`` keyword
 Use the ``bits`` keyword
 
     one_kib = KiB(bits=8192)
+
+### Class Methods
+
+bitmath **class objects** have one public class method which provides
+an alternative method to initialize a bitmath class.
+
+- ``BitMathClass.from_other()`` - Instantiate any ``BitMathClass``
+  using another instance as reference for it's initial value.
+
+This method may be called on bitmath class objects directly. That is
+to say: you do not need to call this method on an instance of a
+bitmath class, however that a valid use case.
+
+**Method Signature:**
+
+    BitMathClass.from_other(bitmath_instance)
+
+The ``from_other()`` class method has one required parameter: an
+instance of a bitmath class.
+
 
 
 Available Classes
