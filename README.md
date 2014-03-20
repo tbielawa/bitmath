@@ -64,7 +64,7 @@ an alternative method to initialize a bitmath class.
 
 This method may be called on bitmath class objects directly. That is
 to say: you do not need to call this method on an instance of a
-bitmath class, however that a valid use case.
+bitmath class, however that is a valid use case.
 
 **Method Signature:**
 
