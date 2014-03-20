@@ -66,6 +66,7 @@ class TestBasicMath(TestCase):
         bm1 = self.KiB(1)
         bm2 = self.KiB(2)
         result = bm1 + bm2
+        self.assertEqual(result, self.KiB(3))
         self.assertIsInstance(result, self.Byte)
 
     def test_bitmath_add_number_is_number(self):
@@ -73,6 +74,7 @@ class TestBasicMath(TestCase):
         bm1 = self.KiB(1)
         num1 = 2
         result = bm1 + num1
+        self.assertEqual(result, 3.0)
         self.assertIsInstance(result, self.Number)
 
     def test_number_add_bitmath_is_number(self):
@@ -80,6 +82,7 @@ class TestBasicMath(TestCase):
         num1 = 2
         bm1 = self.KiB(1)
         result = num1 + bm1
+        self.assertEqual(result, 3.0)
         self.assertIsInstance(result, self.Number)
 
     ##################################################################
@@ -89,6 +92,7 @@ class TestBasicMath(TestCase):
         bm1 = self.KiB(1)
         bm2 = self.KiB(2)
         result = bm1 - bm2
+        self.assertEqual(result, self.KiB(-1))
         self.assertIsInstance(result, self.Byte)
 
     def test_bitmath_sub_number_is_number(self):
@@ -96,6 +100,7 @@ class TestBasicMath(TestCase):
         bm1 = self.KiB(1)
         num1 = 2
         result = bm1 - num1
+        self.assertEqual(result, -1.0)
         self.assertIsInstance(result, self.Number)
 
     def test_number_sub_bitmath_is_number(self):
@@ -103,6 +108,7 @@ class TestBasicMath(TestCase):
         num1 = 2
         bm1 = self.KiB(1)
         result = num1 - bm1
+        self.assertEqual(result, 1.0)
         self.assertIsInstance(result, self.Number)
 
     ##################################################################
@@ -113,6 +119,7 @@ class TestBasicMath(TestCase):
     #     bm1 = self.KiB(1)
     #     bm2 = self.KiB(2)
     #     result = bm1 * bm2
+    #     self.assertEqual(result, )
     #     self.assertIsInstance(result, self.Byte)
 
     def test_bitmath_mul_number_is_bitmath(self):
@@ -120,6 +127,7 @@ class TestBasicMath(TestCase):
         bm1 = self.KiB(1)
         num1 = 2
         result = bm1 * num1
+        self.assertEqual(result, self.KiB(2))
         self.assertIsInstance(result, self.Byte)
 
     def test_number_mul_bitmath_is_number(self):
@@ -127,6 +135,7 @@ class TestBasicMath(TestCase):
         num1 = 2
         bm1 = self.KiB(1)
         result = num1 * bm1
+        self.assertEqual(result, 2.0)
         self.assertIsInstance(result, self.Number)
 
     ##################################################################
@@ -136,6 +145,7 @@ class TestBasicMath(TestCase):
         bm1 = self.KiB(1)
         bm2 = self.KiB(2)
         result = bm1 / bm2
+        self.assertEqual(result, 0.5)
         self.assertIsInstance(result, self.Number)
 
     def test_bitmath_div_number_is_bitmath(self):
@@ -143,6 +153,7 @@ class TestBasicMath(TestCase):
         bm1 = self.KiB(1)
         num1 = 2
         result = bm1 / num1
+        self.assertEqual(result, self.KiB(0.5))
         self.assertIsInstance(result, self.Byte)
 
     def test_number_div_bitmath_is_number(self):
@@ -150,4 +161,5 @@ class TestBasicMath(TestCase):
         num1 = 2
         bm1 = self.KiB(1)
         result = num1 / bm1
+        self.assertEqual(result, 2.0)
         self.assertIsInstance(result, self.Number)

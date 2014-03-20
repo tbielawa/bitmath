@@ -221,7 +221,7 @@ is required.
 | Addition       | ``bm`` + ``num``  | ``type(num)``       | ``KiB(1) + 1`` = ``2.0``                  |
 | Addition       | ``num`` + ``bm``  | ``type(num)``       | ``1 + KiB(1)`` = ``2.0``                  |
 | Subtraction    | ``bm1`` - ``bm2`` | ``type(bm1)``       | ``KiB(1) - KiB(2)`` = ``-1.0KiB``         |
-| Subtraction    | ``bm`` - ``num``  | ``type(num)``       | ``KiB(4) - 1`` = ``-3.0``                 |
+| Subtraction    | ``bm`` - ``num``  | ``type(num)``       | ``KiB(4) - 1`` = ``3.0``                  |
 | Subtraction    | ``num`` - ``bm``  | ``type(num)``       | ``10 - KiB(1)`` = ``9.0``                 |
 | Multiplication | ``bm1`` * ``bm2`` | **not implemented** | -                                         |
 | Multiplication | ``bm`` * ``num``  | ``type(bm)``        | ``KiB(2) * 3`` = ``6.0KiB``               |
