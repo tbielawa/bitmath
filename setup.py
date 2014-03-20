@@ -31,7 +31,7 @@ readme = open('README.md', 'r').read()
 long_description = pypi_notice + readme
 
 setup(name='bitmath',
-      version='1.0.3-1',
+      version='1.0.4-1',
       description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
       long_description=long_description,
       maintainer='Tim Bielawa',

@@ -9,7 +9,7 @@
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
-Version: 1.0.3
+Version: 1.0.4
 Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
@@ -49,6 +49,11 @@ interactive shells as well as larger scripts and applications.
 %doc README.md LICENSE
 
 %changelog
+* Thu Mar 20 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.4-1
+- Plenty of documentation updates
+- Fix some issues with mix-type math operations.
+- More unit tests!
+
 * Mon Mar 17 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.3-1
 - Big issue converting NIST to SI
 - Also, retroactively remove unexpanded macros from changelog
