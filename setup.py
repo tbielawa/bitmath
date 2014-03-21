@@ -27,13 +27,18 @@
 from distutils.core import setup
 
 pypi_notice = open('.pypi_notice', 'r').read()
-readme = open('README.md', 'r').read()
-long_description = pypi_notice + readme
+readme = open('README.md', 'r')
+
+for l in readme.readlines():
+    if l.startswith('### Class Methods'):
+        break
+    else:
+        pypi_notice += l
 
 setup(name='bitmath',
       version='1.0.4-1',
       description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
-      long_description=long_description,
+      long_description=pypi_notice,
       maintainer='Tim Bielawa',
       maintainer_email='timbielawa@gmail.com',
       url='https://github.com/tbielawa/bitmath',
