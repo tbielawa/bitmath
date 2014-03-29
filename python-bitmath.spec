@@ -19,6 +19,7 @@ Url: https://github.com/tbielawa/bitmath
 
 BuildArch: noarch
 BuildRequires: python2-devel
+BuildRequires: python-nose
 
 %description
 bitmath simplifies many facets of interacting with file sizes in
@@ -33,7 +34,7 @@ interactive shells as well as larger scripts and applications.
 
 
 %check
-%{__python2} -m unittest discover
+nosetests -v
 
 %prep
 %setup -n bitmath-%{version}-%{_short_release} -q
