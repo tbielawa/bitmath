@@ -390,7 +390,7 @@ context; TypeError will be raised instead."""
             return self._byte_value / float(other.bytes)
 
     def __truediv__(self, other):
-        return self._div__(other)
+        return self.__div__(other)
 
     def __floordiv__(self, other):
         return NotImplemented
@@ -492,7 +492,7 @@ plain integers."""
     def __invert__(self):
         """Called to implement the unary arithmetic operations (-, +, abs()
         and ~)."""
-        return (type(self))(bytes=-self.prefix_value)
+        return NotImplemented
 
 
 ######################################################################
