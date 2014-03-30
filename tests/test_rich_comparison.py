@@ -38,11 +38,6 @@ class TestRichComparison(TestCase):
         self.mib = MiB(1)
         self.gib = GiB(1)
 
-    # def test_type_raw_int_equality(self):
-    #     """A bitmath type is equal to the value it's instanted with"""
-    #     kib = self.KiB(1)
-    #     self.assertEqual(kib, 1)
-
     def test_less_than(self):
         """One KiB is less than one MiB"""
         self.assertLess(self.kib, self.mib)

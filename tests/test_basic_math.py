@@ -85,6 +85,22 @@ class TestBasicMath(TestCase):
         zero_kib = self.KiB(0)
         self.assertEqual(subtracted, zero_kib)
 
+    def test_absolute_positive_value(self):
+        """abs(PositiveObject) is positive"""
+        self.assertEqual(self.KiB(1), abs(self.KiB(1)))
+
+    def test_absolute_negative_value(self):
+        """abs(NegativeObject) is positive"""
+        self.assertEqual(self.KiB(1), abs(self.KiB(-1)))
+
+    def test_inversion_to_negative(self):
+        """Negating a positive makes a negative"""
+        self.assertEqual(self.KiB(-1), -self.KiB(1))
+
+    def test_inversion_to_positive(self):
+        """Plus'ing a negative makes a positive"""
+        self.assertEqual(self.KiB(1), +self.KiB(-1))
+
     ##################################################################
     # add
     def bitmath_add_bitmath_is_bitmath(self):
