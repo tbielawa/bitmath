@@ -390,19 +390,21 @@ context; TypeError will be raised instead."""
             return self._byte_value / float(other.bytes)
 
     def __truediv__(self, other):
+        # TODO: Fix truediv for num / bm
+        # https://github.com/tbielawa/bitmath/issues/2
         return self.__div__(other)
 
-    def __floordiv__(self, other):
-        return NotImplemented
+    # def __floordiv__(self, other):
+    #     return NotImplemented
 
-    def __mod__(self, other):
-        return NotImplemented
+    # def __mod__(self, other):
+    #     return NotImplemented
 
-    def __divmod__(self, other):
-        return NotImplemented
+    # def __divmod__(self, other):
+    #     return NotImplemented
 
-    def __pow__(self, other, modulo=None):
-        return NotImplemented
+    # def __pow__(self, other, modulo=None):
+    #     return NotImplemented
 
     """These methods are called to implement the binary arithmetic
 operations (+, -, *, /, %, divmod(), pow(), **, <<, >>, &, ^, |) with
@@ -460,24 +462,24 @@ equivalent of the this instances prefix unix value. That is to say:
         """Return this instances prefix unit as a floating point number"""
         return float(self.prefix_value)
 
-    def __lshift__(self, other):
-        """A left shift by n bits is equivalent to multiplication by pow(2,
-n). A long integer is returned if the result exceeds the range of
-plain integers."""
-        return NotImplemented
+#     def __lshift__(self, other):
+#         """A left shift by n bits is equivalent to multiplication by pow(2,
+# n). A long integer is returned if the result exceeds the range of
+# plain integers."""
+#         return NotImplemented
 
-    def __rshift__(self, other):
-        """A right shift by n bits is equivalent to division by pow(2, n)."""
-        return NotImplemented
+#     def __rshift__(self, other):
+#         """A right shift by n bits is equivalent to division by pow(2, n)."""
+#         return NotImplemented
 
-    def __and__(self, other):
-        return NotImplemented
+#     def __and__(self, other):
+#         return NotImplemented
 
-    def __xor__(self, other):
-        return NotImplemented
+#     def __xor__(self, other):
+#         return NotImplemented
 
-    def __or__(self, other):
-        return NotImplemented
+#     def __or__(self, other):
+#         return NotImplemented
 
     def __neg__(self):
         """The negative version of this instance"""
@@ -489,10 +491,10 @@ plain integers."""
     def __abs__(self):
         return (type(self))(abs(self.prefix_value))
 
-    def __invert__(self):
-        """Called to implement the unary arithmetic operations (-, +, abs()
-        and ~)."""
-        return NotImplemented
+    # def __invert__(self):
+    #     """Called to implement the unary arithmetic operations (-, +, abs()
+    #     and ~)."""
+    #     return NotImplemented
 
 
 ######################################################################
