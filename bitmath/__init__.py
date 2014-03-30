@@ -487,7 +487,7 @@ plain integers."""
         return (type(self))(abs(self.prefix_value))
 
     def __abs__(self):
-        return (type(self))(bytes=abs(self.prefix_value))
+        return (type(self))(abs(self.prefix_value))
 
     def __invert__(self):
         """Called to implement the unary arithmetic operations (-, +, abs()
