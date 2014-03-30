@@ -31,6 +31,9 @@ Test for basic math operations
 import unittest
 from . import TestCase
 
+def _mul(input=None, mul=None):
+    input * mul
+
 class TestBasicMath(TestCase):
     from bitmath import *
     from numbers import Number
@@ -155,14 +158,12 @@ class TestBasicMath(TestCase):
 
     ##################################################################
     # mul
-    # @unittest.skip
-    # def test_bitmath_mul_bitmath_is_bitmath(self):
-    #     """bitmath * bitmath = bitmath"""
-    #     bm1 = self.KiB(1)
-    #     bm2 = self.KiB(2)
-    #     result = bm1 * bm2
-    #     self.assertEqual(result, )
-    #     self.assertIsInstance(result, self.Byte)
+    def test_bitmath_mul_bitmath_is_bitmath(self):
+        """bitmath * bitmath = unsupported"""
+        bm1 = self.KiB(1)
+        bm2 = self.KiB(2)
+        test_values = {'input': bm1, 'mul': bm2}
+        self.assertRaises(TypeError, _mul, **test_values)
 
     def test_bitmath_mul_number_is_bitmath(self):
         """bitmath * number = bitmath"""

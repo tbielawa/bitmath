@@ -31,7 +31,6 @@ Tests to verify that type properties are accessable and immutable
 from . import TestCase
 
 def _add(input=None, add=None):
-    print input, add
     input.value += add
 
 class TestAttributeProperties(TestCase):
