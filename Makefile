@@ -58,7 +58,7 @@ unittests:
 clean:
 	@find . -type f -regex ".*\.py[co]$$" -delete
 	@find . -type f \( -name "*~" -or -name "#*" \) -delete
-	@rm -fR build dist rpm-build MANIFEST
+	@rm -fR build dist rpm-build MANIFEST htmlcov .coverage
 
 pep8:
 	@echo "#############################################"
