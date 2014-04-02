@@ -23,33 +23,16 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import unittest
-import platform
 
+import platform
+(major, minor, patch) = platform.python_version_tuple()
+if int(major) == 2 and int(minor) < 7:
+    import unittest2 as unittest
+else:
+    import unittest
 
 class TestCase(unittest.TestCase):
     """
     Parent TestCase to use for all tests.
     """
-    (major, minor, patch) = platform.python_version_tuple()
-
-    def assertIsInstance(self, a, b, msg=None):
-        """Same as self.assertTrue(isinstance(obj, cls)), with a nicer
-default message."""
-        if int(self.major) == 2 and int(self.minor) < 7:
-            try:
-                assert isinstance(a, b)
-            except AssertionError:
-                raise AssertionError(msg)
-        else:
-            super(TestCase, self).assertIsInstance(a, b, msg=msg)
-
-    def assertIs(self, a, b, msg=None):
-        """Just like self.assertTrue(a is b), but with a nicer default message."""
-        if int(self.major) == 2 and int(self.minor) < 7:
-            try:
-                assert a is b
-            except AssertionError:
-                raise AssertionError(msg)
-        else:
-            super(TestCase, self).assertIs(a, b, msg=msg)
+    pass

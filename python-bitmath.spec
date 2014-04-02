@@ -20,6 +20,7 @@ Url: https://github.com/tbielawa/bitmath
 BuildArch: noarch
 BuildRequires: python2-devel
 BuildRequires: python-nose
+%{?el6:BuildRequires: python-unittest2}
 
 %description
 bitmath simplifies many facets of interacting with file sizes in
