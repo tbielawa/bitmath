@@ -22,8 +22,8 @@ browser, what you're really seeing are the base-2 sizes/rates.
   * [Class Initializer Signature](#class-initializer-signature)
   * [Class Methods](#class-methods)
 * Instances
-  * [ Available Classes](#available-classes)
-  * [ Instance Methods](#instance-methods)
+  * [Available Classes](#available-classes)
+  * [Instance Methods](#instance-methods)
   * [Instance Attributes](#instance-attributes)
 * [Usage](#usage)
 * [Basic Examples](#examples)
@@ -148,7 +148,7 @@ more apparent:
 The majority of the functionality of bitmath object comes from their
 rich implementation of standard Python operations. You can use bitmath
 objects in **almost all** of the places you would normally use an
-integer or a float. See **Usage** below for more details.
+integer or a float. See [Usage](#usage) below for more details.
 
 
 Instance Methods
@@ -267,7 +267,7 @@ In these examples ``one_kib`` and ``one_kib_as_byte`` are equivalent
 if tested with the ``==`` operator.
 
 
-See **Examples** for more examples of supported operations.
+See [Examples](#examples) for more examples of supported operations.
 
 
 Examples
