@@ -5,7 +5,8 @@ bitmath simplifies many facets of interacting with file sizes in
 various units. Examples include: converting between SI and NIST prefix
 units (GiB to kB), converting between units of the same type (SI to
 SI, or NIST to NIST), basic arithmetic operations (subtracting 42KiB
-from 50GiB), and rich comparison operations (1024 Bytes == 1KiB).
+from 50GiB), rich comparison operations (1024 Bytes == 1KiB), and
+sorting.
 
 In addition to the conversion and math operations, bitmath provides
 human readable representations of values which are suitable for use in
@@ -16,6 +17,22 @@ of "megabyte" we will refer to "mibibyte". The former is 10^3 =
 1,000,000 bytes, whereas the second is 2^20 = 1,048,576 bytes. When
 you see file sizes in your file browser, or transfer rates in your web
 browser, what you're really seeing are the base-2 sizes/rates.
+
+* Classes
+  * [Class Initializer Signature](#class-initializer-signature)
+  * [Class Methods](#class-methods)
+* Instances
+  * [ Available Classes](#available-classes)
+  * [ Instance Methods](#instance-methods)
+  * [Instance Attributes](#instance-attributes)
+* [Usage](#usage)
+* [Basic Examples](#examples)
+* [Real Life Examples](#real-life-examples)
+  * [Download Speeds](#example-1)
+  * [Calculating how many files fit on a device](#example-2)
+  * [Printing Human-Readable File Sizes in Python](#example-3)
+  * [Calculating Linux BDP and TCP Window Scaling](#example-4)
+* [On Units](#on-units)
 
 
 Basics
@@ -202,7 +219,7 @@ Usage
 
 Supported operations:
 
-- Basic arithmetic: addition, subtraction, multiplication, division
+- Basic arithmetic: addition, subtraction, multiplication, division, sorting
 
 Math works mostly like you expect it to, except for the special cases
 where we mix bitmath types with Number types, and operations where two
@@ -292,16 +309,35 @@ Basic math:
     Out[9]: True
 
 
+Sorting is also supported:
+
+    In [1]: from bitmath import *
+
+    In [2]: import os
+
+    In [3]: sizes = []
+
+    In [4]: for f in os.listdir('./tests/'):
+                sizes.append(KiB(os.path.getsize('./tests/' + f)))
+
+    In [5]: print sizes
+    [KiB(7337.0), KiB(1441.0), KiB(2126.0), KiB(2178.0), KiB(2326.0), KiB(4003.0), KiB(48.0), KiB(1770.0), KiB(7892.0), KiB(4190.0)]
+
+    In [6]: print sorted(sizes)
+    [KiB(48.0), KiB(1441.0), KiB(1770.0), KiB(2126.0), KiB(2178.0), KiB(2326.0), KiB(4003.0), KiB(4190.0), KiB(7337.0), KiB(7892.0)]
+
+
 Real Life Examples
 ==================
 
-**Example 1: Download Speeds**
+#### Example 1
+##### Download Speeds
 
 Let's pretend that your Internet service provider (ISP) advertises
-your maximum downstream as **50Mbps** [1] and you want to know how
-fast that is in mibibytes? ``bitmath`` can do that for you
-easily. Keeping in mind that 1 Byte = 8 bits you can calculate this as
-such:
+your maximum downstream as **50Mbps** [(note 1)](#footnote-1) and you
+want to know how fast that is in mibibytes? ``bitmath`` can do that
+for you easily. Keeping in mind that 1 Byte = 8 bits you can calculate
+this as such:
 
     from bitmath import *
 
@@ -314,10 +350,12 @@ such:
 This tells us that if our ISP advertises **50Mbps** we can expect to
 see download rates of nearly **6MiB/sec**.
 
-**[1]** - Assuming your ISP follows the common industry practice of
-  using SI (base-10) units to describe file sizes/rates.
+###### Footnote 1
+* Assuming your ISP follows the common industry practice of using SI (base-10) units to describe file sizes/rates.
 
-**Example 2: Calculating how many files fit on a device**
+
+#### Example 2
+##### Calculating how many files fit on a device
 
 Given that we have a thumb drive with 12GiB free, how many 4MiB audio
 files can we fit on it?
@@ -336,7 +374,8 @@ files can we fit on it?
 This tells us that we could fit 3072 4MiB audio files on a 12GiB thumb drive.
 
 
-**Example 3: Printing Human-Readable File Sizes in Python**
+#### Example 3
+##### Printing Human-Readable File Sizes in Python
 
 In a Python script or intrepreter we may wish to print out file sizes
 in something other than bytes (which is what ``os.path.getsize``
@@ -359,7 +398,8 @@ returns). We can use ``bitmath`` to do that too:
     test_to_Type_conversion.py - 2.2119140625KiB
 
 
-**Example 4: Calculating Linux BDP and TCP Window Scaling**
+#### Example 4
+##### Calculating Linux BDP and TCP Window Scaling
 
 Say we're doing some Linux Kernel TCP performance tuning. For optimum
 speeds we need to calculate our BDP, or Bandwidth Delay Product. For
@@ -607,8 +647,8 @@ a percent one "unit" of SI is to one "unit" of NIST.
 
     Out[23]: 0.87
 
-They begin as roughly equivalent, however as you can see, they diverge
-significantly for higher values.
+They begin as roughly equivalent, however as you can see (lines: 17,
+20, and 23), they diverge significantly for higher values.
 
 Why two unit systems? Why take the time to point this difference out?
 Why should you care? The Linux Documentation Project comments on
