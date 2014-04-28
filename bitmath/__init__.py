@@ -140,6 +140,23 @@ type"""
         """Returns the "prefix" value of an instance"""
         return self.prefix_value
 
+    @property
+    def binary(self):
+        """Returns the binary representation of an instance in binary 1s and
+0s. Note that for very large numbers this will mean a lot of 1s and
+0s. For example, GiB(100) would be represented as:
+
+0b1100100000000000000000000000000000000000
+
+That leading '0b' is normal. That's how Python represents binary."""
+        return bin(int(self.bits))
+
+    @property
+    def bin(self):
+        """Alias for instance.binary. Returns the binary representation of an
+instance in binary 1s and 0s."""
+        return self.binary
+
     @classmethod
     def from_other(cls, item):
         """Factory function to return instances of `item` converted in a new
@@ -308,6 +325,10 @@ intrepreter"""
         else:
             return self._byte_value >= other.bytes
 
+    ##################################################################
+    # Basic math operations
+    ##################################################################
+
     # Reference: http://docs.python.org/2.7/reference/datamodel.html#emulating-numeric-types
 
     """These methods are called to implement the binary arithmetic
@@ -406,6 +427,8 @@ context; TypeError will be raised instead."""
     # def __pow__(self, other, modulo=None):
     #     return NotImplemented
 
+    ##################################################################
+
     """These methods are called to implement the binary arithmetic
 operations (+, -, *, /, %, divmod(), pow(), **, <<, >>, &, ^, |) with
 reflected (swapped) operands. These functions are only called if the
@@ -462,24 +485,52 @@ equivalent of the this instances prefix unix value. That is to say:
         """Return this instances prefix unit as a floating point number"""
         return float(self.prefix_value)
 
-#     def __lshift__(self, other):
-#         """A left shift by n bits is equivalent to multiplication by pow(2,
-# n). A long integer is returned if the result exceeds the range of
-# plain integers."""
-#         return NotImplemented
+    ##################################################################
+    # Bitwise operations
+    ##################################################################
 
-#     def __rshift__(self, other):
-#         """A right shift by n bits is equivalent to division by pow(2, n)."""
-#         return NotImplemented
+    def __lshift__(self, other):
+        """Left shift, ex: 100 << 2
 
-#     def __and__(self, other):
-#         return NotImplemented
+A left shift by n bits is equivalent to multiplication by pow(2,
+n). A long integer is returned if the result exceeds the range of
+plain integers."""
+        shifted = int(self.bits) << other
+        return type(self)(bits=shifted)
 
-#     def __xor__(self, other):
-#         return NotImplemented
+    def __rshift__(self, other):
+        """Right shift, ex: 100 >> 2
 
-#     def __or__(self, other):
-#         return NotImplemented
+A right shift by n bits is equivalent to division by pow(2, n)."""
+        shifted = int(self.bits) >> other
+        return type(self)(bits=shifted)
+
+    def __and__(self, other):
+        """"Bitwise and, ex: 100 & 2
+
+bitwise and". Each bit of the output is 1 if the corresponding bit
+of x AND of y is 1, otherwise it's 0."""
+        andd = int(self.bits) & other
+        return type(self)(bits=andd)
+
+    def __xor__(self, other):
+        """Bitwise xor, ex: 100 ^ 2
+
+Does a "bitwise exclusive or". Each bit of the output is the same
+as the corresponding bit in x if that bit in y is 0, and it's the
+complement of the bit in x if that bit in y is 1."""
+        xord = int(self.bits) ^ other
+        return type(self)(bits=xord)
+
+    def __or__(self, other):
+        """Bitwise or, ex: 100 | 2
+
+Does a "bitwise or". Each bit of the output is 0 if the corresponding
+bit of x AND of y is 0, otherwise it's 1."""
+        ord = int(self.bits) | other
+        return type(self)(bits=ord)
+
+    ##################################################################
 
     def __neg__(self):
         """The negative version of this instance"""
