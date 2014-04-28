@@ -51,6 +51,9 @@ nosetests -v
 %doc README.md LICENSE
 
 %changelog
+* Mon Apr 28 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.5-1
+- Now with support for bitwise operations
+
 * Thu Mar 20 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.4-1
 - Plenty of documentation updates
 - Fix some issues with mix-type math operations.
