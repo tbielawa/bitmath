@@ -2,21 +2,23 @@ bitmath
 =======
 
 bitmath simplifies many facets of interacting with file sizes in
-various units. Examples include: converting between SI and NIST prefix
-units (GiB to kB), converting between units of the same type (SI to
-SI, or NIST to NIST), basic arithmetic operations (subtracting 42KiB
-from 50GiB), rich comparison operations (1024 Bytes == 1KiB), and
-sorting.
+various units. Examples include: converting between **SI** and
+**NIST** prefix units (*GiB* to *kB*), converting between units of the
+same type (SI to SI, or NIST to NIST), basic arithmetic operations
+(subtracting 42KiB from 50GiB), rich comparison operations (``1024
+Bytes == 1KiB``), bitwise operations (``<<``, ``>>``, ``&``, ``|``,
+``^``), and sorting.
 
 In addition to the conversion and math operations, bitmath provides
 human readable representations of values which are suitable for use in
 interactive shells as well as larger scripts and applications.
 
 In discussion we will refer to the NIST units primarily. I.e., instead
-of "megabyte" we will refer to "mibibyte". The former is 10^3 =
-1,000,000 bytes, whereas the second is 2^20 = 1,048,576 bytes. When
-you see file sizes in your file browser, or transfer rates in your web
-browser, what you're really seeing are the base-2 sizes/rates.
+of "megabyte" we will refer to "mibibyte". The former is ``10^3 =
+1,000,000`` bytes, whereas the second is ``2^20 = 1,048,576``
+bytes. When you see file sizes in your file browser, or transfer rates
+in your web browser, what you're really seeing are the base-2
+sizes/rates.
 
 * Classes
   * [Class Initializer Signature](#class-initializer-signature)
@@ -103,18 +105,19 @@ There are two **fundamental** classes available:
 There are 24 other classes available, representing all the prefix
 units from "k" through "e" (kilo/kibi through exa/exbi).
 
-Classes with 'i' in their names are **NIST** type classes. They were
-defined by the National Institute of Standards and Technolog (NIST) as
-the 'Binary Prefix Units'. They are defined by increasing powers of 2.
+Classes with **'i'** in their names are **NIST** type classes. They
+were defined by the National Institute of Standards and Technolog
+(NIST) as the 'Binary Prefix Units'. They are defined by increasing
+powers of 2.
 
-Classes without the 'i' character are **SI** type classes. Though not
-formally defined by any standards organization, they follow the
+Classes without the **'i'** character are **SI** type classes. Though
+not formally defined by any standards organization, they follow the
 International System of Units (SI) pattern (commonly used to
 abbreviate base 10 values). You may hear these referred to as the
 "Decimal" or "SI" prefixes.
 
-Classes ending with lower-case 'b' characters are **bit
-based**. Classes ending with upper-case 'B' characters are **byte
+Classes ending with lower-case **'b'** characters are **bit
+based**. Classes ending with upper-case **'B'** characters are **byte
 based**. Class inheritance is shown below in parentheses to make this
 more apparent:
 
@@ -191,11 +194,12 @@ Where ``THING`` is any of the bitmath types. You can even
 Instance Attributes
 -------------------
 
-bitmath objects have three public instance attributes:
+bitmath objects have a few public instance attributes:
 
 - ``bytes`` - The number of bytes in the object
 - ``bits`` - The number of bits in the object
 - ``value`` - The value of the instance in **PREFIX** units
+- ``binary`` - The [Python binary representation](https://docs.python.org/2/library/functions.html#bin) of the instance's value (in bits). ``bin`` is an alias for ``binary``
 
 For example:
 
@@ -213,45 +217,25 @@ For example:
 
     Out[16]: 4.7
 
+    In [17]: dvd_capacity.bin
 
-Usage
-=====
+    Out[17]: '0b100011000001001000100111100000000000'
+
+    In [18]: dvd_capacity.binary
+
+    Out[18]: '0b100011000001001000100111100000000000'
+
+
+# Usage
 
 Supported operations:
 
-- Basic arithmetic: addition, subtraction, multiplication, division, sorting
+- Basic arithmetic: addition, subtraction, multiplication, division, bitwise operations, sorting
 
 Math works mostly like you expect it to, except for the special cases
 where we mix bitmath types with Number types, and operations where two
-bitmath types would cancel out (like such as dividing two bitmath
+bitmath types would cancel out (such as dividing two bitmath
 types)
-
-**Legend**
-
-- **Parameters:** ``bm`` indicates a bitmath object is required
-in that position. ``num`` indicates that an integer or decimal value
-is required.
-
-| Operation      | Parameters        | Result Type         | Example                                   |
-| ---------------|-------------------|---------------------|-------------------------------------------|
-| Addition       | ``bm1`` + ``bm2`` | ``type(bm1)``       | ``KiB(1) + KiB(2)`` = ``3.0KiB``          |
-| Addition       | ``bm`` + ``num``  | ``type(num)``       | ``KiB(1) + 1`` = ``2.0``                  |
-| Addition       | ``num`` + ``bm``  | ``type(num)``       | ``1 + KiB(1)`` = ``2.0``                  |
-| Subtraction    | ``bm1`` - ``bm2`` | ``type(bm1)``       | ``KiB(1) - KiB(2)`` = ``-1.0KiB``         |
-| Subtraction    | ``bm`` - ``num``  | ``type(num)``       | ``KiB(4) - 1`` = ``3.0``                  |
-| Subtraction    | ``num`` - ``bm``  | ``type(num)``       | ``10 - KiB(1)`` = ``9.0``                 |
-| Multiplication | ``bm1`` * ``bm2`` | **not implemented** | -                                         |
-| Multiplication | ``bm`` * ``num``  | ``type(bm)``        | ``KiB(2) * 3`` = ``6.0KiB``               |
-| Multiplication | ``num`` * ``bm``  | ``type(num)``       | ``2 * KiB(3)`` = ``6.0``                  |
-| Division       | ``bm1`` / ``bm2`` | ``type(num)``       | ``KiB(1) / KiB(2)`` = ``0.5``             |
-| Division       | ``bm`` / ``num``  | ``type(bm)``        | ``KiB(1) / 3`` = ``0.3330078125KiB``      |
-| Division       | ``num`` / ``bm``  | ``type(num)``       | ``3 / KiB(2)`` = ``1.5``                  |
-
-
-- Size comparison: LT, LE, EQ, NE, GT, GE
-
-- Unit conversion: from bytes through exibytes, supports conversion to any other unit (e.g., Megabytes to Kibibytes)
-
 
 Instantiating any bitmath type is simple:
 
@@ -268,6 +252,52 @@ if tested with the ``==`` operator.
 
 
 See [Examples](#examples) for more examples of supported operations.
+
+
+### Basic Math
+
+**Legend**
+
+- **Parameters:** ``bm`` indicates a bitmath object is required in
+that position. ``num`` indicates that an integer or decimal value is
+required.
+
+| Operation      | Parameters        | Result Type         | Example                                   |
+| ---------------|-------------------|---------------------|-------------------------------------------|
+| Addition       | ``bm1`` + ``bm2`` | ``type(bm1)``       | ``KiB(1) + KiB(2)`` = ``3.0KiB``          |
+| Addition       | ``bm`` + ``num``  | ``type(num)``       | ``KiB(1) + 1`` = ``2.0``                  |
+| Addition       | ``num`` + ``bm``  | ``type(num)``       | ``1 + KiB(1)`` = ``2.0``                  |
+| Subtraction    | ``bm1`` - ``bm2`` | ``type(bm1)``       | ``KiB(1) - KiB(2)`` = ``-1.0KiB``         |
+| Subtraction    | ``bm`` - ``num``  | ``type(num)``       | ``KiB(4) - 1`` = ``3.0``                  |
+| Subtraction    | ``num`` - ``bm``  | ``type(num)``       | ``10 - KiB(1)`` = ``9.0``                 |
+| Multiplication | ``bm1`` * ``bm2`` | **not implemented** | -                                         |
+| Multiplication | ``bm`` * ``num``  | ``type(bm)``        | ``KiB(2) * 3`` = ``6.0KiB``               |
+| Multiplication | ``num`` * ``bm``  | ``type(num)``       | ``2 * KiB(3)`` = ``6.0``                  |
+| Division       | ``bm1`` / ``bm2`` | ``type(num)``       | ``KiB(1) / KiB(2)`` = ``0.5``             |
+| Division       | ``bm`` / ``num``  | ``type(bm)``        | ``KiB(1) / 3`` = ``0.3330078125KiB``      |
+| Division       | ``num`` / ``bm``  | ``type(num)``       | ``3 / KiB(2)`` = ``1.5``                  |
+
+### Bitwise Operations
+
+Bitwise operations are also supported. Bitwise operations work
+directly on the internal ``bits`` attribute of a bitmath instance.
+
+| Operation      | Parameters            | Result Type         | Example                                                 |
+| ---------------|-----------------------|---------------------|---------------------------------------------------------|
+| Left Shift     | ``bm`` << ``num``     | ``type(bm)``        | ``MiB(1)`` << ``2`` = ``MiB(4.0)``                      |
+| Right Shift    | ``bm`` >> ``num``     | ``type(bm)``        | ``MiB(1)`` >> ``2`` = ``MiB(0.25)``                     |
+| AND            | ``bm`` & ``num``      | ``type(bm)``        | ``MiB(13.37)`` & ``1337`` = ``MiB(0.000126...)`` **\*** |
+| OR             | ``bm`` &#124; ``num`` | ``type(bm)``        | ``MiB(13.37)`` &#124; ``1337`` = ``MiB(13.3700...)``    |
+| XOR            | ``bm`` ^ ``num``      | ``type(bm)``        | ``MiB(13.37)`` ^ ``1337`` = ``MiB(13.369...)``          |
+
+**\*** - _Give me a break here, it's not easy coming up with compelling examples for bitwise operations..._
+
+
+### Other Features
+
+- Size comparison: LT, LE, EQ, NE, GT, GE
+
+- Unit conversion: from bytes through exibytes, supports conversion to any other unit (e.g., Megabytes to Kibibytes)
 
 
 Examples
