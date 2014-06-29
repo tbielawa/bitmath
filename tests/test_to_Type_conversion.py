@@ -34,28 +34,28 @@ from bitmath import NIST_STEPS, NIST_PREFIXES
 
 class TestBasicMath(TestCase):
     def setUp(self):
-        self.bit = self.Bit(1)
-        self.byte = self.Byte(1)
+        self.bit = bitmath.Bit(1)
+        self.byte = bitmath.Byte(1)
         # NIST units
-        self.kib = self.KiB(1)
-        self.mib = self.MiB(1)
-        self.gib = self.GiB(1)
-        self.tib = self.TiB(1)
-        self.pib = self.PiB(1)
-        self.eib = self.EiB(1)
+        self.kib = bitmath.KiB(1)
+        self.mib = bitmath.MiB(1)
+        self.gib = bitmath.GiB(1)
+        self.tib = bitmath.TiB(1)
+        self.pib = bitmath.PiB(1)
+        self.eib = bitmath.EiB(1)
 
         # SI units
-        self.kb = self.kB(1)
-        self.mb = self.MB(1)
-        self.gb = self.GB(1)
-        self.tb = self.TB(1)
-        self.pb = self.PB(1)
-        self.eb = self.EB(1)
+        self.kb = bitmath.kB(1)
+        self.mb = bitmath.MB(1)
+        self.gb = bitmath.GB(1)
+        self.tb = bitmath.TB(1)
+        self.pb = bitmath.PB(1)
+        self.eb = bitmath.EB(1)
 
     def test_to_same_unit(self):
         """bitmath type converted to the same unit is properly converted"""
         to_kib = self.kib.to_KiB()
-        self.assertIsInstance(to_kib, self.KiB)
+        self.assertIsInstance(to_kib, bitmath.KiB)
 
     def test_from_other(self):
         """MiB object from_other object"""
@@ -65,11 +65,11 @@ class TestBasicMath(TestCase):
     # to b's
     def test_to_Bit(self):
         """Convert to Bit"""
-        self.assertIsInstance(self.kb.to_Bit(), self.Bit)
+        self.assertIsInstance(self.kb.to_Bit(), bitmath.Bit)
 
     def test_to_Byte(self):
         """Convert to Byte"""
-        self.assertIsInstance(self.kb.to_Byte(), self.Byte)
+        self.assertIsInstance(self.kb.to_Byte(), bitmath.Byte)
 
     ##################################################################
     # to k's
@@ -224,9 +224,9 @@ class TestBasicMath(TestCase):
     def test_convert_nist_to_si(self):
         """Convert an NIST unit into an SI unit"""
         kb_from_kib = self.kib.to_kB()
-        self.assertIs(type(kb_from_kib), self.kB)
+        self.assertIs(type(kb_from_kib), bitmath.kB)
 
     def test_convert_si_to_nist(self):
         """Convert an SI unit into an NIST unit"""
         kib_from_kb = self.kb.to_KiB()
-        self.assertIs(type(kib_from_kb), self.KiB)
+        self.assertIs(type(kib_from_kb), bitmath.KiB)

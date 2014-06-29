@@ -30,20 +30,25 @@ Test to verify the int/float/long conversions work correctly
 
 from . import TestCase
 import bitmath
+import sys
+
+# Python 3.x compat
+if sys.version > '3':
+    long = int
 
 class TestBasicMath(TestCase):
 
     def test_to_int(self):
         """int(bitmath) returns an int"""
-        gib = self.GiB(1337.8)
+        gib = bitmath.GiB(1337.8)
         self.assertIsInstance(int(gib), int)
 
     def test_to_float(self):
         """float(bitmath) returns a float"""
-        gib = self.GiB(1337.8)
+        gib = bitmath.GiB(1337.8)
         self.assertIsInstance(float(gib), float)
 
     def test_to_long(self):
         """long(bitmath) returns a long"""
-        gib = self.GiB(1337.8)
+        gib = bitmath.GiB(1337.8)
         self.assertIsInstance(long(gib), long)

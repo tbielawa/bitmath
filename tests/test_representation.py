@@ -33,10 +33,10 @@ import bitmath
 
 class TestBasicMath(TestCase):
     def setUp(self):
-        self.kib = self.KiB(1)
+        self.kib = bitmath.KiB(1)
         self.kib_repr = 'KiB(1.0)'
         self.kib_str = '1.0KiB'
-        self.half_mib = self.MiB(0.5)
+        self.half_mib = bitmath.MiB(0.5)
         self.half_mib_repr = 'MiB(0.5)'
         self.half_mib_str = '0.5MiB'
 

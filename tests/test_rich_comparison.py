@@ -34,9 +34,9 @@ import bitmath
 
 class TestRichComparison(TestCase):
     def setUp(self):
-        self.kib = KiB(1)
-        self.mib = MiB(1)
-        self.gib = GiB(1)
+        self.kib = bitmath.KiB(1)
+        self.mib = bitmath.MiB(1)
+        self.gib = bitmath.GiB(1)
 
     ##################################################################
     # Test bitmath comparisons
@@ -49,7 +49,7 @@ class TestRichComparison(TestCase):
         # True - 1 KiB is less than 1 MiB
         self.assertLessEqual(self.kib, self.mib)
         # True - 1024 KiB is equal to 1 MiB
-        self.assertLessEqual(KiB(1024), self.mib)
+        self.assertLessEqual(bitmath.KiB(1024), self.mib)
 
     def test_greater_than(self):
         """1 GiB is greater than 1 Mib"""
@@ -60,7 +60,7 @@ class TestRichComparison(TestCase):
         # True - 1 GiB is greater than 1 MiB
         self.assertGreaterEqual(self.gib, self.mib)
         # True - 1024 KiB is equal to 1 MiB
-        self.assertGreaterEqual(self.mib, GiB(1 / 1024.0))
+        self.assertGreaterEqual(self.mib, bitmath.GiB(1 / 1024.0))
 
     ##################################################################
     # Same tests, but against numbers instead of bitmaths
@@ -73,7 +73,7 @@ class TestRichComparison(TestCase):
         # True - 1 KiB is less than 2
         self.assertLessEqual(self.kib, 2)
         # True - 1024 KiB is equal to 1024
-        self.assertLessEqual(KiB(1024), 1024)
+        self.assertLessEqual(bitmath.KiB(1024), 1024)
 
     def test_greater_than_num(self):
         """1 GiB is greater than 0.5"""
@@ -90,7 +90,7 @@ class TestRichComparison(TestCase):
     # Equality testing
     def test_equal(self):
         """Two equal values are actually equal"""
-        self.assertEqual(self.mib, KiB(1024))
+        self.assertEqual(self.mib, bitmath.KiB(1024))
 
     def test_equal_false(self):
         """Unequal objects aren't equal"""

@@ -31,13 +31,11 @@ Tests to verify that type properties are accessable and immutable
 from . import TestCase
 import bitmath
 
-def _add(input=None, add=None):
-    input.value += add
 
 class TestAttributeProperties(TestCase):
 
     def setUp(self):
-        self.kib = self.KiB(1)
+        self.kib = bitmath.KiB(1)
         self.kib_bits = 8192
         self.kib_bytes = 1024
         self.kib_value = 1
@@ -57,4 +55,5 @@ class TestAttributeProperties(TestCase):
     def test_write_property_fails(self):
         """bitmath type's properties are read-only"""
         test_values = {'input': self.kib, 'add': 42}
-        self.assertRaises(AttributeError, _add, **test_values)
+        with self.assertRaises(AttributeError):
+            self.kib += 42

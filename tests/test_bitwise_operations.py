@@ -34,39 +34,39 @@ import bitmath
 
 class TestBitwiseOperations(TestCase):
     def setUp(self):
-        self.leet = Bit(1337)
+        self.leet = bitmath.Bit(1337)
 
     def test_left_shift(self):
         """Bits left shifted (<<) are increased"""
         shifted = self.leet << 3
-        self.assertEqual(shifted, Bit(10696))
+        self.assertEqual(shifted, bitmath.Bit(10696))
 
     def test_right_shift(self):
         """Bits right shifted (>>) are decreased"""
         shifted = self.leet >> 3
-        self.assertEqual(shifted, Bit(167))
+        self.assertEqual(shifted, bitmath.Bit(167))
 
     def test_and(self):
         """Bits and'd (&) are correct"""
         and_fifteen_hundred = self.leet & 1500
-        self.assertEqual(and_fifteen_hundred, Bit(1304))
+        self.assertEqual(and_fifteen_hundred, bitmath.Bit(1304))
         and_orig = self.leet & 1337
-        self.assertEqual(and_orig, Bit(1337))
+        self.assertEqual(and_orig, bitmath.Bit(1337))
         and_thousand = self.leet & 1000
-        self.assertEqual(and_thousand, Bit(296))
+        self.assertEqual(and_thousand, bitmath.Bit(296))
         and_five_hundred = self.leet & 500
-        self.assertEqual(and_five_hundred, Bit(304))
+        self.assertEqual(and_five_hundred, bitmath.Bit(304))
 
     def test_or(self):
         """Bits or'd (|) are correct"""
         or_thousand = self.leet | 1000
-        self.assertEqual(or_thousand, Bit(2041))
+        self.assertEqual(or_thousand, bitmath.Bit(2041))
         or_five_hundred = self.leet | 500
-        self.assertEqual(or_five_hundred, Bit(1533))
+        self.assertEqual(or_five_hundred, bitmath.Bit(1533))
 
     def test_xor(self):
         """Bits xor'd (^) are correct"""
         xor_thousand = self.leet ^ 1000
-        self.assertEqual(xor_thousand, Bit(1745))
+        self.assertEqual(xor_thousand, bitmath.Bit(1745))
         xor_five_hundred = self.leet ^ 500
-        self.assertEqual(xor_five_hundred, Bit(1229))
+        self.assertEqual(xor_five_hundred, bitmath.Bit(1229))
