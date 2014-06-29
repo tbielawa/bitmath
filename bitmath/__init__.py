@@ -35,9 +35,13 @@ man 7 units (from the Linux Documentation Project 'man-pages' package)
 
 
 import numbers
+import sys
 
 __all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb']
 
+# Python 3.x compat
+if sys.version > '3':
+    long = int
 
 SI_PREFIXES = ['k', 'M', 'G', 'T', 'P', 'E']
 SI_STEPS = {
