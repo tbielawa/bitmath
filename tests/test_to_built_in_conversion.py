@@ -29,9 +29,9 @@ Test to verify the int/float/long conversions work correctly
 """
 
 from . import TestCase
+import bitmath
 
 class TestBasicMath(TestCase):
-    from bitmath import *
 
     def test_to_int(self):
         """int(bitmath) returns an int"""

@@ -33,9 +33,9 @@ Reference: http://legacy.python.org/dev/peps/pep-0238/
 from __future__ import division
 import unittest
 from . import TestCase
+import bitmath
 
 class TestFutureMath(TestCase):
-    from bitmath import *
     from numbers import Number
 
     def test_bitmath_div_bitmath_is_number(self):

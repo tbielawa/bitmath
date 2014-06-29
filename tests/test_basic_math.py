@@ -30,12 +30,12 @@ Test for basic math operations
 
 import unittest
 from . import TestCase
+import bitmath
 
 def _mul(input=None, mul=None):
     input * mul
 
 class TestBasicMath(TestCase):
-    from bitmath import *
     from numbers import Number
 
     def setUp(self):

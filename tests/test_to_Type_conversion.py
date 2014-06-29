@@ -30,11 +30,9 @@ Test to verify the bitmath.Type.to_Type() conversions work
 
 from . import TestCase
 import bitmath
+from bitmath import NIST_STEPS, NIST_PREFIXES
 
 class TestBasicMath(TestCase):
-    from bitmath import NIST_STEPS, NIST_PREFIXES
-    from bitmath import *
-
     def setUp(self):
         self.bit = self.Bit(1)
         self.byte = self.Byte(1)

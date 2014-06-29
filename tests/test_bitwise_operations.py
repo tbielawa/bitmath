@@ -30,7 +30,7 @@ Test for bitwise operations: <<, >>, &, ^, |
 
 import unittest
 from . import TestCase
-from bitmath import *
+import bitmath
 
 class TestBitwiseOperations(TestCase):
     def setUp(self):

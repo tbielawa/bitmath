@@ -29,10 +29,9 @@ Tests to verify that string representations are accurate
 """
 
 from . import TestCase
+import bitmath
 
 class TestBasicMath(TestCase):
-    from bitmath import *
-
     def setUp(self):
         self.kib = self.KiB(1)
         self.kib_repr = 'KiB(1.0)'

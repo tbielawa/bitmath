@@ -30,7 +30,7 @@ Test proper sorting operations
 
 import unittest
 from . import TestCase
-from bitmath import *
+import bitmath
 
 class TestRichComparison(TestCase):
     def test_sort_homogeneous_list(self):

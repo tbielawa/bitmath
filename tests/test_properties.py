@@ -29,12 +29,12 @@ Tests to verify that type properties are accessable and immutable
 """
 
 from . import TestCase
+import bitmath
 
 def _add(input=None, add=None):
     input.value += add
 
 class TestAttributeProperties(TestCase):
-    from bitmath import *
 
     def setUp(self):
         self.kib = self.KiB(1)
