@@ -58,7 +58,7 @@ unittests:
 clean:
 	@find . -type f -regex ".*\.py[co]$$" -delete
 	@find . -type f \( -name "*~" -or -name "#*" \) -delete
-	@rm -fR build dist rpm-build MANIFEST htmlcov .coverage
+	@rm -fR build dist rpm-build MANIFEST htmlcov .coverage bitmathenv
 
 pep8:
 	@echo "#############################################"
@@ -127,3 +127,37 @@ rpm: rpmcommon
 	@echo "$(PKGNAME) RPMs are built:"
 	@find rpm-build -maxdepth 2 -name '$(PKGNAME)*.rpm' | awk '{print "    " $$1}'
 	@echo "#############################################"
+
+virtualenv:
+	@echo "#############################################"
+	@echo "# Creating a virtualenv"
+	@echo "#############################################"
+	virtualenv $(NAME)env
+	. $(NAME)env/bin/activate && pip install pep8 nose mock
+
+ci-unittests:
+	@echo "#############################################"
+	@echo "# Running Unit Tests in virtualenv"
+	@echo "#############################################"
+	. $(NAME)env/bin/activate && nosetests -v tests/
+
+ci-list-deps:
+	@echo "#############################################"
+	@echo "# Listing all pip deps"
+	@echo "#############################################"
+	. $(NAME)env/bin/activate && pip freeze
+
+ci-pep8:
+	@echo "#############################################"
+	@echo "# Running PEP8 Compliance Tests in virtualenv"
+	@echo "#############################################"
+	. $(NAME)env/bin/activate && pep8 --ignore=E501,E121,E124 bitmath/
+
+ci-pyflakes:
+	@echo "#################################################"
+	@echo "# Running Pyflakes Compliance Tests in virtualenv"
+	@echo "#################################################"
+	. $(NAME)env/bin/activate && pep8 --ignore=E501,E121,E124 bitmath/
+
+ci: clean virtualenv ci-list-deps ci-pep8 ci-pyflakes ci-unittests
+	:

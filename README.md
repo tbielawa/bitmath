@@ -1,3 +1,7 @@
+
+[![Build Status](https://api.travis-ci.org/tbielawa/bitmath.png)](https://travis-ci.org/tbielawa/bitmath/)
+
+
 bitmath
 =======
 
