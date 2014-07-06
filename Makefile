@@ -53,7 +53,7 @@ unittests:
 	@echo "#############################################"
 	@echo "# Running Unit Tests"
 	@echo "#############################################"
-	nosetests -v
+	nosetests -v --with-coverage --cover-package=bitmath
 
 clean:
 	@find . -type f -regex ".*\.py[co]$$" -delete
@@ -133,13 +133,14 @@ virtualenv:
 	@echo "# Creating a virtualenv"
 	@echo "#############################################"
 	virtualenv $(NAME)env
-	. $(NAME)env/bin/activate && pip install pep8 nose mock
+	. $(NAME)env/bin/activate && pip install pep8 nose mock coverage nose-cover3
 
 ci-unittests:
 	@echo "#############################################"
 	@echo "# Running Unit Tests in virtualenv"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && nosetests -v tests/
+	. $(NAME)env/bin/activate && nosetests -v --with-coverage --cover-package=bitmath tests/
+	. $(NAME)env/bin/activate && nosetests-3.3 -v --with-coverage --cover-package=bitmath tests/
 
 ci-list-deps:
 	@echo "#############################################"
