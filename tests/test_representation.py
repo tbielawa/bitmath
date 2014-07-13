@@ -36,9 +36,22 @@ class TestRepresentation(TestCase):
         self.kib = bitmath.KiB(1)
         self.kib_repr = 'KiB(1.0)'
         self.kib_str = '1.0KiB'
+        self.kib_name = 'KiB'
+        self.kib_system = 'NIST'
+        self.kib_bin = '0b10000000000000'
+        self.kib_binary = self.kib_bin
+        self.kib_power = 10
+        self.kib_base = 2
+
         self.half_mib = bitmath.MiB(0.5)
         self.half_mib_repr = 'MiB(0.5)'
         self.half_mib_str = '0.5MiB'
+        self.half_mib_name = 'KiB'
+        self.half_mib_system = 'NIST'
+        self.half_mib_bin = '0b10000000000000'
+        self.half_mib_binary = self.half_mib_bin
+        self.half_mib_power = 10
+        self.half_mib_base = 2
 
     def test_whole_kib_repr(self):
         """KiB(1) looks correct in a terminal"""
