@@ -34,6 +34,7 @@ man 7 units (from the Linux Documentation Project 'man-pages' package)
 """
 
 
+import math
 import numbers
 import sys
 
@@ -130,6 +131,11 @@ type"""
         self._bit_value = self._byte_value * 8.0
 
     @property
+    def base(self):
+        """Return the mathematical base of an instance"""
+        return self._base
+
+    @property
     def bits(self):
         """Return the number of bits in an instance"""
         return self._bit_value
@@ -138,6 +144,33 @@ type"""
     def bytes(self):
         """Return the number of bytes in an instance"""
         return self._byte_value
+
+    @property
+    def name(self):
+        """Return the string that is this instances prefix name
+
+For instance, KiB(1).name == 'KiB', Byte(1024).name == 'Byte', and
+Gb(1).name == 'Gb'"""
+        return self._name
+
+    @property
+    def power(self):
+        """Return the mathematical power of an instance"""
+        return self._power
+
+    @property
+    def system(self):
+        """Return the system of units used to measure this instance"""
+        if self._base == 2:
+            return "NIST"
+        elif self._base == 10:
+            return "SI"
+        else:
+            # I don't expect to ever encounter this logic branch, but
+            # hey, it's better to have extra test coverage than
+            # insufficient test coverage.
+            raise ValueError("Instances mathematical base is an unsupported value: %s" % (
+                str(self._base)))
 
     @property
     def value(self):
@@ -198,6 +231,84 @@ intrepreter"""
         """String representation of this object"""
         return "%s%s" % \
             (self.prefix_value, self._name)
+
+    ##################################################################
+    # Guess the best human-readable prefix unit for representation
+    ##################################################################
+
+    def best_prefix(self):
+        """Base-case, does it need converting?
+
+If the instance is less than one Byte, return the instance as a Bit
+instance.
+
+Else, begin by recording the unit system the instance is defined
+by. This determines which steps (NIST_STEPS/SI_STEPS) we iterate over.
+
+If the instance is not already a ``Byte`` instance, convert it to one.
+
+NIST units step up by powers of 1024, SI units step up by powers of
+1000.
+
+Take integer value of the log(base=STEP_POWER) of the instance's byte
+value. E.g.:
+
+    >>> int(math.log(Gb(100).bytes, 1000))
+    3
+
+This will return a value >= 0. The following determines the 'best
+prefix unit' for representation:
+
+* result == 0, best represented as a Byte
+* result >= len(SYSTEM_STEPS), best represented as an Exbi/Exabyte
+* 0 < result < len(SYSTEM_STEPS), best represented as SYSTEM_PREFIXES[result-1]
+        """
+        if self < Byte(1):
+            return Bit.from_other(self)
+        else:
+            if not type(self) == Byte:
+                _inst = Byte.from_other(self)
+            else:
+                _inst = self
+
+        # Which table to consult
+        if self.system == 'NIST':
+            _STEPS = NIST_PREFIXES
+            _BASE = 1024
+        elif self.system == 'SI':
+            _STEPS = SI_PREFIXES
+            _BASE = 1000
+        else:
+            # A ValueError should have been raised by now. But it
+            # doesn't hurt to test.
+            raise ValueError("Error guessing best prefix representation. "
+                             "Instances mathematical base is an unsupported "
+                             "value: %s" % (
+                                 str(self._base)))
+
+        # Index of the string of the best prefix in the STEPS list
+        _index = int(math.log(_inst.bytes, _BASE))
+
+        # Recall that the log() function returns >= 0. This doesn't
+        # map to the STEPS list 1:1. That is to say, 0 is handled with
+        # special care. So if the _index is 1, we actually want item 0
+        # in the list.
+
+        if _index == 0:
+            # Already a Byte() type, so return it.
+            return _inst
+        elif _index >= len(_STEPS):
+            # This is a really big number. Use the biggest prefix we've got
+            _best_prefix = _STEPS[-1]
+        elif 0 < _index < len(_STEPS):
+            # There is an appropriate prefix unit to represent this
+            _best_prefix = _STEPS[_index-1]
+
+        _conversion_method = getattr(
+            self,
+            'to_%sB' % _best_prefix)
+
+        return _conversion_method()
 
     ##################################################################
 
@@ -291,6 +402,8 @@ intrepreter"""
     def to_Eb(self):
         return Eb(bits=self._bit_value)
 
+    ##################################################################
+    # Rich comparison operations
     ##################################################################
 
     def __lt__(self, other):
