@@ -1,6 +1,6 @@
 
 [![Build Status](https://api.travis-ci.org/tbielawa/bitmath.png)](https://travis-ci.org/tbielawa/bitmath/)
-
+[![Coverage Status](https://img.shields.io/coveralls/tbielawa/bitmath.svg)](https://coveralls.io/r/tbielawa/bitmath?branch=master)
 
 bitmath
 =======
