@@ -146,11 +146,11 @@ type"""
         return self._byte_value
 
     @property
-    def name(self):
-        """Return the string that is this instances prefix name
+    def unit(self):
+        """Return the string that is this instances prefix unit name
 
-For instance, KiB(1).name == 'KiB', Byte(1024).name == 'Byte', and
-Gb(1).name == 'Gb'"""
+For instance, KiB(1).unit == 'KiB', Byte(1024).unit == 'Byte', and
+Gb(1).unit == 'Gb'"""
         return self._name
 
     @property
@@ -231,6 +231,23 @@ intrepreter"""
         """String representation of this object"""
         return "%s%s" % \
             (self.prefix_value, self._name)
+
+    def format(self, fmt):
+        """Return a representation of this instance formatted with user
+supplied syntax"""
+        _fmt_params = {
+            'base': self.base,
+            'bin': self.bin,
+            'binary': self.binary,
+            'bits': self.bits,
+            'bytes': self.bytes,
+            'power': self.power,
+            'system': self.system,
+            'unit': self.unit,
+            'value': self.value,
+        }
+
+        return fmt.format(**_fmt_params)
 
     ##################################################################
     # Guess the best human-readable prefix unit for representation

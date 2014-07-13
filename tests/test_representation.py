@@ -68,3 +68,21 @@ class TestRepresentation(TestCase):
     def test_half_mib_str(self):
         """MiB(0.5) looks correct as a string"""
         self.assertEqual(str(self.half_mib), self.half_mib_str)
+
+    ##################################################################
+    # Test custom formatting
+    def test_print_two_digits_precision(self):
+        """MiB(1/3.0) prints out with two digits of precision"""
+        expected_result = "0.33MiB"
+        fmt_str = "{value:.2f}{unit}"
+        third_MiB = bitmath.MiB(1/3.0)
+        actual_result = third_MiB.format(fmt_str)
+        self.assertEqual(expected_result, actual_result)
+
+    def test_longer_formatting_string(self):
+        """KiB(12345) as a MiB (12.0556640625) truncates to 5 digits"""
+        expected_result = "12.05566 MiB"
+        fmt_str = "{value:.5f} {unit}"
+        instance = bitmath.KiB(12345).to_MiB()
+        actual_result = instance.format(fmt_str)
+        self.assertEqual(expected_result, actual_result)
