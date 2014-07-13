@@ -32,7 +32,7 @@ import unittest
 from . import TestCase
 import bitmath
 
-class TestRichComparison(TestCase):
+class TestSorting(TestCase):
     def test_sort_homogeneous_list(self):
         """Same types in a list can be sorted properly"""
         first = bitmath.kB(0)

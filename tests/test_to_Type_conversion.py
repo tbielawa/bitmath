@@ -32,7 +32,7 @@ from . import TestCase
 import bitmath
 from bitmath import NIST_STEPS, NIST_PREFIXES
 
-class TestBasicMath(TestCase):
+class TestToTypeConversion(TestCase):
     def setUp(self):
         self.bit = bitmath.Bit(1)
         self.byte = bitmath.Byte(1)

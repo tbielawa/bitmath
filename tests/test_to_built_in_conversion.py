@@ -36,7 +36,7 @@ import sys
 if sys.version > '3':
     long = int
 
-class TestBasicMath(TestCase):
+class TestToBuiltInConversion(TestCase):
 
     def test_to_int(self):
         """int(bitmath) returns an int"""

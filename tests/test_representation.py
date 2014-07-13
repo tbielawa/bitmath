@@ -31,7 +31,7 @@ Tests to verify that string representations are accurate
 from . import TestCase
 import bitmath
 
-class TestBasicMath(TestCase):
+class TestRepresentation(TestCase):
     def setUp(self):
         self.kib = bitmath.KiB(1)
         self.kib_repr = 'KiB(1.0)'
