@@ -319,7 +319,7 @@ prefix unit' for representation:
             _best_prefix = _STEPS[-1]
         elif 0 < _index < len(_STEPS):
             # There is an appropriate prefix unit to represent this
-            _best_prefix = _STEPS[_index-1]
+            _best_prefix = _STEPS[_index - 1]
 
         _conversion_method = getattr(
             self,

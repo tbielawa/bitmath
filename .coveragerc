@@ -1,0 +1,2 @@
+[report]
+include = bitmath/__init__.py
