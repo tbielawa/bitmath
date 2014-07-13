@@ -46,7 +46,7 @@ setup.py: setup.py.in VERSION python-bitmath.spec.in
 tag:
 	git tag -s -m $(TAG) $(TAG)
 
-tests: unittests pep8 pyflakes
+tests: uniquetestnames unittests pep8 pyflakes
 	:
 
 unittests:
@@ -72,6 +72,13 @@ pyflakes:
 	@echo "# Note: most import errors may be ignored"
 	@echo "#############################################"
 	-pyflakes bitmath
+
+uniquetestnames:
+	@echo "#############################################"
+	@echo "# Running Unique TestCase checker"
+	@echo "#############################################"
+	./tests/test_unique_testcase_names.sh
+
 
 install: clean
 	python ./setup.py install
@@ -161,5 +168,5 @@ ci-pyflakes:
 	@echo "#################################################"
 	. $(NAME)env/bin/activate && pep8 --ignore=E501,E121,E124 bitmath/
 
-ci: clean virtualenv ci-list-deps ci-pep8 ci-pyflakes ci-unittests
+ci: clean uniquetestnames virtualenv ci-list-deps ci-pep8 ci-pyflakes ci-unittests
 	:

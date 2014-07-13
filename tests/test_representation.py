@@ -36,7 +36,7 @@ class TestRepresentation(TestCase):
         self.kib = bitmath.KiB(1)
         self.kib_repr = 'KiB(1.0)'
         self.kib_str = '1.0KiB'
-        self.kib_name = 'KiB'
+        self.kib_unit = 'KiB'
         self.kib_system = 'NIST'
         self.kib_bin = '0b10000000000000'
         self.kib_binary = self.kib_bin
@@ -46,12 +46,42 @@ class TestRepresentation(TestCase):
         self.half_mib = bitmath.MiB(0.5)
         self.half_mib_repr = 'MiB(0.5)'
         self.half_mib_str = '0.5MiB'
-        self.half_mib_name = 'KiB'
-        self.half_mib_system = 'NIST'
-        self.half_mib_bin = '0b10000000000000'
-        self.half_mib_binary = self.half_mib_bin
-        self.half_mib_power = 10
-        self.half_mib_base = 2
+
+        self.kB = bitmath.kB(1)
+        self.kB_unit = 'kB'
+        self.kb_system = 'SI'
+
+    def test_kB_unit(self):
+        """kB(1).unit is kB"""
+        self.assertEqual(self.kib.unit, self.kib_unit)
+
+    def test_kB_system(self):
+        """kB(1).system is SI"""
+        self.assertEqual(self.kib.system, self.kib_system)
+
+    def test_kib_unit(self):
+        """KiB(1).unit is KiB"""
+        self.assertEqual(self.kib.unit, self.kib_unit)
+
+    def test_kib_system(self):
+        """KiB(1).system is NIST"""
+        self.assertEqual(self.kib.system, self.kib_system)
+
+    def test_kib_binary(self):
+        """KiB(1).binary is binary"""
+        self.assertEqual(self.kib.binary, self.kib_binary)
+
+    def test_kib_bin(self):
+        """KiB(1).bin (binary alias) is binary"""
+        self.assertEqual(self.kib.bin, self.kib_bin)
+
+    def test_kib_base(self):
+        """KiB(1).base is 2"""
+        self.assertEqual(self.kib.base, self.kib_base)
+
+    def test_kib_power(self):
+        """KiB(1).power (binary alias) is 10"""
+        self.assertEqual(self.kib.power, self.kib_power)
 
     def test_whole_kib_repr(self):
         """KiB(1) looks correct in a terminal"""
