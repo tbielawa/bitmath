@@ -140,7 +140,7 @@ ci-unittests:
 	@echo "# Running Unit Tests in virtualenv"
 	@echo "#############################################"
 	. $(NAME)env/bin/activate && nosetests -v --with-coverage --cover-package=bitmath tests/
-	. $(NAME)env/bin/activate && nosetests-3.3 -v --with-coverage --cover-package=bitmath tests/
+#	. $(NAME)env/bin/activate && nosetests-3.3 -v --with-coverage --cover-package=bitmath tests/
 
 ci-list-deps:
 	@echo "#############################################"
