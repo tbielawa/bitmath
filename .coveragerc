@@ -1,2 +1,9 @@
 [report]
 include = bitmath/__init__.py
+[report]
+exclude_lines =
+    # These should be impossible to trigger.
+    raise ValueError
+
+    # This is for python3 compat only. And py3 is not yet supported
+    long = int

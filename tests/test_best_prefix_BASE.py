@@ -35,15 +35,22 @@ import bitmath
 
 class TestBestPrefixBASE(TestCase):
     def test_byte_round_down(self):
-        """BASE: 4 Bits (as a Byte()) rounds down into a Bit()"""
+        """BASE: 4 Bits (as a Byte()) round down into a Bit()"""
         # Half a byte is 4 bits
         half_byte = bitmath.Byte(bits=4)
         # Byte(0.5) should round down into Bit(4)
         self.assertIs(type(half_byte.best_prefix()), bitmath.Bit)
 
     def test_bit_round_up(self):
-        """BASE: 2 Bytes (as a Bit()) rounds up into a Byte()"""
+        """BASE: 2 Bytes (as a Bit()) round up into a Byte()"""
         # Two bytes is 16 bits
         two_bytes = bitmath.Bit(bytes=2)
         # Bit(16) should round up into Byte(2)
         self.assertIs(type(two_bytes.best_prefix()), bitmath.Byte)
+
+    def test_byte_no_rounding(self):
+        """BASE: 1 Byte (as a Byte()) best prefix is still a Byte()"""
+        # One whole byte
+        one_byte = bitmath.Byte(1)
+        # Byte(1.0) should stay the same, Byte(1.0)
+        self.assertIs(type(one_byte.best_prefix()), bitmath.Byte)
