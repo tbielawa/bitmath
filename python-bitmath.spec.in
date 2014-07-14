@@ -27,7 +27,9 @@ bitmath simplifies many facets of interacting with file sizes in
 various units. Examples include: converting between SI and NIST prefix
 units (GiB to kB), converting between units of the same type (SI to
 SI, or NIST to NIST), basic arithmetic operations (subtracting 42KiB
-from 50GiB), and rich comparison operations (1024 Bytes == 1KiB).
+from 50GiB), and rich comparison operations (1024 Bytes == 1KiB),
+bitwise operations, sorting, and automatic best human-readable prefix
+selection.
 
 In addition to the conversion and math operations, bitmath provides
 human readable representations of values which are suitable for use in
@@ -51,6 +53,14 @@ nosetests -v
 %doc README.md LICENSE
 
 %changelog
+* Mon Jul 14 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.6-1
+- New instance properties
+- Custom representation formatting method. #9
+- Best-prefix guessing: select the best human-readable prefix unit
+  automatically. #6
+- Bitwise operation support. #3
+- More unittests than your body has room for
+
 * Mon Apr 28 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.5-1
 - Now with support for bitwise operations
 

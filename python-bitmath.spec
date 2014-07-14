@@ -9,7 +9,7 @@
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
-Version: 1.0.5
+Version: 1.0.6
 Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
@@ -51,6 +51,14 @@ nosetests -v
 %doc README.md LICENSE
 
 %changelog
+* Mon Jul 14 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.6-1
+- New instance properties
+- Custom representation formatting method. #9
+- Best-prefix guessing: select the best human-readable prefix unit
+  automatically. #6
+- Bitwise operation support. #3
+- More unittests than your body has room for
+
 * Mon Apr 28 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.5-1
 - Now with support for bitwise operations
 
