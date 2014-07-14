@@ -34,6 +34,13 @@ RPMRELEASE = $(shell awk '/global _short_release/{print $$NF; exit}' $(RPMSPEC).
 RPMSPECDIR := .
 RPMSPEC := $(RPMSPECDIR)/$(PKGNAME).spec
 
+# Documentation. YAY!!!!
+docs:
+	cd docsite; make html; cd -
+
+viewdocs: docs
+	xdg-open docsite/build/html/index.html
+
 # Build the spec file on the fly. Substitute version numbers from the
 # canonical VERSION file.
 python-bitmath.spec: python-bitmath.spec.in
@@ -58,7 +65,7 @@ unittests:
 clean:
 	@find . -type f -regex ".*\.py[co]$$" -delete
 	@find . -type f \( -name "*~" -or -name "#*" \) -delete
-	@rm -fR build cover dist rpm-build MANIFEST htmlcov .coverage bitmathenv
+	@rm -fR build cover dist rpm-build MANIFEST htmlcov .coverage bitmathenv docsite/build/html/ docsite/build/doctrees/
 
 pep8:
 	@echo "#############################################"

@@ -47,3 +47,5 @@ nosetests.xml
 htmlcov
 cover
 bitmathenv
+docsite/build/html
+docsite/build/doctrees

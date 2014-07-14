@@ -36,7 +36,7 @@ for l in readme.readlines():
         pypi_notice += l
 
 setup(name='bitmath',
-      version='1.0.5-1',
+      version='1.0.6-1',
       description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
       long_description=pypi_notice,
       maintainer='Tim Bielawa',
