@@ -1,11 +1,11 @@
+.. highlight:: python
+
+
 Real Life Examples
 ##################
 
-Example 1
-*********
-
 Download Speeds
-===============
+***************
 
 Let's pretend that your Internet service provider (ISP) advertises
 your maximum downstream as **50Mbps** [(note 1)](#footnote-1) and you
@@ -13,78 +13,79 @@ want to know how fast that is in mibibytes? ``bitmath`` can do that
 for you easily. Keeping in mind that 1 Byte = 8 bits you can calculate
 this as such:
 
-    from bitmath import *
+.. code-block:: python
+   :linenos:
 
-    downstream = MB(50)
+   from bitmath import *
 
-    downstream.to_MiB() / 8
+   downstream = MB(50)
 
-    MiB(5.96046447754)
+   downstream.to_MiB() / 8
+
+   MiB(5.96046447754)
 
 This tells us that if our ISP advertises **50Mbps** we can expect to
 see download rates of nearly **6MiB/sec**.
 
 Footnote 1
-----------
+==========
 
 * Assuming your ISP follows the common industry practice of using SI (base-10) units to describe file sizes/rates.
 
 
-Example 2
-*********
-
 Calculating how many files fit on a device
-===========================================
+******************************************
 
 Given that we have a thumb drive with 12GiB free, how many 4MiB audio
 files can we fit on it?
 
 
-    from bitmath import *
+.. code-block:: python
+   :linenos:
 
-    thumb_drive = GiB(12)
+   from bitmath import *
 
-    audio_file = MiB(4)
+   thumb_drive = GiB(12)
 
-    thumb_drive / audio_file
+   audio_file = MiB(4)
 
-    3072.0
+   thumb_drive / audio_file
+
+   3072.0
 
 This tells us that we could fit 3072 4MiB audio files on a 12GiB thumb drive.
 
 
-Example 3
-*********
-
 Printing Human-Readable File Sizes in Python
-============================================
+********************************************
 
 In a Python script or intrepreter we may wish to print out file sizes
 in something other than bytes (which is what ``os.path.getsize``
 returns). We can use ``bitmath`` to do that too:
 
 
-    >>> import os
+.. code-block:: python
+   :linenos:
 
-    >>> from bitmath import *
+   >>> import os
 
-    >>> these_files = os.listdir('.')
+   >>> from bitmath import *
 
-    >>> for f in these_files:
-            f_size = Byte(os.path.getsize(f))
-            print "%s - %s" % (f, f_size.to_KiB())
+   >>> these_files = os.listdir('.')
 
-    test_basic_math.py - 3.048828125KiB
-    __init__.py - 0.1181640625KiB
-    test_representation.py - 0.744140625KiB
-    test_to_Type_conversion.py - 2.2119140625KiB
+   >>> for f in these_files:
+           f_size = Byte(os.path.getsize(f))
+           print "%s - %s" % (f, f_size.to_KiB())
+
+   test_basic_math.py - 3.048828125KiB
+   __init__.py - 0.1181640625KiB
+   test_representation.py - 0.744140625KiB
+   test_to_Type_conversion.py - 2.2119140625KiB
 
 
-Example 4
-*********
 
 Calculating Linux BDP and TCP Window Scaling
-============================================
+********************************************
 
 Say we're doing some Linux Kernel TCP performance tuning. For optimum
 speeds we need to calculate our BDP, or Bandwidth Delay Product. For
@@ -112,11 +113,11 @@ Per-socket buffer sizes must not exceede the core networking buffer sizes.
 
 We would normally calculate the optimal BDP and related values following this approach:
 
-1. Measure the latency, or round trip time (RTT), between the host we're tuning and our target remote host
-1. Measure/identify our network transfer rate
-1. Calculate the BDP (multiply transfer rate by rtt)
-1. Obtain our current kernel settings
-1. Adjust settings as necessary
+#. Measure the latency, or round trip time (RTT), between the host we're tuning and our target remote host
+#. Measure/identify our network transfer rate
+#. Calculate the BDP (multiply transfer rate by rtt)
+#. Obtain our current kernel settings
+#. Adjust settings as necessary
 
 But for the sake brevity we'll be working out of an example scenario
 with a pre-defined RTT and transfer rate.
@@ -134,9 +135,11 @@ rate of 1Gb/sec into B/s (Gigabits/second to Bytes/second):
 
 - Convert 1Gb into an equivalent **byte** based unit
 
-Remember 1 Byte = 8 Bytes:
+Remember 1 Byte = 8 Bits:
 
-    tx_rate_GB = 1/8 = 0.125
+.. code-block:: python
+
+   tx_rate_GB = 1/8 = 0.125
 
 Our equivalent transfer rate is 0.125GB/sec.
 
@@ -144,7 +147,9 @@ Our equivalent transfer rate is 0.125GB/sec.
 
 Remember 1ms = 10^-3s:
 
-    window_seconds = 0.199 * 10^-3 = 0.000199
+.. code-block:: python
+
+   window_seconds = 0.199 * 10^-3 = 0.000199
 
 Our equivalent RTT window is 0.000199s
 
@@ -152,7 +157,9 @@ Our equivalent RTT window is 0.000199s
 
 (The unit analysis for this is ``GB/s * s`` leaving us with ``GB``)
 
-    BDP = rx_rate_GB * window_seconds = 0.125 * 0.000199 = 0.000024875
+.. code-block:: python
+
+   BDP = rx_rate_GB * window_seconds = 0.125 * 0.000199 = 0.000024875
 
 Our BDP is 0.000024875GB.
 
@@ -160,7 +167,9 @@ Our BDP is 0.000024875GB.
 
 Remember 1GB = 10^9B
 
-    BDP_bytes = 0.000024875 * 10^9 = 24875.0
+.. code-block:: python
+
+   BDP_bytes = 0.000024875 * 10^9 = 24875.0
 
 Our BDP is 24875 bytes (or about 24.3KiB)
 
@@ -169,27 +178,32 @@ Our BDP is 24875 bytes (or about 24.3KiB)
 All of this math can be done much quicker (and with greater accuracy)
 using the bitmath library. Let's see how:
 
-    from bitmath import GB
+.. code-block:: python
+   :linenos:
 
-    tx = 1/8.0
+   from bitmath import GB
 
-    rtt = 0.199 * 10**-3
+   tx = 1/8.0
 
-    bdp = (GB(tx * rtt)).to_Byte()
+   rtt = 0.199 * 10**-3
 
-    Byte(24875.0)
+   bdp = (GB(tx * rtt)).to_Byte()
 
-    bdp.to_KiB()
+   Byte(24875.0)
 
-    KiB(24.2919921875)
+   bdp.to_KiB()
+
+   KiB(24.2919921875)
 
 **Note:** To avoid integer rounding during division, don't forget to divide by ``8.0`` rather than ``8``
 
 We could shorten that even further:
 
-    print (GB((1/8.0) * (0.199 * 10**-3))).to_Byte()
+.. code-block:: python
 
-	24875.0Byte
+   print (GB((1/8.0) * (0.199 * 10**-3))).to_Byte()
+
+   24875.0Byte
 
 **Get the current kernel parameters**
 
@@ -197,46 +211,51 @@ Important to note is that the **per-socket** buffer sizes must not
 exceed the **core network** buffer sizes. Lets fetch our current core
 buffer sizes:
 
-    $ sysctl net.core.rmem_max net.core.wmem_max
+.. code-block:: console
 
-    net.core.rmem_max = 212992
-
-    net.core.wmem_max = 212992
+   $ sysctl net.core.rmem_max net.core.wmem_max
+   net.core.rmem_max = 212992
+   net.core.wmem_max = 212992
 
 Recall, these values are in bytes. What are they in KiB?
 
-    Byte(212992).to_KiB()
+.. code-block:: python
 
-    KiB(208.0)
+   >>> Byte(212992).to_KiB()
+
+   KiB(208.0)
 
 This means our core networking buffer sizes are set to 208KiB
 each. Now let's check our current per-socket buffer sizes:
 
-    $ sysctl net.ipv4.tcp_rmem net.ipv4.tcp_wmem
+.. code-block:: console
 
-    net.ipv4.tcp_rmem = 4096        87380   6291456
-
-    net.ipv4.tcp_wmem = 4096        16384   4194304
+   $ sysctl net.ipv4.tcp_rmem net.ipv4.tcp_wmem
+   net.ipv4.tcp_rmem = 4096        87380   6291456
+   net.ipv4.tcp_wmem = 4096        16384   4194304
 
 Let's double-check that our buffer sizes aren't already out of wack
 (per-socket should be <= networking core)
 
-    net_core_max = KiB(bytes=212992)
+.. code-block:: python
 
-    ipv4_tcp_rmem_max = KiB(bytes=6291456)
+   >>> net_core_max = KiB(bytes=212992)
 
-    ipv4_tcp_rmem_max > net_core_max
+   >>> ipv4_tcp_rmem_max = KiB(bytes=6291456)
 
-    True
+   >>> ipv4_tcp_rmem_max > net_core_max
+
+   True
 
 It appears that my buffers aren't sized appropriately. We'll fix that
 when we set the tunable parameters.
 
 Finally, how large is the entire system TCP buffer?
 
-    $ sysctl net.ipv4.tcp_mem
+.. code-block:: console
 
-    net.ipv4.tcp_mem = 280632       374176  561264
+   $ sysctl net.ipv4.tcp_mem
+   net.ipv4.tcp_mem = 280632       374176  561264
 
 Our max system TCP buffer size is set to **561264**. Recall that this
 parameter is measured in **memory pages**. Most of the time your page
@@ -245,19 +264,21 @@ size is ``4096 bytes``, but you can check by running the command:
 (561264) into a byte-based unit, we'll multiply it by our pagesize
 (4096):
 
-    sys_pages = 561264
+.. code-block:: python
 
-    page_size = 4096
+   sys_pages = 561264
 
-    sys_buffer = Byte(sys_pages * page_size)
+   page_size = 4096
 
-    print sys_buffer.to_MiB()
+   sys_buffer = Byte(sys_pages * page_size)
 
-    2192.4375MiB
+   print sys_buffer.to_MiB()
 
-    print sys_buffer.to_GiB()
+   2192.4375MiB
 
-    2.14105224609GiB
+   print sys_buffer.to_GiB()
+
+   2.14105224609GiB
 
 The system max TCP buffer size is about 2.14GiB.
 
@@ -276,19 +297,19 @@ And we calculated the following:
 
 Set the **core-network** buffer sizes:
 
-    $ sudo sysctl net.core.rmem_max=24875  net.core.wmem_max=24875
+.. code-block:: console
 
-	net.core.rmem_max = 4235
-
-	net.core.wmem_max = 4235
+   $ sudo sysctl net.core.rmem_max=24875  net.core.wmem_max=24875
+   net.core.rmem_max = 4235
+   net.core.wmem_max = 4235
 
 Set the **per-socket** buffer sizes:
 
-    $ sudo sysctl net.ipv4.tcp_rmem="4096 12437 24875" net.ipv4.tcp_wmem="4096 12437 24875"
+.. code-block:: console
 
-    net.ipv4.tcp_rmem = 4096 12437 24875
-
-    net.ipv4.tcp_wmem = 4096 12437 24875
+   $ sudo sysctl net.ipv4.tcp_rmem="4096 12437 24875" net.ipv4.tcp_wmem="4096 12437 24875"
+   net.ipv4.tcp_rmem = 4096 12437 24875
+   net.ipv4.tcp_wmem = 4096 12437 24875
 
 And it's done! Testing this is left as an exercise for the
 reader. Note that in my experience this is less useful on wireless
