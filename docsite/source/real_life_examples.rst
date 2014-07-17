@@ -8,29 +8,26 @@ Download Speeds
 ***************
 
 Let's pretend that your Internet service provider (ISP) advertises
-your maximum downstream as **50Mbps** [(note 1)](#footnote-1) and you
-want to know how fast that is in mibibytes? ``bitmath`` can do that
-for you easily. Keeping in mind that 1 Byte = 8 bits you can calculate
-this as such:
+your maximum downstream as **50Mbps** (50 Mega**bits** per second)¹
+and you want to know how fast that is in Mega**bytes** per second?
+``bitmath`` can do that for you easily. Keeping in mind that **1 Byte
+= 8 bits** you can calculate this as such:
 
 .. code-block:: python
    :linenos:
 
-   from bitmath import *
+   >>> from bitmath import *
 
-   downstream = MB(50)
+   >>> downstream = Mib(50)
 
-   downstream.to_MiB() / 8
+   >>> print downstream.to_MB()
 
-   MiB(5.96046447754)
+   MB(6.25)
 
 This tells us that if our ISP advertises **50Mbps** we can expect to
 see download rates of nearly **6MiB/sec**.
 
-Footnote 1
-==========
-
-* Assuming your ISP follows the common industry practice of using SI (base-10) units to describe file sizes/rates.
+¹ - *Assuming your ISP follows the common industry practice of using SI (base-10) units to describe file sizes/rates*
 
 
 Calculating how many files fit on a device

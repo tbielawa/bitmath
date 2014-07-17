@@ -9,6 +9,10 @@ Simple Examples
 Basic Bath
 **********
 
+Math works mostly like you expect it to, except for the special cases
+where: we mix bitmath types with Number types, and operations where
+two bitmath types would cancel out (such as dividing two bitmath
+types).
 
 +----------------+-------------------+---------------------+-------------------------------------------+
 | Operation      | Parameters        | Result Type         | Example                                   |
@@ -42,7 +46,9 @@ Bitwise Operations
 ******************
 
 Bitwise operations are also supported. Bitwise operations work
-directly on the internal ``bits`` attribute of a bitmath instance.
+directly on the ``bits`` attribute of a bitmath instance, not the
+number you see in an instances printed representation (``value``), to
+maintain accuracy.
 
 +----------------+-----------------------+--------------+---------------------------------------------------------+
 | Operation      | Parameters            | Result Type  | Example ¹                                               |
