@@ -13,6 +13,7 @@ a percent one "unit" of SI is to one "unit" of NIST.
 
 .. code-block:: python
    :linenos:
+   :emphasize-lines: 7,15,23
 
    In [15]: one_kilo = 1 * 10**3
 
@@ -39,7 +40,7 @@ a percent one "unit" of SI is to one "unit" of NIST.
    Out[23]: 0.87
 
 They begin as roughly equivalent, however as you can see (lines:
-**17**, **20**, and **23**), they diverge significantly for higher
+**7**, **15**, and **23**), they diverge significantly for higher
 values.
 
 Why two unit systems? Why take the time to point this difference out?

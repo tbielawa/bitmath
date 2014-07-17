@@ -25,30 +25,33 @@ based**. Classes ending with upper-case **'B'** characters are **byte
 based**. Class inheritance is shown below in parentheses to make this
 more apparent:
 
-- ``Eb(Bit)``
-- ``EB(Byte)``
-- ``Eib(Bit)``
-- ``EiB(Byte)``
-- ``Gb(Bit)``
-- ``GB(Byte)``
-- ``Gib(Bit)``
-- ``GiB(Byte)``
-- ``kb(Bit)``
-- ``kB(Byte)``
-- ``Kib(Bit)``
-- ``KiB(Byte)``
-- ``Mb(Bit)``
-- ``MB(Byte)``
-- ``Mib(Bit)``
-- ``MiB(Byte)``
-- ``Pb(Bit)``
-- ``PB(Byte)``
-- ``Pib(Bit)``
-- ``PiB(Byte)``
-- ``Tb(Bit)``
-- ``TB(Byte)``
-- ``Tib(Bit)``
-- ``TiB(Byte)``
++---------------+--------------+
+| NIST          | SI           |
++===============+==============+
+| ``Eib(Bit)``  | ``Eb(Bit)``  |
++---------------+--------------+
+| ``EiB(Byte)`` | ``EB(Byte)`` |
++---------------+--------------+
+| ``Gib(Bit)``  | ``Gb(Bit)``  |
++---------------+--------------+
+| ``GiB(Byte)`` | ``GB(Byte)`` |
++---------------+--------------+
+| ``Kib(Bit)``  | ``kb(Bit)``  |
++---------------+--------------+
+| ``KiB(Byte)`` | ``kB(Byte)`` |
++---------------+--------------+
+| ``Mib(Bit)``  | ``Mb(Bit)``  |
++---------------+--------------+
+| ``MiB(Byte)`` | ``MB(Byte)`` |
++---------------+--------------+
+| ``Pib(Bit)``  | ``Pb(Bit)``  |
++---------------+--------------+
+| ``PiB(Byte)`` | ``PB(Byte)`` |
++---------------+--------------+
+| ``Tib(Bit)``  | ``Tb(Bit)``  |
++---------------+--------------+
+| ``TiB(Byte)`` | ``TB(Byte)`` |
++---------------+--------------+
 
 **Note**: Yes, as per SI definition, the ``kB`` and ``kb`` classes begins with a lower-case 'k' character.
 

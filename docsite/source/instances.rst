@@ -9,7 +9,8 @@ Instance Attributes
 bitmath objects have several instance attributes:
 
 - ``base`` - The mathematical base of the unit of the instance (this will be **2** or **10**)
-- ``binary`` - The `Python binary representation <https://docs.python.org/2/library/functions.html#bin>`_ of the instance's value (in bits). ``bin`` is an alias for ``binary``
+- ``binary`` - The `Python binary representation <https://docs.python.org/2/library/functions.html#bin>`_ of the instance's value (in bits)
+- ``bin`` - This is an alias for ``binary``
 - ``bits`` - The number of bits in the object
 - ``bytes`` - The number of bytes in the object
 - ``power`` - The mathematical power the ``base`` of the unit of the instance is raised to

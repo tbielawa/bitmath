@@ -8,10 +8,10 @@ Download Speeds
 ***************
 
 Let's pretend that your Internet service provider (ISP) advertises
-your maximum downstream as **50Mbps** (50 Mega**bits** per second)¹
-and you want to know how fast that is in Mega**bytes** per second?
-``bitmath`` can do that for you easily. Keeping in mind that **1 Byte
-= 8 bits** you can calculate this as such:
+your maximum downstream as **50Mbps** (50 Mega\ **bits** per second)¹
+and you want to know how fast that is in Mega\ **bytes** per second?
+``bitmath`` can do that for you easily. You can calculate this as
+such:
 
 .. code-block:: python
    :linenos:
