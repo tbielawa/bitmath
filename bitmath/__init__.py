@@ -44,6 +44,10 @@ __all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 
 if sys.version > '3':
     long = int
 
+# Constants for refering to prefix systems
+NIST = int(0)
+SI = int(1)
+
 SI_PREFIXES = ['k', 'M', 'G', 'T', 'P', 'E']
 SI_STEPS = {
     'Bit': 1 / 8.0,
@@ -253,8 +257,14 @@ supplied syntax"""
     # Guess the best human-readable prefix unit for representation
     ##################################################################
 
-    def best_prefix(self):
-        """Base-case, does it need converting?
+    def best_prefix(self, system=None):
+        """Optional parameter, `system`, allows you to prefer NIST or SI in
+the results. By default, the current system is used (Bit/Byte default
+to NIST).
+
+Logic discussion/notes:
+
+Base-case, does it need converting?
 
 If the instance is less than one Byte, return the instance as a Bit
 instance.
@@ -279,6 +289,7 @@ prefix unit' for representation:
 * result == 0, best represented as a Byte
 * result >= len(SYSTEM_STEPS), best represented as an Exbi/Exabyte
 * 0 < result < len(SYSTEM_STEPS), best represented as SYSTEM_PREFIXES[result-1]
+
         """
         if self < Byte(1):
             return Bit.from_other(self)
@@ -288,20 +299,27 @@ prefix unit' for representation:
             else:
                 _inst = self
 
-        # Which table to consult
-        if self.system == 'NIST':
-            _STEPS = NIST_PREFIXES
-            _BASE = 1024
-        elif self.system == 'SI':
-            _STEPS = SI_PREFIXES
-            _BASE = 1000
+        # Which table to consult? Was a preferred system provided?
+        if system is None:
+            # No preference. Use existing system
+            if self.system == 'NIST':
+                _STEPS = NIST_PREFIXES
+                _BASE = 1024
+            elif self.system == 'SI':
+                _STEPS = SI_PREFIXES
+                _BASE = 1000
+            # Anything else would have raised by now
         else:
-            # A ValueError should have been raised by now. But it
-            # doesn't hurt to test.
-            raise ValueError("Error guessing best prefix representation. "
-                             "Instances mathematical base is an unsupported "
-                             "value: %s" % (
-                                 str(self._base)))
+            # Preferred system provided.
+            if system == NIST:
+                _STEPS = NIST_PREFIXES
+                _BASE = 1024
+            elif system == SI:
+                _STEPS = SI_PREFIXES
+                _BASE = 1000
+            else:
+                raise ValueError("Invalid value given for 'system' parameter."
+                                 " Must be one of NIST or SI")
 
         # Index of the string of the best prefix in the STEPS list
         _index = int(math.log(_inst.bytes, _BASE))

@@ -80,3 +80,51 @@ class TestBestPrefixNIST(TestCase):
         """NIST: 1 Bit (as a EiB()) rounds down into a Bit()"""
         tiny_EiB = bitmath.EiB.from_other(bitmath.Bit(1))
         self.assertIs(type(tiny_EiB.best_prefix()), bitmath.Bit)
+
+    ##################################################################
+    # These tests verify that when we use the preferred prefix 'NIST'
+    # we get a NIST type unit back.
+    #
+    # One test for each case. First, start with an SI unit, second,
+    # start with a NIST unit
+
+    def test_best_prefix_prefer_NIST_from_SI(self):
+        """NIST: Best prefix honors a NIST preference when starting with an SI unit
+
+Start with an SI (kb) unit and prefer a NIST unit as the result (MiB)
+"""
+        # Start with kB, an SI unit
+        should_be_MiB = bitmath.kB(1600).best_prefix(system=bitmath.NIST)
+        self.assertIs(type(should_be_MiB), bitmath.MiB)
+
+    def test_best_prefix_prefer_NIST_from_NIST(self):
+        """NIST: Best prefix honors a NIST preference when starting with an NIST unit
+
+Start with a NIST (GiB) unit and prefer a NIST unit as the result (MiB)"""
+        # This should be MiB(512.0)
+        should_be_MiB = bitmath.GiB(0.5).best_prefix(system=bitmath.NIST)
+        self.assertIs(type(should_be_MiB), bitmath.MiB)
+
+    ##################################################################
+
+    def test_best_prefix_NIST_default(self):
+        """NIST: Best prefix uses the current system if no preference set
+
+Start with a NIST unit and assert no preference. The default behavior
+returns a prefix from the current system family (GiB)"""
+        # The MiB is == 1 GiB, conversion happens, and the result is a
+        # unit from the same family (GiB)
+        should_be_GiB = bitmath.MiB(1024).best_prefix()
+        self.assertIs(type(should_be_GiB), bitmath.GiB)
+
+    def test_best_prefix_identical_result(self):
+        """NIST: instance.best_prefix returns the same type if nothing changes
+
+Start with a NIST unit that is already prefectly sized, and apply
+best_prefix() to it."""
+        # This is our perfectly sized unit. No change was required
+        should_be_EiB = bitmath.EiB(1).best_prefix()
+        self.assertIs(type(should_be_EiB), bitmath.EiB)
+
+        # Let's be thorough and do that one more time
+        self.assertIs(type(should_be_EiB.best_prefix()), bitmath.EiB)

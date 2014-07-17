@@ -80,3 +80,51 @@ class TestBestPrefixSI(TestCase):
         """SI: 1 Bit (as a EB()) rounds down into a Bit()"""
         tiny_EB = bitmath.EB.from_other(bitmath.Bit(1))
         self.assertIs(type(tiny_EB.best_prefix()), bitmath.Bit)
+
+    ##################################################################
+    # These tests verify that when we use the preferred prefix 'SI'
+    # we get a SI type unit back which required a new prefix
+    #
+    # One test for each case. First, start with an SI unit, second,
+    # start with a NIST unit
+
+    def test_best_prefix_prefer_SI_from_SI(self):
+        """SI: Best prefix honors a SI preference when starting with an SI unit
+
+Start with an SI (kb) unit and prefer a SI unit as the result (MB)
+"""
+        # Start with kB, a SI unit
+        should_be_MB = bitmath.kB(1600).best_prefix(system=bitmath.SI)
+        self.assertIs(type(should_be_MB), bitmath.MB)
+
+    def test_best_prefix_prefer_SI_from_NIST(self):
+        """SI: Best prefix honors a SI preference when starting with a NIST unit
+
+Start with a NIST (GiB) unit and prefer a SI unit as the result (MB)"""
+        # Start with GiB, an NIST unit
+        should_be_MB = bitmath.GiB(0.5).best_prefix(system=bitmath.SI)
+        self.assertIs(type(should_be_MB), bitmath.MB)
+
+    ##################################################################
+
+    def test_best_prefix_SI_default(self):
+        """SI: Best prefix uses the current system if no preference set
+
+Start with a SI unit and assert no preference. The default behavior
+returns a prefix from the current system family (GB)"""
+        # The MB is == 1 GB, conversion happens, and the result is a
+        # unit from the same family (GB)
+        should_be_GB = bitmath.MB(1000).best_prefix()
+        self.assertIs(type(should_be_GB), bitmath.GB)
+
+    def test_best_prefix_identical_result(self):
+        """SI: best_prefix returns the same type when nothing changes
+
+Start with a SI unit that is already prefectly sized, and apply
+best_prefix() to it. again"""
+        # This is our perfectly sized unit. No change was required
+        should_be_EB = bitmath.EB(1).best_prefix()
+        self.assertIs(type(should_be_EB), bitmath.EB)
+
+        # Let's be thorough and do that one more time
+        self.assertIs(type(should_be_EB.best_prefix()), bitmath.EB)
