@@ -70,7 +70,7 @@ Why should you care? `The Linux Documentation Project
     Thus, today, MB = 1000000B and MiB = 1048576B.
 
     In the free software world programs are slowly being changed to
-    conform.  When the Linux kernel boots and says
+    conform.  When the Linux kernel boots and says::
 
         hda: 120064896 sectors (61473 MB) w/2048KiB Cache
 
@@ -81,7 +81,7 @@ Why should you care? `The Linux Documentation Project
 Furthermore, to quote the `National Institute of Standards and
 Technology (NIST) <http://physics.nist.gov/cuu/Units/binary.html>`_:
 
-    "Once upon a time, computer professionals noticed that 210 was
+    "Once upon a time, computer professionals noticed that 2\ :sup:`10` was
     very nearly equal to 1000 and started using the SI prefix "kilo"
     to mean 1024. That worked well enough for a decade or two because
     everybody who talked kilobytes knew that the term implied 1024
@@ -97,7 +97,7 @@ Technology (NIST) <http://physics.nist.gov/cuu/Units/binary.html>`_:
     arithmetic was less convenient than decimal arithmetic. The result
     is that today "everybody" does not "know" what a megabyte is. When
     discussing computer memory, most manufacturers use megabyte to
-    mean 220 = 1 048 576 bytes, but the manufacturers of computer
+    mean 2\ :sup:`20` = 1 048 576 bytes, but the manufacturers of computer
     storage devices usually use the term to mean 1 000 000 bytes. Some
     designers of local area networks have used megabit per second to
     mean 1 048 576 bit/s, but all telecommunications engineers use it
