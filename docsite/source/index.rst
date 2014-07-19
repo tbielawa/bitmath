@@ -36,6 +36,8 @@ bytes. When you see file sizes or transfer rates in your web browser,
 most of the time what you're really seeing are the base-2 sizes/rates.
 
 
+**Don't Forget!** The source for bitmath `is available on GitHub <https://github.com/tbielawa/bitmath>`_.
+
 Contents
 ########
 
