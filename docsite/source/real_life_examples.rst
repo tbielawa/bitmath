@@ -4,14 +4,19 @@
 Real Life Examples
 ##################
 
+.. contents::
+   :depth: 3
+   :local:
+
+
 Download Speeds
 ***************
 
 Let's pretend that your Internet service provider (ISP) advertises
-your maximum downstream as **50Mbps** (50 Mega\ **bits** per second)¹
-and you want to know how fast that is in Mega\ **bytes** per second?
-``bitmath`` can do that for you easily. You can calculate this as
-such:
+your maximum downstream as **50Mbps** (50 Mega\ **bits** per second)\
+:sup:`1` and you want to know how fast that is in Mega\ **bytes** per
+second?  ``bitmath`` can do that for you easily. You can calculate
+this as such:
 
 .. code-block:: python
    :linenos:
@@ -27,30 +32,59 @@ such:
 This tells us that if our ISP advertises **50Mbps** we can expect to
 see download rates of nearly **6MiB/sec**.
 
-¹ - *Assuming your ISP follows the common industry practice of using SI (base-10) units to describe file sizes/rates*
+1. *Assuming your ISP follows the common industry practice of using SI (base-10) units to describe file sizes/rates*
 
 
 Calculating how many files fit on a device
 ******************************************
 
-Given that we have a thumb drive with 12GiB free, how many 4MiB audio
-files can we fit on it?
+In 2001 Apple® announced the iPod™. Their `headline statement
+<http://www.apple.com/pr/library/2001/10/23Apple-Presents-iPod.html>`_
+boasting:
+
+    "... iPod stores up to 1,000 CD-quality songs on its super-thin 5 GB hard drive, ..."
+
+OK. That's pretty simple to work backwards: *capacity of disk drive*
+divided by *number of songs* equals the average size of a song. Which
+in this case is:
+
+.. code-block:: python
+   :linenos:
+   :emphasize-lines: 3
+
+   >>> song_size = GB(5) / 1000
+   >>> print song_size
+   0.005GB
+
+Or, using ``best_prefix``, (line **2**) to generate a more
+human-readable form:
+
+.. code-block:: python
+   :linenos:
+   :emphasize-lines: 3
+
+   >>> song_size = GB(5) / 1000
+   >>> print song_size.best_prefix()
+   5.0MB
+
+That's great, if you have normal radio-length songs. But how many of
+our `favorite jam-band's <https://archive.org/details/moe>`_ 15-30+
+minute long songs could we fit on this iPod? Let's pretend we did the
+math and the average audio file worked out to be **18.6 MiB** (19.5
+MB) large.
 
 
 .. code-block:: python
    :linenos:
+   :emphasize-lines: 4
 
-   from bitmath import *
+   >>> ipod_capacity = GB(5)
+   >>> bootleg_size = MB(19.5)
+   >>> print ipod_capacity / bootleg_size
+   256.41025641
 
-   thumb_drive = GiB(12)
-
-   audio_file = MiB(4)
-
-   thumb_drive / audio_file
-
-   3072.0
-
-This tells us that we could fit 3072 4MiB audio files on a 12GiB thumb drive.
+The result on line **4** tells tells us that we could fit **256**
+average-quality songs on our iPod.
 
 
 Printing Human-Readable File Sizes in Python

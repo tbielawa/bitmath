@@ -1,5 +1,15 @@
+.. image:: https://api.travis-ci.org/tbielawa/bitmath.png
+   :target: https://travis-ci.org/tbielawa/bitmath/
+   :align: right
+
+.. image:: https://coveralls.io/repos/tbielawa/bitmath/badge.png?branch=master
+   :target: https://coveralls.io/r/tbielawa/bitmath?branch=master
+   :align: right
+
+
 bitmath
 #######
+
 
 *bitmath* simplifies many facets of interacting with file sizes in
 various units. Functionality includes:
@@ -39,62 +49,6 @@ Contents
    real_life_examples.rst
    appendices.rst
    copyright.rst
-
-
-Basics
-******
-
-Class Initializer Signature
-===========================
-
-
-.. code-block:: python
-
-   BitMathType([value=0, [bytes=None, [bits=None]]])
-
-A bitmath type may be initialized in four different ways:
-
-- Set no initial value
-
-The default size is 0
-
-.. code-block:: python
-
-   zero_kib = KiB()
-
-- Set the value **in current prefix units**
-
-That is to say, if you want to encapsulate 1KiB, initialize the
-bitmath type with ``1``:
-
-.. code-block:: python
-
-   one_kib = KiB(1)
-
-   one_kib = KiB(value=1)
-
-- Set the number of bytes
-
-Use the ``bytes`` keyword
-
-.. code-block:: python
-
-   one_kib = KiB(bytes=1024)
-
-- Set the number of bits
-
-Use the ``bits`` keyword
-
-.. code-block:: python
-
-   one_kib = KiB(bits=8192)
-
-
-
-
-
-
-
 
 
 

@@ -9,6 +9,8 @@ can do with bitmath. We'll include the following topics:
    :local:
 
 
+.. _simple_examples_supported_operations:
+
 Tables of Supported Operations
 ******************************
 
@@ -20,6 +22,8 @@ Operand  Description
 ``bm``   A bitmath object is required
 ``num``  An integer or decimal value is required
 =======  =======================================
+
+
 
 Arithmetic
 ==========

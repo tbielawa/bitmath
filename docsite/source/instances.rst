@@ -13,18 +13,36 @@ Instance Attributes
 
 bitmath objects have several instance attributes:
 
-- ``base`` - The mathematical base of the unit of the instance (this will be **2** or **10**)
-- ``binary`` - The `Python binary representation <https://docs.python.org/2/library/functions.html#bin>`_ of the instance's value (in bits)
-- ``bin`` - This is an alias for ``binary``
-- ``bits`` - The number of bits in the object
-- ``bytes`` - The number of bytes in the object
-- ``power`` - The mathematical power the ``base`` of the unit of the instance is raised to
-- ``system`` The system of units used to measure this instance (``NIST`` or ``SI``)
-- ``value`` - The value of the instance in **PREFIX** units
-- ``unit`` - The string representation of this prefix unit (such as ``MiB`` or ``kb``)
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| Attribute  | Description                                                                                                                  |
++============+==============================================================================================================================+
+| ``base``   | The mathematical base of the unit of the instance (this will be **2** or **10**)                                             |
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| ``binary`` | The `Python binary representation <https://docs.python.org/2/library/functions.html#bin>`_ of the instance's value (in bits) |
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| ``bin``    | This is an alias for ``binary``                                                                                              |
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| ``bits``   | The number of bits in the object                                                                                             |
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| ``bytes``  | The number of bytes in the object                                                                                            |
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| ``power``  | The mathematical power the ``base`` of the unit of the instance is raised to                                                 |
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| ``system`` | The system of units used to measure this instance (``NIST`` or ``SI``)                                                       |
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| ``value``  | The value of the instance in *prefix* units\ :sup:`1`                                                                        |
++------------+------------------------------------------------------------------------------------------------------------------------------+
+| ``unit``   | The string representation of this prefix unit (such as ``MiB`` or ``kb``)                                                    |
++------------+------------------------------------------------------------------------------------------------------------------------------+
 
-The following is an example of how to access these attributes and what
-you can expect their printed representation to look like:
+**Notes:**
+
+1. Given an instance ``k``, where ``k = KiB(1.3)``, then ``k.value`` is **1.3**
+
+----
+
+The following is an example of how to access some of these attributes
+and what you can expect their printed representation to look like:
 
 .. code-block:: python
    :linenos:
@@ -54,8 +72,8 @@ you can expect their printed representation to look like:
 Instance Methods
 ****************
 
-bitmath objects come with two basic methods: ``to_THING()`` and
-``format()``.
+bitmath objects come with a few basic methods: :py:meth:`to_THING`,
+:py:meth:`format`, and :py:meth:`best_prefix`.
 
 
 .. _instances_to_thing:
@@ -98,6 +116,26 @@ classes. You can even ``to_THING()`` an instance into itself again:
    In [10]: six_TB == six_TB_in_bits
 
    Out[10]: True
+
+
+best_prefix()
+=============
+
+The :py:meth:`best_prefix` method returns the result of converting a
+bitmath instance into an equivalent instance using a prefix unit that
+better represents the original value. Another way to think of this is
+automatic discovery of the most sane, or *human readable*, unit to
+represent a given size. This functionality is especially important in
+the domain of interactive applications which need to report file sizes
+or transfer rates to users.
+
+As an analog, consider you have 923,874,434¢ in your bank account. You
+probably wouldn't want to read your bank statement and find your
+balance in pennies. Most likely, your bank statement would read a
+balance of $9,238,744.34. In this example, the input prefix is the
+*cent*: ``¢``. The *best prefix* for this is the *dollar*: ``$``.
+
+
 
 
 format()
@@ -155,7 +193,7 @@ precision:
    In [3]: print ugly_number.format("{value:.2f}{unit}")
    5.96MiB
 
-By changing the **2** character, you increase or decreate the
+By changing the **2** character, you increase or decrease the
 precision. Set it to **0** (``{value:.0f}``) and you have what
 effectively looks like an integer.
 
@@ -222,7 +260,7 @@ about what's going on here, let's break the first specifier
       \---------- The name of the attribute to print
 
 The second specifier (``{unit}``) says to format the ``unit``
-attribute as a string (string is the defalt type when no type is
+attribute as a string (string is the default type when no type is
 given).
 
 .. seealso::
