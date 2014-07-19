@@ -88,7 +88,7 @@ number you see in an instances printed representation (``value``), to
 maintain accuracy.
 
 +----------------+-----------------------+--------------+---------------------------------------------------------+
-| Operation      | Parameters            | Result Type  | Example ¹                                               |
+| Operation      | Parameters            | Result Type  | Example\ :sup:`1`                                       |
 +================+=======================+==============+=========================================================+
 | Left Shift     | ``bm`` << ``num``     | ``type(bm)`` | ``MiB(1)`` << ``2`` = ``MiB(4.0)``                      |
 +----------------+-----------------------+--------------+---------------------------------------------------------+
@@ -101,7 +101,7 @@ maintain accuracy.
 | XOR            | ``bm`` ^ ``num``      | ``type(bm)`` | ``MiB(13.37)`` ^ ``1337`` = ``MiB(13.369...)``          |
 +----------------+-----------------------+--------------+---------------------------------------------------------+
 
-¹ - *Give me a break here, it's not easy coming up with compelling examples for bitwise operations...*
+1. *Give me a break here, it's not easy coming up with compelling examples for bitwise operations...*
 
 
 Basic Math
@@ -144,28 +144,58 @@ Unit Conversion
    Out[5]: MiB(42.0)
 
 
-Equality Testing
-****************
+Rich Comparison
+***************
+
+Rich Comparison (as per the `Python Basic Customization
+<https://docs.python.org/2.7/reference/datamodel.html#basic-customization>`_
+magic methods): ``<``, ``≤``, ``==``, ``≠``, ``>``, ``≥`` is fully
+supported:
 
 .. code-block:: python
    :linenos:
 
-   In [6]: fourty_two_mib == fourty_two_mib_in_kib
+   In [2]: GB(1) < GiB(1)
+   Out[2]: True
 
+   In [3]: GB(1.073741824) == GiB(1)
+   Out[3]: True
+
+   In [4]: GB(1.073741824) <= GiB(1)
+   Out[4]: True
+
+   In [5]: Bit(1) == TiB(bits=1)
+   Out[5]: True
+
+   In [6]: kB(100) > EiB(bytes=1024)
    Out[6]: True
+
+   In [7]: kB(100) >= EiB.from_other(kB(100))
+   Out[7]: True
+
+   In [8]: kB(100) >= EiB.from_other(kB(99))
+   Out[8]: True
+
+   In [9]: kB(100) >= EiB.from_other(kB(9999))
+   Out[9]: False
+
+   In [10]: KiB(100) != Byte(1)
+   Out[10]: True
 
 
 Sorting
 *******
 
-bitmath supports sorting.
-
+bitmath natively supports sorting.
 
 Let's make a list of the size (in bytes) of all the files in the
-present working directory.
+present working directory (lines **7** and **8**) and then print them
+out sorted by increasing magnitude (lines **13** and **14**, and
+**18** and **19**):
 
 .. code-block:: python
    :linenos:
+   :emphasize-lines: 7,8,13,14,18,19
 
    In [1]: from bitmath import *
 
@@ -187,11 +217,11 @@ present working directory.
    In [8]: print sorted(human_sizes)
    [KiB(48.0), MiB(1.4072265625), MiB(1.728515625), MiB(2.076171875), MiB(2.126953125), MiB(2.271484375), MiB(3.9091796875), MiB(4.091796875), MiB(7.1650390625), MiB(7.70703125)]
 
+Now print them out in descending magnitude
 
-Rich Comparison
-***************
+.. code-block:: python
 
-Rich Comparison (as per the `Python Basic Customization
-<https://docs.python.org/2.7/reference/datamodel.html#basic-customization>`_
-magic methods): ``<``, ``≤``, ``==``, ``≠``, ``>``, ``≥`` is fuly
-supported.
+   In [8]: print sorted(human_sizes, reverse=True)
+   [KiB(7892.0), KiB(7337.0), KiB(4190.0), KiB(4003.0), KiB(2326.0), KiB(2178.0), KiB(2126.0), KiB(1770.0), KiB(1441.0), KiB(48.0)]
+
+

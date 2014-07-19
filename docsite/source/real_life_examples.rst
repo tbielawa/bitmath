@@ -15,8 +15,8 @@ Download Speeds
 Let's pretend that your Internet service provider (ISP) advertises
 your maximum downstream as **50Mbps** (50 Mega\ **bits** per second)\
 :sup:`1` and you want to know how fast that is in Mega\ **bytes** per
-second?  ``bitmath`` can do that for you easily. You can calculate
-this as such:
+second? ``bitmath`` can do that for you easily. We can calculate this
+as such:
 
 .. code-block:: python
    :linenos:
@@ -61,7 +61,7 @@ human-readable form:
 
 .. code-block:: python
    :linenos:
-   :emphasize-lines: 3
+   :emphasize-lines: 2
 
    >>> song_size = GB(5) / 1000
    >>> print song_size.best_prefix()
@@ -105,8 +105,8 @@ returns). We can use ``bitmath`` to do that too:
    >>> these_files = os.listdir('.')
 
    >>> for f in these_files:
-           f_size = Byte(os.path.getsize(f))
-           print "%s - %s" % (f, f_size.to_KiB())
+   ...    f_size = Byte(os.path.getsize(f))
+   ...    print "%s - %s" % (f, f_size.to_KiB())
 
    test_basic_math.py - 3.048828125KiB
    __init__.py - 0.1181640625KiB
@@ -144,7 +144,9 @@ Per-socket buffer sizes must not exceede the core networking buffer sizes.
 
 We would normally calculate the optimal BDP and related values following this approach:
 
-#. Measure the latency, or round trip time (RTT), between the host we're tuning and our target remote host
+#. Measure the latency, or round trip time (RTT, measured in
+   milliseconds), between the host we're tuning and our target remote
+   host
 #. Measure/identify our network transfer rate
 #. Calculate the BDP (multiply transfer rate by rtt)
 #. Obtain our current kernel settings
@@ -155,8 +157,9 @@ with a pre-defined RTT and transfer rate.
 
 **Scenario**
 
-- We have an average network transfer rate of 1Gb/sec (where ``Gb`` is the SI unit for Gigabits, not Gibibytes)
-- Our latency (RTT) is 0.199ms (milliseconds)
+- We have an average network transfer rate of **1Gb/sec** (where
+  ``Gb`` is the SI unit for Gigabits, not Gibibytes: ``GiB``)
+- Our latency (RTT) is **0.199ms** (milliseconds)
 
 **Calculate Manually**
 
@@ -176,7 +179,7 @@ Our equivalent transfer rate is 0.125GB/sec.
 
 - Convert our RTT from miliseconds into seconds
 
-Remember 1ms = 10^-3s:
+Remember 1ms = 10\ :sup:`-3`\ s:
 
 .. code-block:: python
 
@@ -196,7 +199,7 @@ Our BDP is 0.000024875GB.
 
 - Convert 0.000024875GB to bytes:
 
-Remember 1GB = 10^9B
+Remember 1GB = 10\ :sup:`9`\ B
 
 .. code-block:: python
 
@@ -212,17 +215,15 @@ using the bitmath library. Let's see how:
 .. code-block:: python
    :linenos:
 
-   from bitmath import GB
+   >>> from bitmath import GB
 
-   tx = 1/8.0
+   >>> tx = 1/8.0
 
-   rtt = 0.199 * 10**-3
+   >>> rtt = 0.199 * 10**-3
 
-   bdp = (GB(tx * rtt)).to_Byte()
+   >>> bdp = (GB(tx * rtt)).to_Byte()
 
-   Byte(24875.0)
-
-   bdp.to_KiB()
+   >>> print bdp.to_KiB()
 
    KiB(24.2919921875)
 
@@ -232,8 +233,7 @@ We could shorten that even further:
 
 .. code-block:: python
 
-   print (GB((1/8.0) * (0.199 * 10**-3))).to_Byte()
-
+   >>> print (GB((1/8.0) * (0.199 * 10**-3))).to_Byte()
    24875.0Byte
 
 **Get the current kernel parameters**
@@ -252,8 +252,7 @@ Recall, these values are in bytes. What are they in KiB?
 
 .. code-block:: python
 
-   >>> Byte(212992).to_KiB()
-
+   >>> print Byte(212992).to_KiB()
    KiB(208.0)
 
 This means our core networking buffer sizes are set to 208KiB
@@ -297,17 +296,17 @@ size is ``4096 bytes``, but you can check by running the command:
 
 .. code-block:: python
 
-   sys_pages = 561264
+   >>> sys_pages = 561264
 
-   page_size = 4096
+   >>> page_size = 4096
 
-   sys_buffer = Byte(sys_pages * page_size)
+   >>> sys_buffer = Byte(sys_pages * page_size)
 
-   print sys_buffer.to_MiB()
+   >>> print sys_buffer.to_MiB()
 
    2192.4375MiB
 
-   print sys_buffer.to_GiB()
+   >>> print sys_buffer.to_GiB()
 
    2.14105224609GiB
 

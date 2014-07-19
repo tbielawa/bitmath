@@ -10,7 +10,7 @@ Classes
 Initializing
 ************
 
-API signature::
+API signature:
 
 .. code-block:: python
 
@@ -116,7 +116,8 @@ more apparent:
 | ``TiB(Byte)`` | ``TB(Byte)`` |
 +---------------+--------------+
 
-**Note**: Yes, as per SI definition, the ``kB`` and ``kb`` classes begins with a lower-case 'k' character.
+.. note:: As per SI definition, the ``kB`` and ``kb`` classes begins
+          with a *lower-case* **k** character.
 
 The majority of the functionality of bitmath object comes from their
 rich implementation of standard Python operations. You can use bitmath
@@ -129,7 +130,7 @@ Class Methods
 *************
 
 bitmath **class objects** have one public class method which provides
-an alternative method to initialize a bitmath class.
+an alternative way to initialize a bitmath class.
 
 - ``BitMathClass.from_other()`` - Instantiate any ``BitMathClass``
   using another instance as reference for it's initial value.

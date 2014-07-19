@@ -135,8 +135,58 @@ balance in pennies. Most likely, your bank statement would read a
 balance of $9,238,744.34. In this example, the input prefix is the
 *cent*: ``¢``. The *best prefix* for this is the *dollar*: ``$``.
 
+Let's, for example, say we are reporting a transfer rate in an
+interactive application. It's important to present this information in
+an easily consumable format. The library we're using to calculate the
+rate of transfer reports the rate in bytes per second from a
+:py:func:`tx_rate` function.
+
+We'll use this example twice. In the first occurrence, we will print
+out the transfer rate in a more easily digestible format than pure
+bytes/second. In the second occurrence we'll take it a step further,
+and use the :ref:`format <instances_format>` method to make the output
+even easier to read.
+
+.. code-block:: python
 
 
+   In [9]: for _rate in tx_rate():
+       print "Rate: %s/second" % Bit(_rate)
+       time.sleep(1)
+
+   Rate: 100.0Bit/sec
+   Rate: 24000.0Bit/sec
+   Rate: 1024.0Bit/sec
+   Rate: 60151.0Bit/sec
+   Rate: 33.0Bit/sec
+   Rate: 9999.0Bit/sec
+   Rate: 9238742.0Bit/sec
+   Rate: 2.09895849555e+13Bit/sec
+   Rate: 934098021.0Bit/sec
+   Rate: 934894.0Bit/sec
+
+And now using a custom formatting definition:
+
+.. code-block:: python
+
+   In [50]: for _rate in tx_rate():
+       print Bit(_rate).best_prefix().format("Rate: {value:.3f} {unit}/sec")
+       time.sleep(1)
+
+   Rate: 12.500 Byte/sec
+   Rate: 2.930 KiB/sec
+   Rate: 128.000 Byte/sec
+   Rate: 7.343 KiB/sec
+   Rate: 4.125 Byte/sec
+   Rate: 1.221 KiB/sec
+   Rate: 1.101 MiB/sec
+   Rate: 2.386 TiB/sec
+   Rate: 111.353 MiB/sec
+   Rate: 114.123 KiB/sec
+
+
+
+.. _instances_format:
 
 format()
 ========
@@ -179,7 +229,6 @@ precision to 2 digits.
 First, for reference, the default formatting:
 
 .. code-block:: python
-   :linenos:
 
    In [1]: ugly_number = MB(50).to_MiB() / 8.0
    In [2]: print ugly_number
@@ -239,9 +288,9 @@ of how an attribute may be referenced multiple times.
 The Formatting Mini-Language
 ****************************
 
-That is all you need to be on your way printing numbers with custom
-precision. If you want to learn a little bit more about using the
-formatting mini-language, read on.
+That is all you begin printing numbers with custom precision. If you
+want to learn a little bit more about using the formatting
+mini-language, read on.
 
 You may be asking yourself where these ``{value:.2f}`` and ``{unit}``
 strings came from. These are part of the `Format Specification
