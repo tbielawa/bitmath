@@ -1,3 +1,5 @@
+.. _classes:
+
 Classes
 #######
 
@@ -5,6 +7,9 @@ There are two **fundamental** classes available:
 
 - ``Bit``
 - ``Byte``
+
+Available Classes
+*****************
 
 There are **24** other classes available, representing all the prefix
 units from **k** through **e** (*kilo/kibi* through *exa/exbi*).
@@ -24,6 +29,8 @@ Classes ending with *lower-case* **'b'** characters are **bit
 based**. Classes ending with upper-case **'B'** characters are **byte
 based**. Class inheritance is shown below in parentheses to make this
 more apparent:
+
+.. _classes_available:
 
 +---------------+--------------+
 | NIST          | SI           |

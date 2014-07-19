@@ -1,5 +1,7 @@
+.. _appendix_on_units:
+
 On Units
-########
+********
 
 As previously stated, in this module you will find two very similar
 sets of classes available. These are the **NIST** and **SI**

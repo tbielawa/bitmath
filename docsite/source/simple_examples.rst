@@ -1,18 +1,45 @@
-Simple Examples
+Getting Started
 ###############
 
-**Legend**
+In this section we will take a high-level look at the basic things you
+can do with bitmath. We'll include the following topics:
 
-* ``bm`` indicates a bitmath object is required
-* ``num`` indicates that an integer or decimal value is required
+.. contents::
+   :depth: 3
+   :local:
 
-Basic Bath
-**********
 
-Math works mostly like you expect it to, except for the special cases
-where: we mix bitmath types with Number types, and operations where
-two bitmath types would cancel out (such as dividing two bitmath
-types).
+Tables of Supported Operations
+******************************
+
+The following legend describes the two operands used in the tables below.
+
+=======  =======================================
+Operand  Description
+=======  =======================================
+``bm``   A bitmath object is required
+``num``  An integer or decimal value is required
+=======  =======================================
+
+Arithmetic
+==========
+
+Math works mostly like you expect it to, except for a few edge-cases:
+
+* Mixing bitmath types with Number types (the result varies
+  per-operation)
+
+* Operations where two bitmath types would cancel out (such as
+  dividing two bitmath types)
+
+* Multiplying two bitmath instances together is **not supported at all**
+
+
+See :ref:`Appendix: Rules for Mixed Math <appendix_mixed_math>`
+for a discussion of the behavior in each mixed math case.
+
+
+.. _simple_examples_arithmetic_table:
 
 +----------------+-------------------+---------------------+-------------------------------------------+
 | Operation      | Parameters        | Result Type         | Example                                   |
@@ -42,8 +69,14 @@ types).
 | Division       | ``num`` / ``bm``  | ``type(num)``       | ``3 / KiB(2)`` = ``1.5``                  |
 +----------------+-------------------+---------------------+-------------------------------------------+
 
+
 Bitwise Operations
-******************
+==================
+
+.. seealso::
+
+   `Bitwise Calculator <http://www.miniwebtool.com/bitwise-calculator/>`_
+      A free online calculator for checking your math
 
 Bitwise operations are also supported. Bitwise operations work
 directly on the ``bits`` attribute of a bitmath instance, not the
@@ -67,19 +100,27 @@ maintain accuracy.
 ¹ - *Give me a break here, it's not easy coming up with compelling examples for bitwise operations...*
 
 
-Other Features
-**************
+Basic Math
+**********
 
-- Size comparison: ``<``, ``≤``, ``==``, ``≠``, ``>``, ``≥``
+bitmath supports all arithmetic operations
 
-- Unit conversion: from bytes through exibytes, supports conversion to any other unit (e.g., Megabytes to Kibibytes)
+.. code-block:: python
+   :linenos:
+
+   In [7]: eighty_four_mib = fourty_two_mib + fourty_two_mib_in_kib
+
+   In [8]: eighty_four_mib
+
+   Out[8]: MiB(84.0)
+
+   In [9]: eighty_four_mib == fourty_two_mib * 2
+
+   Out[9]: True
 
 
-Examples
-********
-
-Basic unit conversion:
-
+Unit Conversion
+***************
 
 .. code-block:: python
    :linenos:
@@ -99,7 +140,8 @@ Basic unit conversion:
    Out[5]: MiB(42.0)
 
 
-Equality testing:
+Equality Testing
+****************
 
 .. code-block:: python
    :linenos:
@@ -108,23 +150,15 @@ Equality testing:
 
    Out[6]: True
 
-Basic math:
 
-.. code-block:: python
-   :linenos:
+Sorting
+*******
 
-   In [7]: eighty_four_mib = fourty_two_mib + fourty_two_mib_in_kib
-
-   In [8]: eighty_four_mib
-
-   Out[8]: MiB(84.0)
-
-   In [9]: eighty_four_mib == fourty_two_mib * 2
-
-   Out[9]: True
+bitmath supports sorting.
 
 
-Sorting is also supported:
+Let's make a list of the size (in bytes) of all the files in the
+present working directory.
 
 .. code-block:: python
    :linenos:
@@ -148,3 +182,12 @@ Sorting is also supported:
 
    In [8]: print sorted(human_sizes)
    [KiB(48.0), MiB(1.4072265625), MiB(1.728515625), MiB(2.076171875), MiB(2.126953125), MiB(2.271484375), MiB(3.9091796875), MiB(4.091796875), MiB(7.1650390625), MiB(7.70703125)]
+
+
+Rich Comparison
+***************
+
+Rich Comparison (as per the `Python Basic Customization
+<https://docs.python.org/2.7/reference/datamodel.html#basic-customization>`_
+magic methods): ``<``, ``≤``, ``==``, ``≠``, ``>``, ``≥`` is fuly
+supported.

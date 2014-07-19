@@ -3,6 +3,11 @@ Instances
 
 .. _instance_attributes:
 
+.. contents::
+   :depth: 3
+   :local:
+
+
 Instance Attributes
 *******************
 
@@ -53,12 +58,14 @@ bitmath objects come with two basic methods: ``to_THING()`` and
 ``format()``.
 
 
+.. _instances_to_thing:
+
 to_THING()
 ==========
 
-Like the available classes, there are 24 ``to_THING()`` methods
-available. ``THING`` is any of the bitmath classes. You can even
-``to_THING()`` an instance into itself again:
+Like the :ref:`available classes <classes_available>`, there are 24
+``to_THING()`` methods available. ``THING`` is any of the bitmath
+classes. You can even ``to_THING()`` an instance into itself again:
 
 
 .. code-block:: python
@@ -100,11 +107,9 @@ bitmath instances come with a verbose built-in string representation:
 
 .. code-block:: python
 
-   In [1]: from bitmath import *
+   In [1]: leet_bits = Bit(1337)
 
-   In [2]: leet_bits = Bit(1337)
-
-   In [3]: print leet_bits
+   In [2]: print leet_bits
    1337.0Bit
 
 However, for instances which aren't whole numbers (as in ``MiB(1/3.0)
@@ -115,8 +120,10 @@ representation. All of the :ref:`instances attributes
 <instance_attributes>` are available to use when choosing a
 representation.
 
-
-The following are some common use cases of the ``format`` method.
+The following sections describe some common use cases of the
+``format`` method as well as provide a :ref:`brief tutorial
+<instances_mini_language>` of the greater Python formatting
+meta-language.
 
 
 Setting Decimal Precision
@@ -136,11 +143,8 @@ First, for reference, the default formatting:
 .. code-block:: python
    :linenos:
 
-   In [1]: from bitmath import *
-
-   In [2]: ugly_number = MB(50).to_MiB() / 8.0
-
-   In [3]: print ugly_number
+   In [1]: ugly_number = MB(50).to_MiB() / 8.0
+   In [2]: print ugly_number
    5.96046447754MiB
 
 Now, let's use the ``format`` method to limit that to two digits of
@@ -148,28 +152,12 @@ precision:
 
 .. code-block:: python
 
-   In [7]: print ugly_number.format("{value:.2f}{unit}")
+   In [3]: print ugly_number.format("{value:.2f}{unit}")
    5.96MiB
 
-You may be asking yourself where these ``{value:.2f}`` and ``{unit}``
-strings came from. These are part of the `Format Specification
-Mini-Language
-<https://docs.python.org/2/library/string.html#format-specification-mini-language>`_
-which is part of the Python standard library. To be explicitly clear
-about what's going on here, let's break the first specifier
-(``{value:.2f}``) down into it's component parts::
-
-   {value:.2f}
-      ↑  ↑↑↑↑
-      |  |||\---- The "f" says to format this as a floating point type
-      |  ||\----- The 2 indicates we want 2 digits of precision (default is 6)
-      |  |\------ The '.' character must precede the precision specifier for floats
-      |  \------- The : separates the attribute name from the formatting specification
-      \---------- The name of the attribute to print
-
-The second specifier (``{unit}``) says to format the ``unit``
-attribute as a string (string is the defalt type when no type is
-given).
+By changing the **2** character, you increase or decreate the
+precision. Set it to **0** (``{value:.0f}``) and you have what
+effectively looks like an integer.
 
 
 Format All the Instance Attributes
@@ -180,6 +168,7 @@ of how an attribute may be referenced multiple times.
 
 .. code-block:: python
    :linenos:
+   :emphasize-lines: 4,15
 
    In [8]: longer_format = """Formatting attributes for %s
       ...: This instances prefix unit is {unit}, which is a {system} type unit
@@ -204,4 +193,39 @@ of how an attribute may be referenced multiple times.
    The instance is 50000000.0 bits large
    bytes/bits without trailing decimals: 6250000/50000000
 
-.. note:: On line **4** we print with 1 digit of precision, on line **15** we see the value has been rounded to **6.0**
+.. note:: On line **4** we print with 1 digit of precision, on line
+          **15** we see the value has been rounded to **6.0**
+
+.. _instances_mini_language:
+
+The Formatting Mini-Language
+****************************
+
+That is all you need to be on your way printing numbers with custom
+precision. If you want to learn a little bit more about using the
+formatting mini-language, read on.
+
+You may be asking yourself where these ``{value:.2f}`` and ``{unit}``
+strings came from. These are part of the `Format Specification
+Mini-Language
+<https://docs.python.org/2/library/string.html#format-specification-mini-language>`_
+which is part of the Python standard library. To be explicitly clear
+about what's going on here, let's break the first specifier
+(``{value:.2f}``) down into it's component parts::
+
+   {value:.2f}
+      ↑  ↑↑↑↑
+      |  |||\---- The "f" says to format this as a floating point type
+      |  ||\----- The 2 indicates we want 2 digits of precision (default is 6)
+      |  |\------ The '.' character must precede the precision specifier for floats
+      |  \------- The : separates the attribute name from the formatting specification
+      \---------- The name of the attribute to print
+
+The second specifier (``{unit}``) says to format the ``unit``
+attribute as a string (string is the defalt type when no type is
+given).
+
+.. seealso::
+
+   `Python String Format Cookbook <http://mkaz.com/2012/10/10/python-string-format/>`_
+      `Marcus Kazmierczak’s <http://mkaz.com/>`_ *excellent* introduction to string formatting

@@ -37,7 +37,7 @@ Contents
    instances.rst
    simple_examples.rst
    real_life_examples.rst
-   on_units.rst
+   appendices.rst
    copyright.rst
 
 
