@@ -34,7 +34,7 @@ functionality included in stdlibs `string.format
 <https://docs.python.org/2/library/string.html>`_.
 
 In discussion we will refer to the NIST units primarily. I.e., instead
-of "megabyte" we will refer to "mibibyte". The former is ``10^3 =
+of "megabyte" we will refer to "mebi". The former is ``10^3 =
 1,000,000`` bytes, whereas the second is ``2^20 = 1,048,576``
 bytes. When you see file sizes or transfer rates in your web browser,
 most of the time what you're really seeing are the base-2 sizes/rates.

@@ -154,12 +154,12 @@ In pure Python, this could also be written as:
    :linenos:
    :emphasize-lines: 3
 
-   In [1]: a_mibibyte = MiB(1)
+   In [1]: a_mebibyte = MiB(1)
 
-   In [2]: a_mibibyte_sized_kibibyte = KiB(bytes=a_mibibyte.bytes)
+   In [2]: a_mebibyte_sized_kibibyte = KiB(bytes=a_mebibyte.bytes)
 
-   In [3]: a_mibibyte == a_mibibyte_sized_kibibyte
+   In [3]: a_mebibyte == a_mebibyte_sized_kibibyte
    Out[3]: True
 
-   In [4]: print a_mibibyte, a_mibibyte_sized_kibibyte
+   In [4]: print a_mebibyte, a_mebibyte_sized_kibibyte
    1.0MiB 1024.0KiB

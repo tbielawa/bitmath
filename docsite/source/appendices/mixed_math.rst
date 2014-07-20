@@ -49,19 +49,13 @@ Operator
    operation would be addition, **+**.
 
 LHS
-   Left-hand side. In discussion this specifically refers to the
+   *Left-hand side*. In discussion this specifically refers to the
    operand on the left-hand side of the operator.
 
 RHS
-   Right-hand side. In discussion this specifically refers to the
+   *Right-hand side*. In discussion this specifically refers to the
    operand on the right-hand side of the operator.
 
-Cardinality, Cardinal
-   Formally, *a measure of the number of elements of a set*.
-
-   With respect to bitmath and mixed-math, the cardinality of an
-   instance is equivalent to the :ref:`value <instances_attributes>`
-   of the instance.
 
 
 Two bitmath operands
@@ -71,12 +65,37 @@ This section describes what happens when two bitmath instances are
 used as operands. There are three possible results from this type of
 operation.
 
-*Addition* and *subtraction*
-  The result will be of the type of the Left Hand Side (LHS).
+*Addition and subtraction*
+  The result will be of the type of the LHS.
 
 *Multiplication*
-   **Undefined**, therefore multiplication will result in a
-   :py:exc:`NotImplemented` exception being raised.
+   Supported, but yields strange results.
+
+.. code-block:: python
+   :linenos:
+   :emphasize-lines: 6,9
+
+   In [10]: first = MiB(5)
+
+   In [11]: second = kB(2)
+
+   In [12]: first * second
+   Out[12]: MiB(10000.0)
+
+   In [13]: (first * second).best_prefix()
+   Out[13]: GiB(9.765625)
+
+As we can see on lines **6** and **9**, multiplying even two
+relatively small quantities together (``MiB(5)`` and ``kB(2)``) yields
+quite large results.
+
+Internally, this is implemented as:
+
+.. math::
+
+   (5 \cdot 2^{20}) \cdot (2 \cdot 10^{3}) = 10,485,760,000 B
+
+   10,485,760,000 B \cdot \dfrac{1 MiB}{1,048,576 B} = 10,000 MiB
 
 *Division*
    The result will be a number type due to unit cancellation.
@@ -153,10 +172,10 @@ Equivalently, divorcing the bitmath instance from it's value:
    In [13]: print num + bm_value
    66.0
 
-What it all boils down to is this: if you don't provide a unit then
-bitmath won't give you one back. There is no way for bitmath to guess
+What it all boils down to is this: if we don't provide a unit then
+bitmath won't give us one back. There is no way for bitmath to guess
 what unit the operand was *intended* to carry. Therefore, the behavior
-of bitmath is **conservative**. It will meet you half way and do the
+of bitmath is **conservative**. It will meet us half way and do the
 math, but it will not return a unit in the result.
 
 
@@ -183,8 +202,8 @@ property. I.e., the placement of the operands **is**
 significant. Additionally, there is a semantic difference in
 division. Dividing a quantity (e.g. ``MiB(100)``) by a constant
 (``10``) makes complete sense. Conceptually (in the domain of
-bitmath), the intention of division is to separate a measured quantity
-into a given number of equal sized parts.
+bitmath), the intention of ``MiB(100) / 10)`` is to separate
+``MiB(10)`` into **10** equal sized parts.
 
 .. code-block:: python
 

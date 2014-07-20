@@ -36,7 +36,8 @@ Math works mostly like you expect it to, except for a few edge-cases:
 * Operations where two bitmath types would cancel out (such as
   dividing two bitmath types)
 
-* Multiplying two bitmath instances together is **not supported at all**
+* Multiplying two bitmath instances together is supported, but the
+  results may not make much sense.
 
 
 See :ref:`Appendix: Rules for Math <appendix_math>` for a discussion
@@ -60,11 +61,11 @@ of the behavior of bitmath and number types.
 +----------------+-------------------+---------------------+---------------------------------------+
 | Subtraction    | ``num`` - ``bm``  | ``type(num)``       | ``10 - KiB(1)`` = ``9.0``             |
 +----------------+-------------------+---------------------+---------------------------------------+
-| Multiplication | ``bm1`` * ``bm2`` | ✕                   | ✕                                     |
+| Multiplication | ``bm1`` * ``bm2`` | ``type(bm1)``       | ``KiB(1) * KiB(2)`` = ``2048.0KiB``   |
 +----------------+-------------------+---------------------+---------------------------------------+
 | Multiplication | ``bm`` * ``num``  | ``type(bm)``        | ``KiB(2) * 3`` = ``6.0KiB``           |
 +----------------+-------------------+---------------------+---------------------------------------+
-| Multiplication | ``num`` * ``bm``  | ``type(num)``       | ``2 * KiB(3)`` = ``6.0``              |
+| Multiplication | ``num`` * ``bm``  | ``type(bm)``        | ``2 * KiB(3)`` = ``6.0KiB``           |
 +----------------+-------------------+---------------------+---------------------------------------+
 | Division       | ``bm1`` / ``bm2`` | ``type(num)``       | ``KiB(1) / KiB(2)`` = ``0.5``         |
 +----------------+-------------------+---------------------+---------------------------------------+
