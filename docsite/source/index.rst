@@ -1,10 +1,14 @@
 .. image:: https://api.travis-ci.org/tbielawa/bitmath.png
    :target: https://travis-ci.org/tbielawa/bitmath/
    :align: right
+   :height: 19
+   :width: 77
 
 .. image:: https://coveralls.io/repos/tbielawa/bitmath/badge.png?branch=master
    :target: https://coveralls.io/r/tbielawa/bitmath?branch=master
    :align: right
+   :height: 19
+   :width: 77
 
 
 bitmath
@@ -49,6 +53,7 @@ Contents
    instances.rst
    simple_examples.rst
    real_life_examples.rst
+   contributing.rst
    appendices.rst
    copyright.rst
 

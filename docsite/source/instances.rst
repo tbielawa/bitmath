@@ -8,6 +8,8 @@ Instances
    :local:
 
 
+.. _instances_attributes:
+
 Instance Attributes
 *******************
 

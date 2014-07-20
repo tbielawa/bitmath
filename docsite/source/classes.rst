@@ -124,7 +124,7 @@ rich implementation of standard Python operations. You can use bitmath
 objects in **almost all** of the places you would normally use an
 integer or a float. See the :ref:`Table of Supported Operations
 <simple_examples_supported_operations>` and :ref:`Appendix: Rules for
-Mixed Math <appendix_mixed_math>` for more details.
+Math <appendix_math>` for more details.
 
 Class Methods
 *************
