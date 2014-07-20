@@ -510,7 +510,7 @@ is to be supported.object.__complex__(self)
             return (type(self))(bytes=total_bytes)
 
     def __sub__(self, other):
-        """Supported operations with result types:
+        """Subtraction: Supported operations with result types:
 
 - bm - bm = bm
 - bm - num = num
@@ -525,7 +525,7 @@ is to be supported.object.__complex__(self)
             return (type(self))(bytes=total_bytes)
 
     def __mul__(self, other):
-        """Supported operations with result types:
+        """Multiplication: Supported operations with result types:
 
 - bm1 * bm2 = bm1
 - bm * num = bm
@@ -537,9 +537,9 @@ is to be supported.object.__complex__(self)
             return (type(self))(bytes=result)
         else:
             # bm1 * bm2
-            #
-            # Need to figure out exactly how to calculate this.
-            return NotImplemented
+            _other = other.value * other.base ** other.power
+            _self = self.prefix_value * self._base ** self._power
+            return (type(self))(bytes=_other * _self)
 
     """The division operator (/) is implemented by these methods. The
 __truediv__() method is used when __future__.division is in effect,
@@ -548,7 +548,7 @@ defined, the object will not support division in the alternate
 context; TypeError will be raised instead."""
 
     def __div__(self, other):
-        """Supported operations with result types:
+        """Division: Supported operations with result types:
 
 - bm1 / bm2 = num
 - bm / num = bm
@@ -604,8 +604,8 @@ RTYPE. E.g., 3 * MiB(3), or 10 / GB(42)
         return other - self.value
 
     def __rmul__(self, other):
-        # num * bm = num
-        return other * self.value
+        # num * bm = bm
+        return self * other
 
     def __rdiv__(self, other):
         # num / bm = num
