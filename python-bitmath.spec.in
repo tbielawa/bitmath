@@ -28,13 +28,16 @@ various units. Examples include: converting between SI and NIST prefix
 units (GiB to kB), converting between units of the same type (SI to
 SI, or NIST to NIST), basic arithmetic operations (subtracting 42KiB
 from 50GiB), and rich comparison operations (1024 Bytes == 1KiB),
-bitwise operations, sorting, and automatic best human-readable prefix
-selection.
+bitwise operations, sorting, automatic best human-readable prefix
+selection, and completely customizable formatting.
 
 In addition to the conversion and math operations, bitmath provides
 human readable representations of values which are suitable for use in
 interactive shells as well as larger scripts and applications.
 
+bitmath is thoroughly unittested, with over 100 individual tests (a
+number which is always increasing). bitmaths test-coverage is almost
+always at 100%.
 
 %check
 nosetests -v
@@ -53,6 +56,10 @@ nosetests -v
 %doc README.md LICENSE
 
 %changelog
+* Sat Jul 19 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.7-1
+- Lots of documentation and unittest updates
+- See GitHub Milestone 2: 1.0.7 for a list of closed issues
+
 * Mon Jul 14 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.6-1
 - New instance properties
 - Custom representation formatting method. #9
