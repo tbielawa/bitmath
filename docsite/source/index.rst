@@ -34,13 +34,17 @@ functionality included in stdlibs `string.format
 <https://docs.python.org/2/library/string.html>`_.
 
 In discussion we will refer to the NIST units primarily. I.e., instead
-of "megabyte" we will refer to "mebi". The former is ``10^3 =
+of "megabyte" we will refer to "mebibyte". The former is ``10^3 =
 1,000,000`` bytes, whereas the second is ``2^20 = 1,048,576``
 bytes. When you see file sizes or transfer rates in your web browser,
 most of the time what you're really seeing are the base-2 sizes/rates.
 
+**Don't Forget!** The source for bitmath `is available on GitHub
+<https://github.com/tbielawa/bitmath>`_.
 
-**Don't Forget!** The source for bitmath `is available on GitHub <https://github.com/tbielawa/bitmath>`_.
+OH! And did we mention it has 100+ unittests? `Check them out for
+yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
+
 
 Contents
 ########

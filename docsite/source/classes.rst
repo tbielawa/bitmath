@@ -71,7 +71,7 @@ There are **24** other classes available, representing all the prefix
 units from **k** through **e** (*kilo/kibi* through *exa/exbi*).
 
 Classes with **'i'** in their names are **NIST** type classes. They
-were defined by the National Institute of Standards and Technolog
+were defined by the National Institute of Standards and Technology
 (NIST) as the 'Binary Prefix Units'. They are defined by increasing
 powers of 2.
 

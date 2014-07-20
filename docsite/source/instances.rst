@@ -123,6 +123,17 @@ classes. You can even ``to_THING()`` an instance into itself again:
 best_prefix()
 =============
 
+.. py:method:: best_prefix([system=None])
+
+   Return an equivalent instance which uses the best human-readable
+   prefix-unit to represent it.
+
+   :param int system: one of :py:const:`bitmath.NIST` or :py:const:`bitmath.SI`
+   :return: An equivalent :py:class:`bitmath` instance
+   :rtype: :py:class:`bitmath`
+   :raises ValueError: if an invalid unit system is given for ``system``
+
+
 The :py:meth:`best_prefix` method returns the result of converting a
 bitmath instance into an equivalent instance using a prefix unit that
 better represents the original value. Another way to think of this is
@@ -187,11 +198,26 @@ And now using a custom formatting definition:
    Rate: 114.123 KiB/sec
 
 
+The :py:meth:`format` method also allows you to select a **preferred
+prefix-unit system** for the result.
+
+In the following example we'll make a ``GiB`` instance (this is a NIST
+unit) and then apply :py:meth:`best_prefix` to it.
+
 
 .. _instances_format:
 
 format()
 ========
+
+.. py:method:: format(fmt_spec)
+
+   Return a custom-formatted string to represent this instance.
+
+   :param str fmt_spec: A valid formatting mini-language string
+   :return: The custom formatted representation
+   :rtype: ``string``
+
 
 bitmath instances come with a verbose built-in string representation:
 
@@ -205,13 +231,13 @@ bitmath instances come with a verbose built-in string representation:
 However, for instances which aren't whole numbers (as in ``MiB(1/3.0)
 == 0.333333333333MiB``, etc), their representation can be undesirable.
 
-The ``format`` method gives you complete control over the instance's
-representation. All of the :ref:`instances attributes
+The :py:meth:`format` method gives you complete control over the
+instance's representation. All of the :ref:`instances attributes
 <instance_attributes>` are available to use when choosing a
 representation.
 
 The following sections describe some common use cases of the
-``format`` method as well as provide a :ref:`brief tutorial
+:py:meth:`format` method as well as provide a :ref:`brief tutorial
 <instances_mini_language>` of the greater Python formatting
 meta-language.
 
@@ -236,8 +262,8 @@ First, for reference, the default formatting:
    In [2]: print ugly_number
    5.96046447754MiB
 
-Now, let's use the ``format`` method to limit that to two digits of
-precision:
+Now, let's use the :py:meth:`format` method to limit that to two
+digits of precision:
 
 .. code-block:: python
 

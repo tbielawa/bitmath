@@ -163,7 +163,8 @@ Let's look at an example of this in action:
    In [10]: print num + bm
    66.0
 
-Equivalently, divorcing the bitmath instance from it's value:
+Equivalently, divorcing the bitmath instance from it's value (this is
+coercion):
 
 .. code-block:: python
 
@@ -194,7 +195,6 @@ numeric operand as a constant. Here's an example demonstrating this.
 
    In [3]: KiB(43) * 10
    Out[3]: KiB(430.0)
-
 
 
 **Division**, however, *does not* have this commutative

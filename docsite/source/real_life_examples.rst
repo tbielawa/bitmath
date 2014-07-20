@@ -69,7 +69,7 @@ human-readable form:
 
 That's great, if you have normal radio-length songs. But how many of
 our `favorite jam-band's <https://archive.org/details/moe>`_ 15-30+
-minute long songs could we fit on this iPod? Let's pretend we did the
+minute-long songs could we fit on this iPod? Let's pretend we did the
 math and the average audio file worked out to be **18.6 MiB** (19.5
 MB) large.
 
@@ -90,7 +90,7 @@ average-quality songs on our iPod.
 Printing Human-Readable File Sizes in Python
 ********************************************
 
-In a Python script or intrepreter we may wish to print out file sizes
+In a Python script or interpreter we may wish to print out file sizes
 in something other than bytes (which is what ``os.path.getsize``
 returns). We can use ``bitmath`` to do that too:
 
@@ -113,6 +113,11 @@ returns). We can use ``bitmath`` to do that too:
    test_representation.py - 0.744140625KiB
    test_to_Type_conversion.py - 2.2119140625KiB
 
+.. seealso::
+
+   :ref:`Instance Formatting <instances_format>`
+      How to print results in a *prettier* format
+
 
 
 Calculating Linux BDP and TCP Window Scaling
@@ -133,11 +138,13 @@ networking/socket buffers.
 
 **System-Wide Memory Limits**
 
-- ``net.ipv4.tcp_mem`` - **Pages** - Three Value Vector - The ``max`` field of the parameter is the number of **memory pages** allowed for queueing by all TCP sockets.
+- ``net.ipv4.tcp_mem`` - **Pages** - Three Value Vector - The ``max``
+  field of the parameter is the number of **memory pages** allowed for
+  queueing by all TCP sockets.
 
 **Per-Socket Buffers**
 
-Per-socket buffer sizes must not exceede the core networking buffer sizes.
+Per-socket buffer sizes must not exceed the core networking buffer sizes.
 
 - ``net.ipv4.tcp_rmem`` - **Bytes** - Three Field Vector - The ``max`` field sets the size of the TCP receive buffer
 - ``net.ipv4.tcp_wmem`` - **Bytes** - Three Field Vector - As above, but for the write buffer
@@ -177,7 +184,7 @@ Remember 1 Byte = 8 Bits:
 
 Our equivalent transfer rate is 0.125GB/sec.
 
-- Convert our RTT from miliseconds into seconds
+- Convert our RTT from milliseconds into seconds
 
 Remember 1ms = 10\ :sup:`-3`\ s:
 
