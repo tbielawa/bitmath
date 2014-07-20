@@ -156,12 +156,12 @@ class TestBasicMath(TestCase):
     ##################################################################
     # mul
     def test_bitmath_mul_bitmath_is_bitmath(self):
-        """bitmath * bitmath = unsupported"""
+        """bitmath * bitmath = bitmath"""
         bm1 = bitmath.KiB(1)
         bm2 = bitmath.KiB(2)
-        test_values = {'input': bm1, 'mul': bm2}
-        with self.assertRaises(TypeError):
-            result = bm1 * bm2
+        result = bm1 * bm2
+        self.assertEqual(result, bitmath.KiB(2048.0))
+        self.assertIs(type(result), bitmath.KiB)
 
     def test_bitmath_mul_number_is_bitmath(self):
         """bitmath * number = bitmath"""
@@ -172,12 +172,12 @@ class TestBasicMath(TestCase):
         self.assertIsInstance(result, bitmath.Byte)
 
     def test_number_mul_bitmath_is_number(self):
-        """number * bitmath = number"""
+        """number * bitmath = bitmath"""
         num1 = 2
         bm1 = bitmath.KiB(1)
         result = num1 * bm1
-        self.assertEqual(result, 2.0)
-        self.assertIsInstance(result, Number)
+        self.assertEqual(result, bitmath.KiB(2.0))
+        self.assertIs(type(result), bitmath.KiB)
 
     ##################################################################
     # div
