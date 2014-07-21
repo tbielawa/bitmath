@@ -131,6 +131,12 @@ can during a measured round-trip-time without sending more than can be
 processed. To accomplish this we are resizing our kernel read/write
 networking/socket buffers.
 
+We will see two ways of doing this. The tedious manual way, and the
+way with bitmath.
+
+The Hard Way
+============
+
 **Core Networking Values**
 
 - ``net.core.rmem_max`` - **Bytes** - Single Value - Default receive buffer size
@@ -214,10 +220,13 @@ Remember 1GB = 10\ :sup:`9`\ B
 
 Our BDP is 24875 bytes (or about 24.3KiB)
 
-**Calculate with bitmath**
+
+The :py:mod:`bitmath` way
+=========================
+
 
 All of this math can be done much quicker (and with greater accuracy)
-using the bitmath library. Let's see how:
+using the :py:mod:`bitmath` library. Let's see how:
 
 .. code-block:: python
    :linenos:
@@ -234,7 +243,8 @@ using the bitmath library. Let's see how:
 
    KiB(24.2919921875)
 
-**Note:** To avoid integer rounding during division, don't forget to divide by ``8.0`` rather than ``8``
+.. note::
+   To avoid integer rounding during division, don't forget to divide by ``8.0`` rather than ``8``
 
 We could shorten that even further:
 
