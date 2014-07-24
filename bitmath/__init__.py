@@ -36,9 +36,10 @@ man 7 units (from the Linux Documentation Project 'man-pages' package)
 
 import math
 import numbers
+import os.path
 import sys
 
-__all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb']
+__all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb', 'getsize']
 
 # Python 3.x compat
 if sys.version > '3':
@@ -844,3 +845,15 @@ class Pb(Bit):
 class Eb(Bit):
     def _setup(self):
         return (10, 18, 'Eb')
+
+
+######################################################################
+# Utility functions
+def getsize(path, system=NIST):
+    """Return a bitmath instance in the best human-readable representation
+of the file size at `path`. Optionally, provide a preferred unit
+system by setting `system` to either `bitmath.NIST` (default) or
+`bitmath.SI`."""
+    _path = os.path.realpath(path)
+    size_bytes = os.path.getsize(_path)
+    return Byte(size_bytes).best_prefix(system=system)
