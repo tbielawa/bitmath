@@ -34,8 +34,10 @@ man 7 units (from the Linux Documentation Project 'man-pages' package)
 """
 
 
+import fnmatch
 import math
 import numbers
+import os
 import os.path
 import sys
 
@@ -46,8 +48,8 @@ if sys.version > '3':
     long = int
 
 # Constants for refering to prefix systems
-NIST = int(0)
-SI = int(1)
+NIST = int(2)
+SI = int(10)
 
 SI_PREFIXES = ['k', 'M', 'G', 'T', 'P', 'E']
 SI_STEPS = {
@@ -857,3 +859,33 @@ system by setting `system` to either `bitmath.NIST` (default) or
     _path = os.path.realpath(path)
     size_bytes = os.path.getsize(_path)
     return Byte(size_bytes).best_prefix(system=system)
+
+
+def listdir(search_base, followlinks=False, system=NIST):
+    """This is a generator which recurses the directory tree
+`search_base`, yielding 2-tuples of:
+
+* The absolute path to a discovered file and a bitmath instance
+representing the "apparent size" of the file.
+
+    - `search_base` - The directory to begin walking down.
+    - `followlinks` - Whether or not to follow symbolic links
+    - `system` - Provide a preferred unit system by setting `system`
+      to either `bitmath.NIST` (default) or `bitmath.SI`.
+
+NOTE: This function does NOT return tuples for directory entities.
+
+    """
+    for root, dirs, files in os.walk(search_base, followlinks=followlinks):
+        for name in files:
+            _path = os.path.realpath(os.path.join(root, name))
+            if followlinks:
+                if os.path.isdir(_path):
+                    pass
+                else:
+                    yield (_path, getsize(_path, system=system))
+            else:
+                if os.path.isdir(_path) or os.path.islink(_path):
+                    pass
+                else:
+                    yield (_path, getsize(_path, system=system))
