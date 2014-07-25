@@ -160,7 +160,7 @@ Same assumptions as in test_listdir_symlinks_nofollow.
                                         followlinks=True,
                                         relpath=True))
 
-        # There should two files discovered
+        # There should be two files discovered
         self.assertEqual(len(contents), int(2))
 
         # Ensure the returned path matches the expected path
@@ -177,11 +177,10 @@ Same assumptions as in test_listdir_symlinks_nofollow.
 Same assumptions as in test_listdir_symlinks_follow. Difference is
 that the 0th item of the tuple returns a fully qualified path.
         """
-        # Call with relpath=True so the paths are easier to verify
         contents = list(bitmath.listdir('./tests/listdir_symlinks/',
                                         followlinks=True))
 
-        # There should two files discovered
+        # There should be two files discovered
         self.assertEqual(len(contents), int(2))
 
         # Ensure the returned path matches the expected path and
@@ -193,3 +192,35 @@ that the 0th item of the tuple returns a fully qualified path.
         # Ensure the measured size is what we expect
         self.assertEqual(contents[0][1], bitmath.Byte(10.0))
         self.assertEqual(contents[1][1], bitmath.Byte(10.0))
+
+    def test_listdir_filtering_nosymlinks(self):
+        """listdir: no symbolic links in tree measures right with a filter
+
+Same assumptions as test_listdir_nosymlinks."""
+        # Call with relpath=True so the paths are easier to verify
+        contents = list(bitmath.listdir('./tests/listdir_nosymlinks/',
+                                        relpath=True,
+                                        # Should only find 1 file, 1024_byte_file
+                                        filter='1024*'))
+
+        # There should be one file discovered
+        self.assertEqual(len(contents), int(1))
+
+        # Ensure the returned path matches the expected path
+        self.assertEqual(contents[0][0], 'tests/listdir_nosymlinks/depth1/depth2/1024_byte_file')
+
+        # Ensure the measured size is what we expect
+        self.assertEqual(contents[0][1], bitmath.KiB(1.0))
+
+    def test_listdir_filtering_empty_match_nosymlinks(self):
+        """listdir: filtering with nosymlinks returns 0 matches for a filter
+
+Same assumptions as test_listdir_nosymlinks."""
+        # Call with relpath=True so the paths are easier to verify
+        contents = list(bitmath.listdir('./tests/listdir_nosymlinks/',
+                                        relpath=True,
+                                        # Should find no matches
+                                        filter='*notafile*'))
+
+        # There should be one file discovered
+        self.assertEqual(len(contents), int(0))
