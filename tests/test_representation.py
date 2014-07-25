@@ -51,6 +51,8 @@ class TestRepresentation(TestCase):
         self.kB_unit = 'kB'
         self.kb_system = 'SI'
 
+        self.kib_str_changed = 'KiB 1.000'
+
     def test_kB_unit(self):
         """kB(1).unit is kB"""
         self.assertEqual(self.kib.unit, self.kib_unit)
@@ -116,3 +118,14 @@ class TestRepresentation(TestCase):
         instance = bitmath.KiB(12345).to_MiB()
         actual_result = instance.format(fmt_str)
         self.assertEqual(expected_result, actual_result)
+
+    def test_change_format_string(self):
+        """KiB(1.0) looks right if changing fmt str in bitmath.KiB
+
+NOTE: This does NOT make use of the bitmath.format context
+manager. There is a separate test suite for that: test_context_manager"""
+        orig_fmt_str = bitmath.format_string
+        bitmath.format_string = "{unit} {value:.3f}"
+        kib = bitmath.KiB(1)
+        self.assertEqual(self.kib_str_changed, str(kib))
+        bitmath.format_string = orig_fmt_str

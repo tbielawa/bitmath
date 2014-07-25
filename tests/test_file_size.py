@@ -207,7 +207,8 @@ Same assumptions as test_listdir_nosymlinks."""
         self.assertEqual(len(contents), int(1))
 
         # Ensure the returned path matches the expected path
-        self.assertEqual(contents[0][0], 'tests/listdir_nosymlinks/depth1/depth2/1024_byte_file')
+        self.assertEqual(contents[0][0],
+                         'tests/listdir_nosymlinks/depth1/depth2/1024_byte_file')
 
         # Ensure the measured size is what we expect
         self.assertEqual(contents[0][1], bitmath.KiB(1.0))
