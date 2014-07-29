@@ -1,1 +1,3 @@
 python-coveralls
+nose
+distribute

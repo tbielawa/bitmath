@@ -155,7 +155,6 @@ ci-unittests:
 	@echo "# Running Unit Tests in virtualenv"
 	@echo "#############################################"
 	. $(NAME)env/bin/activate && nosetests -v --with-coverage --cover-html --cover-package=bitmath tests/
-	. $(NAME)env/bin/activate && nosetests-3.3 -v --with-coverage --cover-package=bitmath tests/
 
 ci-list-deps:
 	@echo "#############################################"
@@ -173,7 +172,50 @@ ci-pyflakes:
 	@echo "#################################################"
 	@echo "# Running Pyflakes Compliance Tests in virtualenv"
 	@echo "#################################################"
-	. $(NAME)env/bin/activate && pep8 --ignore=E501,E121,E124 bitmath/
+	. $(NAME)env/bin/activate && pyflakes bitmath/
 
 ci: clean uniquetestnames virtualenv ci-list-deps ci-pep8 ci-pyflakes ci-unittests
 	:
+
+virtualenv3:
+	@echo ""
+	@echo "#############################################"
+	@echo "# Creating a virtualenv"
+	@echo "#############################################"
+	virtualenv $(NAME)env3 --python=python3.3
+	. $(NAME)env3/bin/activate && pip install -r requirements.txt
+	. $(NAME)env3/bin/activate && pip install pep8 nose mock coverage nose-cover3
+
+ci-unittests3:
+	@echo ""
+	@echo "#############################################"
+	@echo "# Running Unit Tests in virtualenv"
+	@echo "# Using python: $(shell ./bitmathenv3/bin/python3.3 --version)"
+	@echo "#############################################"
+	. $(NAME)env3/bin/activate && nosetests-3.3 -v --with-coverage --cover-html --cover-package=bitmath tests/
+
+ci-list-deps3:
+	@echo ""
+	@echo "#############################################"
+	@echo "# Listing all pip deps"
+	@echo "#############################################"
+	. $(NAME)env3/bin/activate && pip freeze
+
+ci-pep83:
+	@echo ""
+	@echo "#############################################"
+	@echo "# Running PEP8 Compliance Tests in virtualenv"
+	@echo "#############################################"
+	. $(NAME)env3/bin/activate && pep8 --ignore=E501,E121,E124 bitmath/
+
+ci-pyflakes3:
+	@echo ""
+	@echo "#################################################"
+	@echo "# Running Pyflakes Compliance Tests in virtualenv"
+	@echo "#################################################"
+	. $(NAME)env3/bin/activate && pyflakes bitmath/
+
+ci3: clean uniquetestnames virtualenv3 ci-list-deps3 ci-pep83 ci-pyflakes3 ci-unittests3
+	:
+
+ci-all: ci ci3
