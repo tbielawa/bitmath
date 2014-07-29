@@ -30,7 +30,7 @@ as such:
    MB(6.25)
 
 This tells us that if our ISP advertises **50Mbps** we can expect to
-see download rates of nearly **6MiB/sec**.
+see download rates of over **6MB/sec**.
 
 1. *Assuming your ISP follows the common industry practice of using SI (base-10) units to describe file sizes/rates*
 
