@@ -1,4 +1,4 @@
-[report]
+[run]
 include = bitmath/__init__.py
 [report]
 exclude_lines =

@@ -54,10 +54,10 @@ class TestFutureMath(TestCase):
         self.assertIsInstance(result, bitmath.Byte)
 
     # Disabling this test until https://github.com/tbielawa/bitmath/issues/2 is fixed
-    # def test_number_div_bitmath_is_number(self):
-    #     """truediv: number / bitmath = number"""
-    #     num1 = 2
-    #     bm1 = bitmath.KiB(1)
-    #     result = num1 / bm1
-    #     self.assertEqual(result, 2.0)
-    #     self.assertIsInstance(result, self.Number)
+    def test_number_div_bitmath_is_number(self):
+        """truediv: number / bitmath = number"""
+        num1 = 2
+        bm1 = bitmath.KiB(1)
+        result = num1 / bm1
+        self.assertEqual(result, 2.0)
+        self.assertIsInstance(result, Number)
