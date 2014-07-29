@@ -111,6 +111,14 @@ class TestRepresentation(TestCase):
         actual_result = third_MiB.format(fmt_str)
         self.assertEqual(expected_result, actual_result)
 
+    def test_print_scientific_four_digits_precision(self):
+        """MiB(102.4754) prints out with four digits of precision"""
+        expected_result = "102.5MiB"
+        fmt_str = "{value:.4g}{unit}"
+        third_MiB = bitmath.MiB(102.4754)
+        actual_result = third_MiB.format(fmt_str)
+        self.assertEqual(expected_result, actual_result)
+
     def test_longer_formatting_string(self):
         """KiB(12345) as a MiB (12.0556640625) truncates to 5 digits"""
         expected_result = "12.05566 MiB"
@@ -129,3 +137,11 @@ manager. There is a separate test suite for that: test_context_manager"""
         kib = bitmath.KiB(1)
         self.assertEqual(self.kib_str_changed, str(kib))
         bitmath.format_string = orig_fmt_str
+
+    def test_print_byte_singular(self):
+        """Byte(1.0) prints out units in singular form"""
+        expected_result = "1B"
+        fmt_str = "{value:.2g}{unit}"
+        one_Byte = bitmath.Byte(1.0)
+        actual_result = one_Byte.format(fmt_str)
+        self.assertEqual(expected_result, actual_result)

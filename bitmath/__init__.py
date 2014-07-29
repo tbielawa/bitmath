@@ -77,7 +77,7 @@ NIST_STEPS = {
 }
 
 format_string = "{value:.3f} {unit}"
-
+format_plural = False
 
 ######################################################################
 # First, the bytes...
@@ -121,7 +121,7 @@ converted *to* this unit"""
         return value / float(self._unit_value)
 
     def _setup(self):
-        return (2, 0, 'B')
+        return (2, 0, 'B', 'Bytes')
 
     def _do_setup(self):
         """Setup basic parameters for this class"""
@@ -131,7 +131,7 @@ power=10 represents 2^10, which is the NIST Binary Prefix for 1 Kibibyte.
 
 Likewise, for the SI prefix classes `base` will be 10, and the `power`
 for the Kilobyte is 3."""
-        (self._base, self._power, self._name) = self._setup()
+        (self._base, self._power, self._name_singular, self._name_plural) = self._setup()
         self._unit_value = self._base ** self._power
 
     def _norm(self, value):
@@ -158,10 +158,39 @@ type"""
     @property
     def unit(self):
         """Return the string that is this instances prefix unit name
+in agreement with this instance value (singular or plural). Following
+the convention that only 1 is singular.
+
+For instance, KiB(1).unit_quantified == 'KiB', Byte(0).unit_quantified ==
+'Bytes', Byte(1).unit_quantified == 'Byte', Byte(1.1).unit_quantified ==
+'Bytes', and Gb(2).unit_quantified == 'Gb'"""
+        if self.prefix_value == 1:
+            # If it's a '1', return it singular, no matter what
+            return self._name_singular
+        elif format_plural:
+            # Pluralization requested
+            return self._name_plural
+        else:
+            # Pluralization NOT requested, and the value is not 1
+            return self._name_singular
+
+    @property
+    def unit_plural(self):
+        """Return the string that is this instances prefix unit name in the
+plural form.
+
+For instance, KiB(1).unit_plural == 'KiB', Byte(1024).unit_plural == 'Bytes',
+and Gb(1).unit_plural == 'Gb'"""
+        return self._name_plural
+
+    @property
+    def unit_singular(self):
+        """Return the string that is this instances prefix unit name in the
+singular form.
 
 For instance, KiB(1).unit == 'KiB', Byte(1024).unit == 'Byte', and
 Gb(1).unit == 'Gb'"""
-        return self._name
+        return self._name_singular
 
     @property
     def power(self):
@@ -233,9 +262,8 @@ KiB(1024.0)
 
     def __repr__(self):
         """Representation of this object as you would expect to see in an
-intrepreter"""
-        return "%s(%s)" % \
-            (self._name, self.prefix_value)
+interpreter"""
+        return self.format("{unit_singular}({value})")
 
     def __str__(self):
         """String representation of this object"""
@@ -253,7 +281,9 @@ supplied syntax"""
             'power': self.power,
             'system': self.system,
             'unit': self.unit,
-            'value': self.value,
+            'unit_plural': self.unit_plural,
+            'unit_singular': self.unit_singular,
+            'value': self.value
         }
 
         return fmt.format(**_fmt_params)
@@ -712,64 +742,64 @@ bit of x AND of y is 0, otherwise it's 1."""
 # NIST Prefixes for Byte based types
 class KiB(Byte):
     def _setup(self):
-        return (2, 10, 'KiB')
+        return (2, 10, 'KiB', 'KiBs')
 
 
 class MiB(Byte):
     def _setup(self):
-        return (2, 20, 'MiB')
+        return (2, 20, 'MiB', 'MiBs')
 
 
 class GiB(Byte):
     def _setup(self):
-        return (2, 30, 'GiB')
+        return (2, 30, 'GiB', 'GiBs')
 
 
 class TiB(Byte):
     def _setup(self):
-        return (2, 40, 'TiB')
+        return (2, 40, 'TiB', 'TiBs')
 
 
 class PiB(Byte):
     def _setup(self):
-        return (2, 50, 'PiB')
+        return (2, 50, 'PiB', 'PiBs')
 
 
 class EiB(Byte):
     def _setup(self):
-        return (2, 60, 'EiB')
+        return (2, 60, 'EiB', 'EiBs')
 
 
 ######################################################################
 # SI Prefixes for Byte based types
 class kB(Byte):
     def _setup(self):
-        return (10, 3, 'kB')
+        return (10, 3, 'kB', 'kBs')
 
 
 class MB(Byte):
     def _setup(self):
-        return (10, 6, 'MB')
+        return (10, 6, 'MB', 'MBs')
 
 
 class GB(Byte):
     def _setup(self):
-        return (10, 9, 'GB')
+        return (10, 9, 'GB', 'GBs')
 
 
 class TB(Byte):
     def _setup(self):
-        return (10, 12, 'TB')
+        return (10, 12, 'TB', 'TBs')
 
 
 class PB(Byte):
     def _setup(self):
-        return (10, 15, 'PB')
+        return (10, 15, 'PB', 'PBs')
 
 
 class EB(Byte):
     def _setup(self):
-        return (10, 18, 'EB')
+        return (10, 18, 'EB', 'EBs')
 
 
 ######################################################################
@@ -781,7 +811,7 @@ class Bit(Byte):
         self.prefix_value = self._to_prefix_value(self._bit_value)
 
     def _setup(self):
-        return (2, 0, 'B')
+        return (2, 0, 'b', 'Bits')
 
     def _norm(self, value):
         """Normalize the input value into the fundamental unit for this prefix
@@ -794,64 +824,64 @@ type"""
 # NIST Prefixes for Bit based types
 class Kib(Bit):
     def _setup(self):
-        return (2, 10, 'Kib')
+        return (2, 10, 'Kib', 'Kibs')
 
 
 class Mib(Bit):
     def _setup(self):
-        return (2, 20, 'Mib')
+        return (2, 20, 'Mib', 'Mibs')
 
 
 class Gib(Bit):
     def _setup(self):
-        return (2, 30, 'Gib')
+        return (2, 30, 'Gib', 'Gibs')
 
 
 class Tib(Bit):
     def _setup(self):
-        return (2, 40, 'Tib')
+        return (2, 40, 'Tib', 'Tibs')
 
 
 class Pib(Bit):
     def _setup(self):
-        return (2, 50, 'Pib')
+        return (2, 50, 'Pib', 'Pibs')
 
 
 class Eib(Bit):
     def _setup(self):
-        return (2, 60, 'Eib')
+        return (2, 60, 'Eib', 'Eibs')
 
 
 ######################################################################
 # SI Prefixes for Bit based types
 class kb(Bit):
     def _setup(self):
-        return (10, 3, 'kb')
+        return (10, 3, 'kb', 'kbs')
 
 
 class Mb(Bit):
     def _setup(self):
-        return (10, 6, 'Mb')
+        return (10, 6, 'Mb', 'Mbs')
 
 
 class Gb(Bit):
     def _setup(self):
-        return (10, 9, 'Gb')
+        return (10, 9, 'Gb', 'Gbs')
 
 
 class Tb(Bit):
     def _setup(self):
-        return (10, 12, 'Tb')
+        return (10, 12, 'Tb', 'Tbs')
 
 
 class Pb(Bit):
     def _setup(self):
-        return (10, 15, 'Pb')
+        return (10, 15, 'Pb', 'Pbs')
 
 
 class Eb(Bit):
     def _setup(self):
-        return (10, 18, 'Eb')
+        return (10, 18, 'Eb', 'Ebs')
 
 
 ######################################################################
@@ -917,9 +947,28 @@ def listdir(search_base, followlinks=False, filter='*',
 
 
 @contextlib.contextmanager
-def format(fmt_str):
+def format(fmt_str=None, plural=False):
+    """Context manager for printing bitmath instances.
+
+``fmt_str`` - a formatting mini-language compat formatting string. See
+the @properties (above) for a list of available items.
+
+``plural`` - True enables printing instances with 's's if they're
+plural. False (default) prints them as singular (no trailing 's')
+"""
     import bitmath
-    orig_fmt_str = bitmath.format_string
-    bitmath.format_string = fmt_str
+    if plural:
+        orig_fmt_plural = bitmath.format_plural
+        bitmath.format_plural = True
+
+    if fmt_str:
+        orig_fmt_str = bitmath.format_string
+        bitmath.format_string = fmt_str
+
     yield
-    bitmath.format_string = orig_fmt_str
+
+    if plural:
+        bitmath.format_plural = orig_fmt_plural
+
+    if fmt_str:
+        bitmath.format_string = orig_fmt_str

@@ -150,6 +150,7 @@ Example:
        ...: This instances prefix unit is {unit}, which is a {system} type unit
        ...: The unit value is {value}
        ...: This value can be truncated to just 1 digit of precision: {value:.1f}
+       ...: This value can be truncated to just 2 significant digits: {value:.2g}
        ...: In binary this looks like: {binary}
        ...: The prefix unit is derived from a base of {base}
        ...: Which is raised to the power {power}

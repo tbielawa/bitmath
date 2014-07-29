@@ -63,3 +63,41 @@ class TestContextManager(TestCase):
 
         # Make sure formatting looks right AFTER the context manager
         self.assertEqual(str(bitmath.KiB(1.337)), "1.337 KiB")
+
+
+    def test_print_byte_plural(self):
+        """Byte(3.0) prints out units in plural form"""
+        expected_result = "3Bytes"
+        fmt_str = "{value:.1g}{unit}"
+        three_Bytes = bitmath.Byte(3.0)
+
+        with bitmath.format(plural=True):
+            actual_result = three_Bytes.format(fmt_str)
+            self.assertEqual(expected_result, actual_result)
+
+    def test_print_byte_plural_fmt_in_mgr(self):
+        """Byte(3.0) prints out units in plural form, setting the fmt str in the mgr"""
+        expected_result = "3Bytes"
+
+        with bitmath.format(fmt_str="{value:.1g}{unit}", plural=True):
+            three_Bytes = bitmath.Byte(3.0)
+            actual_result = str(three_Bytes)
+            self.assertEqual(expected_result, actual_result)
+
+    def test_print_GiB_plural_fmt_in_mgr(self):
+        """TiB(1/3.0) prints out units in plural form, setting the fmt str in the mgr"""
+        expected_result = "3Bytes"
+
+        with bitmath.format(fmt_str="{value:.1g}{unit}", plural=True):
+            three_Bytes = bitmath.Byte(3.0)
+            actual_result = str(three_Bytes)
+            self.assertEqual(expected_result, actual_result)
+
+    def test_print_GiB_singular_fmt_in_mgr(self):
+        """TiB(1/3.0) prints out units in singular form, setting the fmt str in the mgr"""
+        expected_result = "341.3GiB"
+
+        with bitmath.format(fmt_str="{value:.1f}{unit}"):
+            third_tibibyte = bitmath.TiB(1/3.0).best_prefix()
+            actual_result = str(third_tibibyte)
+            self.assertEqual(expected_result, actual_result)
