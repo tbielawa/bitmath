@@ -564,8 +564,7 @@ context; TypeError will be raised instead."""
             return self._byte_value / float(other.bytes)
 
     def __truediv__(self, other):
-        # TODO: Fix truediv for num / bm
-        # https://github.com/tbielawa/bitmath/issues/2
+        # num / bm
         return self.__div__(other)
 
     # def __floordiv__(self, other):
@@ -609,6 +608,10 @@ RTYPE. E.g., 3 * MiB(3), or 10 / GB(42)
         return self * other
 
     def __rdiv__(self, other):
+        # num / bm = num
+        return other / float(self.value)
+
+    def __rtruediv__(self, other):
         # num / bm = num
         return other / float(self.value)
 
