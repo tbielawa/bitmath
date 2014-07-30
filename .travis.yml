@@ -4,6 +4,7 @@ notifications:
 branches:
     only:
         - master
+        - travis
 after_success:
     - coveralls
 matrix:
