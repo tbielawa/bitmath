@@ -186,11 +186,11 @@ And now using a custom formatting definition:
        print Bit(_rate).best_prefix().format("Rate: {value:.3f} {unit}/sec")
        time.sleep(1)
 
-   Rate: 12.500 Byte/sec
+   Rate: 12.500 B/sec
    Rate: 2.930 KiB/sec
-   Rate: 128.000 Byte/sec
+   Rate: 128.000 B/sec
    Rate: 7.343 KiB/sec
-   Rate: 4.125 Byte/sec
+   Rate: 4.125 B/sec
    Rate: 1.221 KiB/sec
    Rate: 1.101 MiB/sec
    Rate: 2.386 TiB/sec

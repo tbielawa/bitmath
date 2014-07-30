@@ -163,11 +163,12 @@ type"""
     def unit(self):
         """Return the string that is this instances prefix unit name
 in agreement with this instance value (singular or plural). Following
-the convention that only 1 is singular.
+the convention that only 1 is singular. This method will always return
+the singular form when bitmath.format_plural is False (default value).
 
-For instance, KiB(1).unit_quantified == 'KiB', Byte(0).unit_quantified ==
-'Bytes', Byte(1).unit_quantified == 'Byte', Byte(1.1).unit_quantified ==
-'Bytes', and Gb(2).unit_quantified == 'Gb'"""
+For instance, when plural form is enabled, KiB(1).unit == 'KiB',
+Byte(0).unit == 'Bytes', Byte(1).unit == 'B', Byte(1.1).unit == 'Bytes'
+and Gb(2).unit == 'Gbs'"""
         if self.prefix_value == 1:
             # If it's a '1', return it singular, no matter what
             return self._name_singular
@@ -192,8 +193,8 @@ and Gb(1).unit_plural == 'Gb'"""
         """Return the string that is this instances prefix unit name in the
 singular form.
 
-For instance, KiB(1).unit == 'KiB', Byte(1024).unit == 'Byte', and
-Gb(1).unit == 'Gb'"""
+For instance, KiB(1).unit_singular == 'KiB', Byte(1024).unit == 'B', and
+Gb(1).unit_singular == 'Gb'"""
         return self._name_singular
 
     @property
