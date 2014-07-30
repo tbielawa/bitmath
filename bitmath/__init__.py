@@ -7,7 +7,7 @@
 # obtaining a copy of this software and associated documentation files
 # (the "Software"), to deal in the Software without restriction,
 # including without limitation the rights to use, copy, modify, merge,
-# publish, distribute, sublicense, and/or sell copies of the Software,
+# publish, distribute, sub-license, and/or sell copies of the Software,
 # and to permit persons to whom the Software is furnished to do so,
 # subject to the following conditions:
 #
@@ -42,13 +42,17 @@ import os
 import os.path
 import sys
 
-__all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb', 'getsize', 'listdir']
+__all__ = [
+    'Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB',
+    'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb',
+    'getsize', 'listdir'
+]
 
 # Python 3.x compat
 if sys.version > '3':
     long = int
 
-# Constants for refering to prefix systems
+# Constants for referring to prefix systems
 NIST = int(2)
 SI = int(10)
 
@@ -656,7 +660,7 @@ If one of those methods does not support the operation with the
 supplied arguments, it should return NotImplemented.
 
 For bitmath purposes, these methods return the int/long/float
-equivalent of the this instances prefix unix value. That is to say:
+equivalent of the this instances prefix Unix value. That is to say:
 
     - int(KiB(3.336)) would return 3
     - long(KiB(3.336)) would return 3L
