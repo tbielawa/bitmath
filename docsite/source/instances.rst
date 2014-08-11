@@ -283,7 +283,7 @@ of how an attribute may be referenced multiple times.
 
 .. code-block:: python
    :linenos:
-   :emphasize-lines: 4,15
+   :emphasize-lines: 4,16
 
    In [8]: longer_format = """Formatting attributes for %s
       ...: This instances prefix unit is {unit}, which is a {system} type unit
@@ -309,7 +309,7 @@ of how an attribute may be referenced multiple times.
    bytes/bits without trailing decimals: 6250000/50000000
 
 .. note:: On line **4** we print with 1 digit of precision, on line
-          **15** we see the value has been rounded to **6.0**
+          **16** we see the value has been rounded to **6.0**
 
 .. _instances_mini_language:
 
