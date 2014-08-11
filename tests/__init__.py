@@ -39,10 +39,6 @@ class TestCase(unittest.TestCase):
     def assertListEqual(self, l1, l2, msg=None):
         """Assert that the contents of l1 and l2 are equal (disregarding
 ordering)"""
-        print "Testing list equivalence of:"
-        print l1
-        print l2
-
         s1 = set(l1)
         s2 = set(l2)
 
