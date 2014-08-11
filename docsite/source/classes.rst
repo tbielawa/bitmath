@@ -71,15 +71,15 @@ There are **24** other classes available, representing all the prefix
 units from **k** through **e** (*kilo/kibi* through *exa/exbi*).
 
 Classes with **'i'** in their names are **NIST** type classes. They
-were defined by the National Institute of Standards and Technology
-(NIST) as the 'Binary Prefix Units'. They are defined by increasing
-powers of 2.
+were defined by the `National Institute of Standards and Technology
+(NIST) <http://www.nist.gov/>`_ as the 'Binary Prefix Units'. They are
+defined by increasing powers of 2.
 
 Classes without the **'i'** character are **SI** type classes. Though
 not formally defined by any standards organization, they follow the
-International System of Units (SI) pattern (commonly used to
-abbreviate base 10 values). You may hear these referred to as the
-"Decimal" or "SI" prefixes.
+`International System of Units (SI) <http://www.bipm.org/en/si/>`_
+pattern (commonly used to abbreviate base 10 values). You may hear
+these referred to as the "Decimal" or "SI" prefixes.
 
 Classes ending with *lower-case* **'b'** characters are **bit
 based**. Classes ending with upper-case **'B'** characters are **byte

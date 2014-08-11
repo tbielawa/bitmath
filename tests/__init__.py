@@ -39,9 +39,6 @@ class TestCase(unittest.TestCase):
     def assertListEqual(self, l1, l2, msg=None):
         """Assert that the contents of l1 and l2 are equal (disregarding
 ordering)"""
-        s1 = set(l1)
-        s2 = set(l2)
-
         self.assertEqual(len(l1), len(l2))
 
         # OK, the lists are of the same size. Let's test that each
