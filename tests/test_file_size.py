@@ -106,20 +106,30 @@ Would yield 2-tuple's of:
     ('/path/tests/listdir_nosymlinks/depth1/depth2/1024_byte_file', KiB(1.0))
         """
         # Call with relpath=True so the paths are easier to verify
-        contents = list(bitmath.listdir('./tests/listdir_nosymlinks/', relpath=True))
-
-        # There should only be two files discovered.
-        self.assertEqual(len(contents), int(2))
+        contents = list(bitmath.listdir('./tests/listdir_nosymlinks/',
+                                        relpath=True))
 
         # Ensure the returned paths match the expected paths
-        self.assertEqual(contents[0][0],
-                         'tests/listdir_nosymlinks/depth1/depth2/10_byte_file')
-        self.assertEqual(contents[1][0],
-                         'tests/listdir_nosymlinks/depth1/depth2/1024_byte_file')
+        discovered_paths = [
+            contents[0][0],
+            contents[1][0],
+        ]
+        expected_paths = [
+            'tests/listdir_nosymlinks/depth1/depth2/10_byte_file',
+            'tests/listdir_nosymlinks/depth1/depth2/1024_byte_file'
+        ]
 
-        # Ensure the measured sizes are what we expect
-        self.assertEqual(contents[0][1], bitmath.Byte(10.0))
-        self.assertEqual(contents[1][1], bitmath.KiB(1.0))
+        self.assertListEqual(discovered_paths, expected_paths)
+
+        expected_sizes = [
+            bitmath.Byte(10.0),
+            bitmath.Byte(1024.0)
+        ]
+        discovered_sizes = [
+            contents[0][1],
+            contents[1][1]
+        ]
+        self.assertListEqual(discovered_sizes, expected_sizes)
 
     def test_listdir_symlinks_nofollow(self):
         """listdir: symbolic links in tree not followed
@@ -140,10 +150,6 @@ directory structure looks like this:
         # Call with relpath=True so the paths are easier to verify
         contents = list(bitmath.listdir('./tests/listdir_symlinks/', relpath=True))
 
-        # There should only be one file discovered. The symlink isn't
-        # dereferenced
-        self.assertEqual(len(contents), int(1))
-
         # Ensure the returned path matches the expected path
         self.assertEqual(contents[0][0], 'tests/listdir_symlinks/depth1/depth2/10_byte_file')
 
@@ -160,16 +166,27 @@ Same assumptions as in test_listdir_symlinks_nofollow.
                                         followlinks=True,
                                         relpath=True))
 
-        # There should be two files discovered
-        self.assertEqual(len(contents), int(2))
-
         # Ensure the returned path matches the expected path
-        self.assertEqual(contents[0][0], 'tests/listdir_symlinks/10_byte_file_link')
-        self.assertEqual(contents[1][0], 'tests/listdir_symlinks/depth1/depth2/10_byte_file')
+        expected_paths = [
+            'tests/listdir_symlinks/10_byte_file_link',
+            'tests/listdir_symlinks/depth1/depth2/10_byte_file'
+        ]
+        discovered_paths = [
+            contents[0][0],
+            contents[1][0]
+        ]
+        self.assertListEqual(discovered_paths, expected_paths)
 
         # Ensure the measured size is what we expect
-        self.assertEqual(contents[0][1], bitmath.Byte(10.0))
-        self.assertEqual(contents[1][1], bitmath.Byte(10.0))
+        expected_sizes = [
+            bitmath.Byte(10.0),
+            bitmath.Byte(10.0)
+        ]
+        discovered_sizes = [
+            contents[0][1],
+            contents[1][1]
+        ]
+        self.assertListEqual(discovered_sizes, expected_sizes)
 
     def test_listdir_symlinks_follow_relpath_false(self):
         """listdir: symlinks followed, absolute paths are returned
@@ -180,18 +197,29 @@ that the 0th item of the tuple returns a fully qualified path.
         contents = list(bitmath.listdir('./tests/listdir_symlinks/',
                                         followlinks=True))
 
-        # There should be two files discovered
-        self.assertEqual(len(contents), int(2))
-
         # Ensure the returned path matches the expected path and
         # begins with the present working directory
         pwd = os.path.realpath('.')
-        self.assertEqual(contents[0][0], os.path.join(pwd, contents[0][0]))
-        self.assertEqual(contents[1][0], os.path.join(pwd, contents[1][0]))
+        expected_paths = [
+            os.path.join(pwd, contents[0][0]),
+            os.path.join(pwd, contents[1][0])
+        ]
+        discovered_paths = [
+            contents[0][0],
+            contents[1][0]
+        ]
+        self.assertListEqual(discovered_paths, expected_paths)
 
         # Ensure the measured size is what we expect
-        self.assertEqual(contents[0][1], bitmath.Byte(10.0))
-        self.assertEqual(contents[1][1], bitmath.Byte(10.0))
+        expected_sizes = [
+            bitmath.Byte(10.0),
+            bitmath.Byte(10.0)
+        ]
+        discovered_sizes = [
+            contents[0][1],
+            contents[1][1]
+        ]
+        self.assertListEqual(discovered_sizes, expected_sizes)
 
     def test_listdir_filtering_nosymlinks(self):
         """listdir: no symbolic links in tree measures right with a filter
@@ -202,9 +230,6 @@ Same assumptions as test_listdir_nosymlinks."""
                                         relpath=True,
                                         # Should only find 1 file, 1024_byte_file
                                         filter='1024*'))
-
-        # There should be one file discovered
-        self.assertEqual(len(contents), int(1))
 
         # Ensure the returned path matches the expected path
         self.assertEqual(contents[0][0],

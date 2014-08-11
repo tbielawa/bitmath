@@ -35,4 +35,26 @@ class TestCase(unittest.TestCase):
     """
     Parent TestCase to use for all tests.
     """
-    pass
+
+    def assertListEqual(self, l1, l2, msg=None):
+        """Assert that the contents of l1 and l2 are equal (disregarding
+ordering)"""
+        print "Testing list equivalence of:"
+        print l1
+        print l2
+
+        s1 = set(l1)
+        s2 = set(l2)
+
+        self.assertEqual(len(l1), len(l2))
+
+        # OK, the lists are of the same size. Let's test that each
+        # item in l1 is in l2. This assumes that what you provided in
+        # l1 are what you expected to find in l2.
+        for item in l1:
+            if item not in l2:
+                raise AssertionError("List 1 and list 2 are not equivalent: %s %s" % (
+                    str(l1),
+                    str(l2)))
+
+        return True
