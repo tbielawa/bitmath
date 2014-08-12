@@ -54,6 +54,5 @@ class TestAttributeProperties(TestCase):
 
     def test_write_property_fails(self):
         """bitmath type's properties are read-only"""
-        test_values = {'input': self.kib, 'add': 42}
         with self.assertRaises(AttributeError):
             self.kib.value += 42

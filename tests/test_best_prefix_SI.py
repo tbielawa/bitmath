@@ -28,7 +28,6 @@
 Test for SI prefix guessing
 """
 
-import unittest
 from . import TestCase
 import bitmath
 

@@ -28,7 +28,6 @@
 Test proper sorting operations
 """
 
-import unittest
 from . import TestCase
 import bitmath
 

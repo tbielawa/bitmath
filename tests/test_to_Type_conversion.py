@@ -30,7 +30,6 @@ Test to verify the bitmath.Type.to_Type() conversions work
 
 from . import TestCase
 import bitmath
-from bitmath import NIST_STEPS, NIST_PREFIXES
 
 
 class TestToTypeConversion(TestCase):
@@ -61,6 +60,7 @@ class TestToTypeConversion(TestCase):
     def test_from_other(self):
         """MiB object from_other object"""
         mib_from_kib = bitmath.MiB.from_other(bitmath.KiB(1))
+        self.assertIs(type(mib_from_kib), bitmath.MiB)
 
     ##################################################################
     # to b's

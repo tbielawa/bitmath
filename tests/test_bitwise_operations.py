@@ -28,7 +28,6 @@
 Test for bitwise operations: <<, >>, &, ^, |
 """
 
-import unittest
 from . import TestCase
 import bitmath
 

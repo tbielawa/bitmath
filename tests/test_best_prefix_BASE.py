@@ -28,7 +28,6 @@
 Test for base (Bit/Byte) prefix guessing
 """
 
-import unittest
 from . import TestCase
 import bitmath
 

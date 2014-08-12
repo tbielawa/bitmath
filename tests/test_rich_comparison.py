@@ -28,7 +28,6 @@
 Test for rich comparison operations: LT, LE, EQ, NE, GT, GE
 """
 
-import unittest
 from . import TestCase
 import bitmath
 

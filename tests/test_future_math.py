@@ -31,7 +31,6 @@ Reference: http://legacy.python.org/dev/peps/pep-0238/
 """
 
 from __future__ import division
-import unittest
 from . import TestCase
 import bitmath
 
