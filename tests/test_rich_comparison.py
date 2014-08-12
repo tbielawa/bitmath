@@ -32,6 +32,7 @@ import unittest
 from . import TestCase
 import bitmath
 
+
 class TestRichComparison(TestCase):
     def setUp(self):
         self.kib = bitmath.KiB(1)

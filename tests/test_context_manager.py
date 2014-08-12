@@ -31,6 +31,7 @@ Tests to verify that the formatting context manager works
 from . import TestCase
 import bitmath
 
+
 class TestContextManager(TestCase):
     def test_with_format(self):
         """bitmath.format context mgr sets and restores formatting"""
@@ -63,7 +64,6 @@ class TestContextManager(TestCase):
 
         # Make sure formatting looks right AFTER the context manager
         self.assertEqual(str(bitmath.KiB(1.337)), "1.337 KiB")
-
 
     def test_print_byte_plural(self):
         """Byte(3.0) prints out units in plural form"""
@@ -98,6 +98,6 @@ class TestContextManager(TestCase):
         expected_result = "341.3GiB"
 
         with bitmath.format(fmt_str="{value:.1f}{unit}"):
-            third_tibibyte = bitmath.TiB(1/3.0).best_prefix()
+            third_tibibyte = bitmath.TiB(1 / 3.0).best_prefix()
             actual_result = str(third_tibibyte)
             self.assertEqual(expected_result, actual_result)

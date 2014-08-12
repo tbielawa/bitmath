@@ -32,6 +32,7 @@ from . import TestCase
 import bitmath
 import os
 
+
 class TestFileSize(TestCase):
     # expected sizes are given in bytes
     def setUp(self):

@@ -31,6 +31,7 @@ Tests to verify that string representations are accurate
 from . import TestCase
 import bitmath
 
+
 class TestRepresentation(TestCase):
     def setUp(self):
         self.kib = bitmath.KiB(1)
@@ -107,7 +108,7 @@ class TestRepresentation(TestCase):
         """MiB(1/3.0) prints out with two digits of precision"""
         expected_result = "0.33MiB"
         fmt_str = "{value:.2f}{unit}"
-        third_MiB = bitmath.MiB(1/3.0)
+        third_MiB = bitmath.MiB(1 / 3.0)
         actual_result = third_MiB.format(fmt_str)
         self.assertEqual(expected_result, actual_result)
 

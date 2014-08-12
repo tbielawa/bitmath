@@ -36,19 +36,20 @@ import sys
 if sys.version > '3':
     long = int
 
+
 class TestToBuiltInConversion(TestCase):
 
     def test_to_int(self):
         """int(bitmath) returns an int"""
         gib = bitmath.GiB(1337.8)
-        self.assertIsInstance(int(gib), int)
+        self.assertIs(type(int(gib)), int)
 
     def test_to_float(self):
         """float(bitmath) returns a float"""
         gib = bitmath.GiB(1337.8)
-        self.assertIsInstance(float(gib), float)
+        self.assertIs(type(float(gib)), float)
 
     def test_to_long(self):
         """long(bitmath) returns a long"""
         gib = bitmath.GiB(1337.8)
-        self.assertIsInstance(long(gib), long)
+        self.assertIs(type(long(gib)), long)

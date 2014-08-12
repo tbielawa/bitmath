@@ -32,6 +32,7 @@ import unittest
 from . import TestCase
 import bitmath
 
+
 class TestBitwiseOperations(TestCase):
     def setUp(self):
         self.leet = bitmath.Bit(1337)

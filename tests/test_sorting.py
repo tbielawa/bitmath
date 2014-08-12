@@ -32,6 +32,7 @@ import unittest
 from . import TestCase
 import bitmath
 
+
 class TestSorting(TestCase):
     def test_sort_homogeneous_list(self):
         """Same types in a list can be sorted properly"""

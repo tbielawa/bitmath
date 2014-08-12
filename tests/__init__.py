@@ -31,6 +31,7 @@ if int(major) == 2 and int(minor) < 7:
 else:
     import unittest
 
+
 class TestCase(unittest.TestCase):
     """
     Parent TestCase to use for all tests.
