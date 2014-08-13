@@ -191,6 +191,23 @@ type"""
         return self._base
 
     @property
+    def binary(self):
+        """Returns the binary representation of an instance in binary 1s and
+0s. Note that for very large numbers this will mean a lot of 1s and
+0s. For example, GiB(100) would be represented as:
+
+0b1100100000000000000000000000000000000000
+
+That leading '0b' is normal. That's how Python represents binary."""
+        return bin(int(self.bits))
+
+    @property
+    def bin(self):
+        """Alias for instance.binary. Returns the binary representation of an
+instance in binary 1s and 0s."""
+        return self.binary
+
+    @property
     def bits(self):
         """Return the number of bits in an instance"""
         return self._bit_value
@@ -199,6 +216,25 @@ type"""
     def bytes(self):
         """Return the number of bytes in an instance"""
         return self._byte_value
+
+    @property
+    def power(self):
+        """Return the mathematical power of an instance"""
+        return self._power
+
+    @property
+    def system(self):
+        """Return the system of units used to measure this instance"""
+        if self._base == 2:
+            return "NIST"
+        elif self._base == 10:
+            return "SI"
+        else:
+            # I don't expect to ever encounter this logic branch, but
+            # hey, it's better to have extra test coverage than
+            # insufficient test coverage.
+            raise ValueError("Instances mathematical base is an unsupported value: %s" % (
+                str(self._base)))
 
     @property
     def unit(self):
@@ -241,45 +277,9 @@ Gb(1).unit_singular == 'Gb'"""
         return self._name_singular
 
     @property
-    def power(self):
-        """Return the mathematical power of an instance"""
-        return self._power
-
-    @property
-    def system(self):
-        """Return the system of units used to measure this instance"""
-        if self._base == 2:
-            return "NIST"
-        elif self._base == 10:
-            return "SI"
-        else:
-            # I don't expect to ever encounter this logic branch, but
-            # hey, it's better to have extra test coverage than
-            # insufficient test coverage.
-            raise ValueError("Instances mathematical base is an unsupported value: %s" % (
-                str(self._base)))
-
-    @property
     def value(self):
         """Returns the "prefix" value of an instance"""
         return self.prefix_value
-
-    @property
-    def binary(self):
-        """Returns the binary representation of an instance in binary 1s and
-0s. Note that for very large numbers this will mean a lot of 1s and
-0s. For example, GiB(100) would be represented as:
-
-0b1100100000000000000000000000000000000000
-
-That leading '0b' is normal. That's how Python represents binary."""
-        return bin(int(self.bits))
-
-    @property
-    def bin(self):
-        """Alias for instance.binary. Returns the binary representation of an
-instance in binary 1s and 0s."""
-        return self.binary
 
     @classmethod
     def from_other(cls, item):
