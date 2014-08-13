@@ -105,7 +105,7 @@ classes. You can even ``to_THING()`` an instance into itself again:
 
    In [6]: print one_mib, one_mib_in_kb, another_mib
 
-   1.0MiB 8388.608kb 1.0MiB
+   1.0 MiB 8388.608 kb 1.0 MiB
 
    In [7]: six_TB = TB(6)
 
@@ -113,7 +113,7 @@ classes. You can even ``to_THING()`` an instance into itself again:
 
    In [9]: print six_TB, six_TB_in_bits
 
-   6.0TB 4.8e+13Bit
+   6.0 TB 4.8e+13 Bit
 
    In [10]: six_TB == six_TB_in_bits
 
@@ -167,16 +167,16 @@ even easier to read.
        print "Rate: %s/second" % Bit(_rate)
        time.sleep(1)
 
-   Rate: 100.0Bit/sec
-   Rate: 24000.0Bit/sec
-   Rate: 1024.0Bit/sec
-   Rate: 60151.0Bit/sec
-   Rate: 33.0Bit/sec
-   Rate: 9999.0Bit/sec
-   Rate: 9238742.0Bit/sec
-   Rate: 2.09895849555e+13Bit/sec
-   Rate: 934098021.0Bit/sec
-   Rate: 934894.0Bit/sec
+   Rate: 100.0 Bit/sec
+   Rate: 24000.0 Bit/sec
+   Rate: 1024.0 Bit/sec
+   Rate: 60151.0 Bit/sec
+   Rate: 33.0 Bit/sec
+   Rate: 9999.0 Bit/sec
+   Rate: 9238742.0 Bit/sec
+   Rate: 2.09895849555e+13 Bit/sec
+   Rate: 934098021.0 Bit/sec
+   Rate: 934894.0 Bit/sec
 
 And now using a custom formatting definition:
 
@@ -210,7 +210,7 @@ unit) and then apply :py:meth:`best_prefix` to it.
 format()
 ========
 
-.. py:method:: format(fmt_spec)
+.. py:method:: BitMathInstance.format(fmt_spec)
 
    Return a custom-formatted string to represent this instance.
 
@@ -226,10 +226,10 @@ bitmath instances come with a verbose built-in string representation:
    In [1]: leet_bits = Bit(1337)
 
    In [2]: print leet_bits
-   1337.0Bit
+   1337.0 Bit
 
 However, for instances which aren't whole numbers (as in ``MiB(1/3.0)
-== 0.333333333333MiB``, etc), their representation can be undesirable.
+== 0.333333333333 MiB``, etc), their representation can be undesirable.
 
 The :py:meth:`format` method gives you complete control over the
 instance's representation. All of the :ref:`instances attributes
@@ -260,7 +260,7 @@ First, for reference, the default formatting:
 
    In [1]: ugly_number = MB(50).to_MiB() / 8.0
    In [2]: print ugly_number
-   5.96046447754MiB
+   5.96046447754 MiB
 
 Now, let's use the :py:meth:`format` method to limit that to two
 digits of precision:
@@ -268,7 +268,7 @@ digits of precision:
 .. code-block:: python
 
    In [3]: print ugly_number.format("{value:.2f}{unit}")
-   5.96MiB
+   5.96 MiB
 
 By changing the **2** character, you increase or decrease the
 precision. Set it to **0** (``{value:.0f}``) and you have what
@@ -297,7 +297,7 @@ of how an attribute may be referenced multiple times.
       ...: bytes/bits without trailing decimals: {bytes:.0f}/{bits:.0f}""" % str(ugly_number)
 
    In [9]: print ugly_number.format(longer_format)
-   Formatting attributes for 5.96046447754MiB
+   Formatting attributes for 5.96046447754 MiB
    This instances prefix unit is MiB, which is a NIST type unit
    The unit value is 5.96046447754
    This value can be truncated to just 1 digit of precision: 6.0

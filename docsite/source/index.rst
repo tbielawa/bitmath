@@ -53,6 +53,7 @@ Contents
    :maxdepth: 2
    :numbered:
 
+   module.rst
    classes.rst
    instances.rst
    simple_examples.rst
