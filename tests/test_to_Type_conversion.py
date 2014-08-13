@@ -231,3 +231,10 @@ class TestToTypeConversion(TestCase):
         """Convert an SI unit into an NIST unit"""
         kib_from_kb = self.kb.to_KiB()
         self.assertIs(type(kib_from_kb), bitmath.KiB)
+
+    ##################################################################
+    # Naughty bad bad test cases
+    def test_from_other_bad_input(self):
+        """from_other raises if "other" isn't a bitmath instance"""
+        with self.assertRaises(ValueError):
+            a = bitmath.Byte.from_other(str("not a bitmath instance!"))

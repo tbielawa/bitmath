@@ -46,7 +46,7 @@ class TestContextManager(TestCase):
         ]
 
         str_reps = [
-            "101.00-B",
+            "101.00-Byte",
             "202.00-KiB",
             "303.00-MB",
             "404.00-GiB",

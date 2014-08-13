@@ -45,7 +45,7 @@ import sys
 __all__ = [
     'Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB',
     'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb',
-    'getsize', 'listdir'
+    'getsize', 'listdir', 'format', 'format_string', 'format_plural'
 ]
 
 # Python 3.x compat
@@ -80,8 +80,24 @@ NIST_STEPS = {
     'Ei': 1152921504606846976
 }
 
-format_string = "{value:.3f} {unit}"
+######################################################################
+# Set up our module variables/constants
+
+###################################
+# Internal:
+
+# Console repr(), ex: MiB(13.37), or kB(42.0)
+__FORMAT_REPR = '{unit_singular}({value})'
+
+###################################
+# Exposed:
+
+# String representation, ex:13.37 MiB, or 42.0 kB
+format_string = "{value} {unit}"
+
+# Pluralization behavior
 format_plural = False
+
 
 ######################################################################
 # First, the bytes...
@@ -94,7 +110,32 @@ Byte based types fundamentally operate on self._bit_value"""
 
     def __init__(self, value=0, bytes=None, bits=None):
         """Instantiate with `value` by the unit, in plain bytes, or
-bits. Don't supply more than one keyword."""
+bits. Don't supply more than one keyword.
+
+default behavior: initialize with value of 0
+only setting value: assert bytes is None and bits is None
+only setting bytes: assert value == 0 and bits is None
+only setting bits: assert value == 0 and bytes is None
+        """
+        _raise = False
+        if (value == 0) and (bytes is None) and (bits is None):
+            pass
+        # Setting by bytes
+        elif bytes is not None:
+            if (value == 0) and (bits is None):
+                pass
+            else:
+                _raise = True
+        # setting by bits
+        elif bits is not None:
+            if (value == 0) and (bytes is None):
+                pass
+            else:
+                _raise = True
+
+        if _raise:
+            raise ValueError("Only one parameter of: value, bytes, or bits is allowed")
+
         self._do_setup()
         if bytes:
             # We were provided with the fundamental base unit, no need
@@ -125,7 +166,7 @@ converted *to* this unit"""
         return value / float(self._unit_value)
 
     def _setup(self):
-        return (2, 0, 'B', 'Bytes')
+        return (2, 0, 'Byte', 'Bytes')
 
     def _do_setup(self):
         """Setup basic parameters for this class"""
@@ -167,8 +208,10 @@ the convention that only 1 is singular. This method will always return
 the singular form when bitmath.format_plural is False (default value).
 
 For instance, when plural form is enabled, KiB(1).unit == 'KiB',
-Byte(0).unit == 'Bytes', Byte(1).unit == 'B', Byte(1.1).unit == 'Bytes'
+Byte(0).unit == 'Bytes', Byte(1).unit == 'Byte', Byte(1.1).unit == 'Bytes'
 and Gb(2).unit == 'Gbs'"""
+        global format_plural
+
         if self.prefix_value == 1:
             # If it's a '1', return it singular, no matter what
             return self._name_singular
@@ -254,11 +297,15 @@ instantiate the class ahead of time.
 
 *Example:*
 >>> import bitmath
->>> kib = bitmath.KiB.from_other(MiB(1))
+>>> kib = bitmath.KiB.from_other(bitmath.MiB(1))
 >>> print kib
 KiB(1024.0)
 """
-        return cls(bits=item.bits)
+        if isinstance(item, Byte):
+            return cls(bits=item.bits)
+        else:
+            raise ValueError("The provided items must be a valid bitmath class: %s" %
+                             str(item.__class__))
 
     ######################################################################
     # The following implement the Python datamodel customization methods
@@ -272,7 +319,7 @@ interpreter"""
 
     def __str__(self):
         """String representation of this object"""
-        return self.format(format_string)
+        return self.format(globals()['format_string'])
 
     def format(self, fmt):
         """Return a representation of this instance formatted with user
@@ -816,7 +863,7 @@ class Bit(Byte):
         self.prefix_value = self._to_prefix_value(self._bit_value)
 
     def _setup(self):
-        return (2, 0, 'b', 'Bits')
+        return (2, 0, 'Bit', 'Bits')
 
     def _norm(self, value):
         """Normalize the input value into the fundamental unit for this prefix
@@ -952,16 +999,22 @@ def listdir(search_base, followlinks=False, filter='*',
 
 
 @contextlib.contextmanager
-def format(fmt_str=None, plural=False):
+def format(fmt_str=None, plural=False, bestprefix=False):
     """Context manager for printing bitmath instances.
 
 ``fmt_str`` - a formatting mini-language compat formatting string. See
 the @properties (above) for a list of available items.
 
 ``plural`` - True enables printing instances with 's's if they're
-plural. False (default) prints them as singular (no trailing 's')
-"""
-    import bitmath
+plural. False (default) prints them as singular (no trailing 's').
+
+``bestprefix`` - True enables printing instances in their best
+human-readable representation. False, the default, prints instances
+using their current prefix unit.
+    """
+    if 'bitmath' not in globals():
+        import bitmath
+
     if plural:
         orig_fmt_plural = bitmath.format_plural
         bitmath.format_plural = True

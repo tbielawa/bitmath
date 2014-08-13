@@ -36,7 +36,7 @@ class TestRepresentation(TestCase):
     def setUp(self):
         self.kib = bitmath.KiB(1)
         self.kib_repr = 'KiB(1.0)'
-        self.kib_str = '1.000 KiB'
+        self.kib_str = '1.0 KiB'
         self.kib_unit = 'KiB'
         self.kib_system = 'NIST'
         self.kib_bin = '0b10000000000000'
@@ -46,7 +46,7 @@ class TestRepresentation(TestCase):
 
         self.half_mib = bitmath.MiB(0.5)
         self.half_mib_repr = 'MiB(0.5)'
-        self.half_mib_str = '0.500 MiB'
+        self.half_mib_str = '0.5 MiB'
 
         self.kB = bitmath.kB(1)
         self.kB_unit = 'kB'
@@ -141,7 +141,7 @@ manager. There is a separate test suite for that: test_context_manager"""
 
     def test_print_byte_singular(self):
         """Byte(1.0) prints out units in singular form"""
-        expected_result = "1B"
+        expected_result = "1Byte"
         fmt_str = "{value:.2g}{unit}"
         one_Byte = bitmath.Byte(1.0)
         actual_result = one_Byte.format(fmt_str)
