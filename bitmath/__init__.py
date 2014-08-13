@@ -87,7 +87,7 @@ NIST_STEPS = {
 # Internal:
 
 # Console repr(), ex: MiB(13.37), or kB(42.0)
-__FORMAT_REPR = '{unit_singular}({value})'
+_FORMAT_REPR = '{unit_singular}({value})'
 
 ###################################
 # Exposed:
@@ -315,7 +315,8 @@ KiB(1024.0)
     def __repr__(self):
         """Representation of this object as you would expect to see in an
 interpreter"""
-        return self.format("{unit_singular}({value})")
+        global _FORMAT_REPR
+        return self.format(_FORMAT_REPR)
 
     def __str__(self):
         """String representation of this object"""
