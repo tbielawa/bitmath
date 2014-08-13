@@ -320,7 +320,8 @@ interpreter"""
 
     def __str__(self):
         """String representation of this object"""
-        return self.format(globals()['format_string'])
+        global format_string
+        return self.format(format_string)
 
     def format(self, fmt):
         """Return a representation of this instance formatted with user
