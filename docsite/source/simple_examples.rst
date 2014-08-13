@@ -40,8 +40,11 @@ Math works mostly like you expect it to, except for a few edge-cases:
   results may not make much sense.
 
 
-See :ref:`Appendix: Rules for Math <appendix_math>` for a discussion
-of the behavior of bitmath and number types.
+.. seealso::
+
+   :ref:`Appendix: Rules for Math <appendix_math>`
+
+   For a discussion of the behavior of bitmath and number types.
 
 
 .. _simple_examples_arithmetic_table:
