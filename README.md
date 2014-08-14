@@ -40,6 +40,10 @@ The main documentation has been moved to
 
 Topics include:
 
+* The `bitmath` Module
+  * Functions
+  * Context Managers
+  * Module Variables
 * Classes
   * Initializing
   * Available Classes

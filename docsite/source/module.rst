@@ -70,11 +70,25 @@ bitmath.listdir()
                   ``True``
    :type system: One of ``bitmath.NIST`` or ``bitmath.SI``
 
-
    .. note::
 
-      * This function does NOT return tuples for directory entities.
+      * This function does **not** return tuples for directory
+        entities. Including directories in results is scheduled for
+        introduction in the upcoming 1.1.0 release.
       * Symlinks to **files** are followed automatically
+
+
+   When interpreting the results from this function it is *crucial* to
+   understand exactly which items are being taken into account, what
+   decisions were made to select those items, and how their sizes are
+   measured.
+
+   Results from this function may seem invalid when directly compared
+   to the results from common command line utilities, such as ``du``,
+   or ``tree``.
+
+
+
 
    .. versionadded:: 1.0.7
 

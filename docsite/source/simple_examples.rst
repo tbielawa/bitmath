@@ -43,8 +43,7 @@ Math works mostly like you expect it to, except for a few edge-cases:
 .. seealso::
 
    :ref:`Appendix: Rules for Math <appendix_math>`
-
-   For a discussion of the behavior of bitmath and number types.
+      For a discussion of the behavior of bitmath and number types.
 
 
 .. _simple_examples_arithmetic_table:

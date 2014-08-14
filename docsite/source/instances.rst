@@ -15,27 +15,113 @@ Instance Attributes
 
 bitmath objects have several instance attributes:
 
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| Attribute  | Description                                                                                                                  |
-+============+==============================================================================================================================+
-| ``base``   | The mathematical base of the unit of the instance (this will be **2** or **10**)                                             |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| ``binary`` | The `Python binary representation <https://docs.python.org/2/library/functions.html#bin>`_ of the instance's value (in bits) |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| ``bin``    | This is an alias for ``binary``                                                                                              |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| ``bits``   | The number of bits in the object                                                                                             |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| ``bytes``  | The number of bytes in the object                                                                                            |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| ``power``  | The mathematical power the ``base`` of the unit of the instance is raised to                                                 |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| ``system`` | The system of units used to measure this instance (``NIST`` or ``SI``)                                                       |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| ``value``  | The value of the instance in *prefix* units\ :sup:`1`                                                                        |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
-| ``unit``   | The string representation of this prefix unit (such as ``MiB`` or ``kb``)                                                    |
-+------------+------------------------------------------------------------------------------------------------------------------------------+
+.. py:attribute:: BitMathInstance.base
+
+   The mathematical base of the unit of the instance (this will be **2** or **10**)
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.base
+      2
+
+.. py:attribute:: BitMathInstance.binary
+
+   The `Python binary representation
+   <https://docs.python.org/2/library/functions.html#bin>`_ of the
+   instance's value (in bits)
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.binary
+      0b10100111001000
+
+.. py:attribute:: BitMathInstance.bin
+
+   This is an alias for ``binary``
+
+.. py:attribute:: BitMathInstance.bits
+
+   The number of bits in the object
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.bits
+      10696.0
+
+.. py:attribute:: BitMathInstance.bytes
+
+   The number of bytes in the object
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.bytes
+      1337
+
+.. py:attribute:: BitMathInstance.power
+
+   The mathematical power the ``base`` of the unit of the instance is raised to
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.power
+      0
+
+.. py:attribute:: BitMathInstance.system
+
+   The system of units used to measure this instance (``NIST`` or ``SI``)
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.system
+      NIST
+
+.. py:attribute:: BitMathInstance.value
+
+   The value of the instance in *prefix* units\ :sup:`1`
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.value
+      1337.0
+
+.. py:attribute:: BitMathInstance.unit
+
+   The string representation of this prefix unit (such as ``MiB`` or ``kb``)
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.unit
+      Byte
+
+.. py:attribute:: BitMathInstance.unit_plural
+
+   The pluralized string representation of this prefix unit.
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.unit_plural
+      Bytes
+
+.. py:attribute:: BitMathInstance.unit_singular
+
+   The singular string representation of this prefix unit (such as
+   ``MiB`` or ``kb``)
+
+   .. code-block:: python
+
+      >>> b = bitmath.Byte(1337)
+      >>> print b.unit_singular
+      Byte
+
 
 **Notes:**
 
