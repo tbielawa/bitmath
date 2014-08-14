@@ -56,9 +56,8 @@ bitmath.listdir()
    :param bool relpath: **Default:** ``False``, returns the fully
                         qualified to each discovered file. ``True`` to
                         return the relative path from the present
-                        working directory to the discovered file.
-
-			If ``relpath`` is ``False``, then
+                        working directory to the discovered file. If
+                        ``relpath`` is ``False``, then
                         :py:func:`bitmath.listdir` internally calls
                         :py:func:`os.path.realpath` to normalize path
                         references
