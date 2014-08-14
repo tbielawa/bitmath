@@ -9,7 +9,7 @@
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
-Version: 1.0.7
+Version: 1.0.8
 Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
@@ -56,6 +56,16 @@ nosetests -v
 %doc README.md LICENSE
 
 %changelog
+* Thu Aug 14 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.8-1%{?dist}
+- First release with contributors: davidfischer-ch and hikusukih! Thank you!
+- Real documentation (via readthedocs.org)
+- Significant formatting functionality added:
+- +formatting context manager, listdir, getsize
+- Python3 compat via rtruediv contribution!
+- So many more unit tests
+- Coveralls code-coverage review
+- Pluralization/singularity in string formatting (thanks for the contribution!)
+
 * Sat Jul 19 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.7-1
 - Lots of documentation and unittest updates
 - See GitHub Milestone 2: 1.0.7 for a list of closed issues
