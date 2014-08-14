@@ -176,6 +176,7 @@ classes. You can even ``to_THING()`` an instance into itself again:
 
 .. code-block:: python
    :linenos:
+   :emphasize-lines: 5,11,19
 
    In [1]: from bitmath import *
 
