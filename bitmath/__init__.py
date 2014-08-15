@@ -33,6 +33,7 @@ decimal and binary prefixes:
 man 7 units (from the Linux Documentation Project 'man-pages' package)
 """
 
+from __future__ import print_function
 
 import contextlib
 import fnmatch
@@ -1113,10 +1114,10 @@ def cli_script():
 
     # If we have a unit provided then use it
     if args.tounit:
-        print getattr(instance, args.tounit[0]).value
+        print(getattr(instance, args.tounit[0]).value)
     # Otherwise use the best_prefix call
     else:
-        print instance.best_prefix()
+        print(instance.best_prefix())
 
 
 if __name__ == '__main__':
