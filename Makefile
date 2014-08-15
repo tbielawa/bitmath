@@ -91,7 +91,7 @@ install: clean
 	python ./setup.py install
 
 sdist: setup.py clean
-	python setup.py sdist -t MANIFEST.in
+	python setup.py sdist
 
 rpmcommon: sdist python-bitmath.spec setup.py
 	@mkdir -p rpm-build

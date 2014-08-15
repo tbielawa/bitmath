@@ -24,38 +24,49 @@
 # SOFTWARE.
 
 
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    print "Command line script will not be created."
+    from distutils.core import setup
+
 
 pypi_notice = open('.pypi_notice', 'r').read()
 
-setup(name='bitmath',
-      version='%VERSION%-%RELEASE%',
-      description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
-      long_description=pypi_notice,
-      maintainer='Tim Bielawa',
-      maintainer_email='timbielawa@gmail.com',
-      url='https://github.com/tbielawa/bitmath',
-      license='MIT',
-      package_dir={'bitmath': 'bitmath'},
-      packages=['bitmath'],
-      classifiers = [
-          'Development Status :: 5 - Production/Stable',
-          'Environment :: Console',
-          'Intended Audience :: Developers',
-          'Intended Audience :: Information Technology',
-          'Intended Audience :: System Administrators',
-          'Intended Audience :: Telecommunications Industry',
-          'License :: OSI Approved :: MIT License',
-          'Operating System :: MacOS :: MacOS X',
-          'Operating System :: POSIX',
-          'Operating System :: POSIX :: Linux',
-          'Programming Language :: Python',
-          'Topic :: Scientific/Engineering :: Mathematics',
-          'Topic :: Software Development :: Libraries',
-          'Topic :: Software Development :: Libraries :: Python Modules',
-          'Topic :: Software Development :: User Interfaces',
-          'Topic :: System :: Filesystems',
-          'Topic :: Text Processing :: Filters',
-          'Topic :: Utilities'
-      ]
+setup(
+    name='bitmath',
+    version='%VERSION%-%RELEASE%',
+    description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
+    long_description=pypi_notice,
+    maintainer='Tim Bielawa',
+    maintainer_email='timbielawa@gmail.com',
+    url='https://github.com/tbielawa/bitmath',
+    license='MIT',
+    package_dir={'bitmath': 'bitmath'},
+    packages=['bitmath'],
+    classifiers = [
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Information Technology',
+        'Intended Audience :: System Administrators',
+        'Intended Audience :: Telecommunications Industry',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: POSIX',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python',
+        'Topic :: Scientific/Engineering :: Mathematics',
+        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Software Development :: User Interfaces',
+        'Topic :: System :: Filesystems',
+        'Topic :: Text Processing :: Filters',
+        'Topic :: Utilities'
+    ],
+    entry_points = {
+        'console_scripts': [
+            'bitmath = bitmath:cli_script',
+        ],
+    }
 )
