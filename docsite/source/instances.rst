@@ -413,7 +413,7 @@ classes. Under the covers these properties call ``to_THING``.
 
 .. code-block:: python
    :linenos:
-   :emphasize-lines: 5,9,13
+   :emphasize-lines: 5,9,15
 
    In [1]: from bitmath import *
 
