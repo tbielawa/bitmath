@@ -33,6 +33,7 @@ decimal and binary prefixes:
 man 7 units (from the Linux Documentation Project 'man-pages' package)
 """
 
+from __future__ import print_function
 
 import contextlib
 import fnmatch
@@ -1072,3 +1073,52 @@ using their current prefix unit.
 
     if fmt_str:
         bitmath.format_string = orig_fmt_str
+
+
+def cli_script():
+    """
+    A command line interface to basic bitmath operations.
+    """
+    import argparse
+
+    choices = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB',
+               'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib',
+               'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb']
+
+    parser = argparse.ArgumentParser(
+        description='Converts from one type of size to another.')
+    parser.add_argument('--from-stdin', default=False, action='store_true',
+                        help='Reads number from stdin rather than the cli')
+    parser.add_argument(
+        '-f', '--from', choices=choices, nargs=1, type=str, dest='fromunit',
+        help='Input type you are converting from. Defaultes to Byte.')
+    parser.add_argument(
+        '-t', '--to', choices=choices, required=False, nargs=1, type=str,
+        help=('Input type you are converting to. '
+              'Attempts to sense best result if omitted.'), dest='tounit')
+    parser.add_argument(
+        'size', nargs='*', type=float,
+        help='The number to convert.')
+
+    args = parser.parse_args()
+
+    if args.from_stdin:
+        args.size = [float(sys.stdin.readline()[:-1])]
+
+    # Find the proper class from input
+    if not args.fromunit:
+        args.fromunit = ['Byte']
+
+    instance = getattr(__import__(
+        'bitmath', fromlist=['True']), args.fromunit[0])(args.size[0])
+
+    # If we have a unit provided then use it
+    if args.tounit:
+        print(getattr(instance, args.tounit[0]).value)
+    # Otherwise use the best_prefix call
+    else:
+        print(instance.best_prefix())
+
+
+if __name__ == '__main__':
+    cli_script()
