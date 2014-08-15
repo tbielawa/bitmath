@@ -40,7 +40,7 @@ most of the time what you're really seeing are the base-2 sizes/rates.
 **Don't Forget!** The source for bitmath `is available on GitHub
 <https://github.com/tbielawa/bitmath>`_.
 
-OH! And did we mention it has 100+ unittests? `Check them out for
+OH! And did we mention it has 150+ unittests? `Check them out for
 yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
 
 
@@ -52,6 +52,12 @@ The main documentation has been moved to
 <http://bitmath.readthedocs.org/en/latest/>`_.
 
 Topics include:
+
+* The ``bitmath`` Module
+
+  * Functions
+  * Context Managers
+  * Module Variables
 
 * Classes
 
@@ -212,3 +218,82 @@ Example:
    There are 6250000.0 bytes in this instance
    The instance is 50000000.0 bits large
    bytes/bits without trailing decimals: 6250000/50000000
+
+Utility Functions
+-----------------
+
+**bitmath.getsize()**
+
+.. code-block:: python
+
+   >>> print bitmath.getsize('python-bitmath.spec')
+   3.7060546875 KiB
+
+**bitmath.listdir()**
+
+.. code-block:: python
+
+   >>> for i in bitmath.listdir('./tests/', followlinks=True, relpath=True, bestprefix=True):
+   ...     print i
+   ...
+   ('tests/test_file_size.py', KiB(9.2900390625))
+   ('tests/test_basic_math.py', KiB(7.1767578125))
+   ('tests/__init__.py', KiB(1.974609375))
+   ('tests/test_bitwise_operations.py', KiB(2.6376953125))
+   ('tests/test_context_manager.py', KiB(3.7744140625))
+   ('tests/test_representation.py', KiB(5.2568359375))
+   ('tests/test_properties.py', KiB(2.03125))
+   ('tests/test_instantiating.py', KiB(3.4580078125))
+   ('tests/test_future_math.py', KiB(2.2001953125))
+   ('tests/test_best_prefix_BASE.py', KiB(2.1044921875))
+   ('tests/test_rich_comparison.py', KiB(3.9423828125))
+   ('tests/test_best_prefix_NIST.py', KiB(5.431640625))
+   ('tests/test_unique_testcase_names.sh', Byte(311.0))
+   ('tests/.coverage', KiB(3.1708984375))
+   ('tests/test_best_prefix_SI.py', KiB(5.34375))
+   ('tests/test_to_built_in_conversion.py', KiB(1.798828125))
+   ('tests/test_to_Type_conversion.py', KiB(8.0185546875))
+   ('tests/test_sorting.py', KiB(4.2197265625))
+   ('tests/listdir_symlinks/10_byte_file_link', Byte(10.0))
+   ('tests/listdir_symlinks/depth1/depth2/10_byte_file', Byte(10.0))
+   ('tests/listdir_nosymlinks/depth1/depth2/10_byte_file', Byte(10.0))
+   ('tests/listdir_nosymlinks/depth1/depth2/1024_byte_file', KiB(1.0))
+   ('tests/file_sizes/kbytes.test', KiB(1.0))
+   ('tests/file_sizes/bytes.test', Byte(38.0))
+   ('tests/listdir/10_byte_file', Byte(10.0))
+
+
+Formatting
+----------
+
+.. code-block:: python
+
+   >> with bitmath.format(fmt_str="[{value:.3f}@{unit}]"):
+   ...     for i in bitmath.listdir('./tests/', followlinks=True, relpath=True, bestprefix=True):
+   ...         print i[1]
+   ...
+   [9.290@KiB]
+   [7.177@KiB]
+   [1.975@KiB]
+   [2.638@KiB]
+   [3.774@KiB]
+   [5.257@KiB]
+   [2.031@KiB]
+   [3.458@KiB]
+   [2.200@KiB]
+   [2.104@KiB]
+   [3.942@KiB]
+   [5.432@KiB]
+   [311.000@Byte]
+   [3.171@KiB]
+   [5.344@KiB]
+   [1.799@KiB]
+   [8.019@KiB]
+   [4.220@KiB]
+   [10.000@Byte]
+   [10.000@Byte]
+   [10.000@Byte]
+   [1.000@KiB]
+   [1.000@KiB]
+   [38.000@Byte]
+   [10.000@Byte]
