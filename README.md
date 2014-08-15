@@ -96,7 +96,7 @@ What good would a README be without examples?
     2457.6
 
 ## Convert Units
-
+### With to method
     In [1]: from bitmath import *
 
     In [2]: dvd_size = GiB(4.7)
@@ -104,11 +104,20 @@ What good would a README be without examples?
     In [3]: print "DVD Size in MiB: %s" % dvd_size.to_MiB()
     DVD Size in MiB: 4812.8MiB
 
+### With Properties
+    In [1]: from bitmath import *
+
+    In [2]: dvd_size = GiB(4.7)
+
+    In [3]: print "DVD Size in MiB: %s" % dvd_size.MiB
+    DVD Size in MiB: 4812.8MiB
+
+
 ## Select a human-readable unit
 
     In [4]: small_number = kB(100)
 
-    In [5]: ugly_number = small_number.to_TiB()
+    In [5]: ugly_number = small_number.TiB
 
     In [6]: print ugly_number
     9.09494701773e-08TiB

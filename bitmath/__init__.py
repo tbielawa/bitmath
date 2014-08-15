@@ -442,6 +442,10 @@ prefix unit' for representation:
     def to_Byte(self):
         return Byte(self._byte_value / float(NIST_STEPS['Byte']))
 
+    # Properties
+    Bit = property(lambda s: s.to_Bit())
+    Byte = property(lambda s: s.to_Byte())
+
     ##################################################################
 
     def to_KiB(self):
@@ -455,6 +459,12 @@ prefix unit' for representation:
 
     def to_kb(self):
         return kb(bits=self._bit_value)
+
+    # Properties
+    KiB = property(lambda s: s.to_KiB())
+    Kib = property(lambda s: s.to_Kib())
+    kB = property(lambda s: s.to_kB())
+    kb = property(lambda s: s.to_kb())
 
     ##################################################################
 
@@ -470,6 +480,12 @@ prefix unit' for representation:
     def to_Mb(self):
         return Mb(bits=self._bit_value)
 
+    # Properties
+    MiB = property(lambda s: s.to_MiB())
+    Mib = property(lambda s: s.to_Mib())
+    MB = property(lambda s: s.to_MB())
+    Mb = property(lambda s: s.to_Mb())
+
     ##################################################################
 
     def to_GiB(self):
@@ -483,6 +499,12 @@ prefix unit' for representation:
 
     def to_Gb(self):
         return Gb(bits=self._bit_value)
+
+    # Properties
+    GiB = property(lambda s: s.to_GiB())
+    Gib = property(lambda s: s.to_Gib())
+    GB = property(lambda s: s.to_GB())
+    Gb = property(lambda s: s.to_Gb())
 
     ##################################################################
 
@@ -498,6 +520,12 @@ prefix unit' for representation:
     def to_Tb(self):
         return Tb(bits=self._bit_value)
 
+    # Properties
+    TiB = property(lambda s: s.to_TiB())
+    Tib = property(lambda s: s.to_Tib())
+    TB = property(lambda s: s.to_TB())
+    Tb = property(lambda s: s.to_Tb())
+
     ##################################################################
 
     def to_PiB(self):
@@ -512,6 +540,12 @@ prefix unit' for representation:
     def to_Pb(self):
         return Pb(bits=self._bit_value)
 
+    # Properties
+    PiB = property(lambda s: s.to_PiB())
+    Pib = property(lambda s: s.to_Pib())
+    PB = property(lambda s: s.to_PB())
+    Pb = property(lambda s: s.to_Pb())
+
     ##################################################################
 
     def to_EiB(self):
@@ -525,6 +559,12 @@ prefix unit' for representation:
 
     def to_Eb(self):
         return Eb(bits=self._bit_value)
+
+    # Properties
+    EiB = property(lambda s: s.to_EiB())
+    Eib = property(lambda s: s.to_Eib())
+    EB = property(lambda s: s.to_EB())
+    Eb = property(lambda s: s.to_Eb())
 
     ##################################################################
     # Rich comparison operations
