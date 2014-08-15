@@ -398,6 +398,48 @@ of how an attribute may be referenced multiple times.
 .. note:: On line **4** we print with 1 digit of precision, on line
           **16** we see the value has been rounded to **6.0**
 
+.. _instances_properties:
+
+Instance Properties
+*******************
+
+THING Properties
+================
+
+Like the :ref:`available classes <classes_available>`, there are 24
+``THING`` properties available. ``THING`` is any of the bitmath
+classes. Under the covers these properties call ``to_THING``.
+
+
+.. code-block:: python
+   :linenos:
+   :emphasize-lines: 5,9,13
+
+   In [1]: from bitmath import *
+
+   In [2]: one_mib = MiB(1)
+
+   In [3]: one_mib == one_mib.kb
+
+   Out[3]: True
+
+   In [4]: print one_mib, one_mib.kb, one_mib.MiB
+
+   1.0 MiB 8388.608 kb 1.0 MiB
+
+   In [5]: six_TB = TB(6)
+
+   In [6]: print six_TB, six_TB.Bit
+
+   6.0 TB 4.8e+13 Bit
+
+   In [7]: six_TB == six_TB.Bit
+
+   Out[7]: True
+
+
+
+
 .. _instances_mini_language:
 
 The Formatting Mini-Language

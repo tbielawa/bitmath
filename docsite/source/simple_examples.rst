@@ -146,6 +146,9 @@ Unit Conversion
 
    Out[5]: MiB(42.0)
 
+   In [6]: fourty_two_mib.KiB
+
+   Out[6]: KiB(43008.0)
 
 Rich Comparison
 ***************
