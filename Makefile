@@ -93,7 +93,7 @@ install: clean
 sdist: setup.py clean
 	python setup.py sdist -t MANIFEST.in
 
-rpmcommon: sdist python-bitmath.spec setup.py docs
+rpmcommon: sdist python-bitmath.spec setup.py
 	@mkdir -p rpm-build
 	@cp dist/$(NAME)-$(VERSION)-$(RPMRELEASE).tar.gz rpm-build/$(VERSION)-$(RPMRELEASE).tar.gz
 
