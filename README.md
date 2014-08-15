@@ -51,6 +51,7 @@ Topics include:
 * Instances
   * Instance Attributes
   * Instance Methods
+  * Instance Properties
   * The Formatting Mini-Language
 * Getting Started
   * Tables of Supported Operations
