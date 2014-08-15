@@ -5,7 +5,7 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 2
+%global _short_release 3
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
@@ -56,6 +56,9 @@ nosetests -v
 %doc README.md LICENSE
 
 %changelog
+* Fri Aug 15 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.8-3
+- Actually fix this whole specfile and version mixup
+
 * Fri Aug 15 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.8-2
 - Fix macro expansion in specfile changelog
 

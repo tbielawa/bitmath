@@ -29,7 +29,7 @@ from distutils.core import setup
 pypi_notice = open('.pypi_notice', 'r').read()
 
 setup(name='bitmath',
-      version='1.0.8-2',
+      version='1.0.8-3',
       description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
       long_description=pypi_notice,
       maintainer='Tim Bielawa',
