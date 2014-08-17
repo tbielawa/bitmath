@@ -31,6 +31,45 @@ bitmath.getsize()
    :py:func:`os.path.realpath` before calling
    :py:func:`os.path.getsize` on any paths.
 
+   Here's an example of where we'll run :py:func:`bitmath.getsize` on
+   the bitmath source code using the defaults for ``bestprefix`` and
+   ``system``:
+
+   .. code-block:: python
+
+      >>> import bitmath
+      >>> print bitmath.getsize('./bitmath/__init__.py')
+      33.3583984375 KiB
+
+   Let's say we want to see the results in bytes. We can do this by
+   setting ``bestprefix`` to ``False``:
+
+   .. code-block:: python
+
+      >>> import bitmath
+      >>> print bitmath.getsize('./bitmath/__init__.py', bestprefix=False)
+      34159.0 Byte
+
+   Recall, the default for representation is with the best
+   human-readable prefix. We can control the prefix system used by
+   setting ``system`` to either :py:data:`bitmath.NIST` (the default)
+   or :py:data:`bitmath.SI`:
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 1-4
+
+      >>> print bitmath.getsize('./bitmath/__init__.py')
+      33.3583984375 KiB
+      >>> print bitmath.getsize('./bitmath/__init__.py', system=bitmath.NIST)
+      33.3583984375 KiB
+      >>> print bitmath.getsize('./bitmath/__init__.py', system=bitmath.SI)
+      34.159 kB
+
+   We can see in lines **1** → **4** that the same result is returned
+   when ``system`` is not set and when ``system`` is set to
+   :py:data:`bitmath.NIST` (the default).
+
    .. versionadded:: 1.0.7
 
 bitmath.listdir()
