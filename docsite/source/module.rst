@@ -5,6 +5,10 @@
 The ``bitmath`` Module
 ######################
 
+.. contents::
+   :depth: 3
+   :local:
+
 Functions
 *********
 
@@ -77,7 +81,7 @@ bitmath.listdir()
 
 .. function:: bitmath.listdir(search_base[, followlinks=False[, filter='*'[, relpath=False[, bestprefix=False[, system=NIST]]]]])
 
-   This is a generator which recurses a directory tree yielding
+   This is a **generator** which recurses a directory tree yielding
    2-tuples of:
 
    * The absolute/relative path to a discovered file
@@ -112,8 +116,9 @@ bitmath.listdir()
    .. note::
 
       * This function does **not** return tuples for directory
-        entities. Including directories in results is scheduled for
-        introduction in the upcoming 1.1.0 release.
+        entities. Including directories in results is `scheduled for
+        introduction <https://github.com/tbielawa/bitmath/issues/27>`_
+        in the upcoming 1.1.0 release.
       * Symlinks to **files** are followed automatically
 
 
@@ -126,7 +131,83 @@ bitmath.listdir()
    to the results from common command line utilities, such as ``du``,
    or ``tree``.
 
+   Let's pretend we have a directory structure like the following::
 
+      some_files/
+      ├── deeper_files/
+      │   └── second_file
+      └── first_file
+
+   Where ``some_files/`` is a directory, and so is
+   ``some_files/deeper_files/``. There are two regular files in this
+   tree:
+
+   * ``somefiles/first_file`` - 1337 Bytes
+   * ``some_files/deeper_files/second_file`` - 13370 Bytes
+
+   The **total** size of the files in this tree is **1337 + 13370 =
+   14707** bytes.
+
+   Let's call :py:func:`bitmath.listdir` on the ``some_files/``
+   directory and see what the results look like. First we'll use all
+   the default parameters, then we'll set ``relpath`` to ``True``:
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 5-6,10-11
+
+      >>> import bitmath
+      >>> for f in bitmath.listdir('./some_files'):
+      ...     print f
+      ...
+      ('/tmp/tmp.P5lqtyqwPh/some_files/first_file', Byte(1337.0))
+      ('/tmp/tmp.P5lqtyqwPh/some_files/deeper_files/second_file', Byte(13370.0))
+      >>> for f in bitmath.listdir('./some_files', relpath=True):
+      ...     print f
+      ...
+      ('some_files/first_file', Byte(1337.0))
+      ('some_files/deeper_files/second_file', Byte(13370.0))
+
+   On lines **5** and **6** the results print the full path, whereas
+   on lines **10** and **11** the path is relative to the present
+   working directory.
+
+   Let's play with the ``filter`` parameter now. Let's say we only
+   want to include results for files whose name begins with "second":
+
+   .. code-block:: python
+
+      >>> for f in bitmath.listdir('./some_files', filter='second*'):
+      ...     print f
+      ...
+      ('/tmp/tmp.P5lqtyqwPh/some_files/deeper_files/second_file', Byte(13370.0))
+
+
+   If we wish to avoid having to write for-loops, We can collect the
+   results into a list rather simply:
+
+   .. code-block:: python
+
+      >>> files = list(bitmath.listdir('./some_files'))
+      >>> print files
+      [('/tmp/tmp.P5lqtyqwPh/some_files/first_file', Byte(1337.0)), ('/tmp/tmp.P5lqtyqwPh/some_files/deeper_files/second_file', Byte(13370.0))]
+
+   Here's a more advanced example where we will sum the size of all
+   the returned results and then play around with the possible
+   formatting. Recall that a bitmath instance representing the size of
+   the discovered file is the second item in each returned tuple.
+
+   .. code-block:: python
+
+      >>> discovered_files = [f[1] for f in bitmath.listdir('./some_files')]
+      >>> print discovered_files
+      [Byte(1337.0), Byte(13370.0)]
+      >>> print reduce(lambda x,y: x+y, discovered_files)
+      14707.0 Byte
+      >>> print reduce(lambda x,y: x+y, discovered_files).best_prefix()
+      14.3623046875 KiB
+      >>> print reduce(lambda x,y: x+y, discovered_files).best_prefix().format("{value:.3f} {unit}")
+      14.362 KiB
 
 
    .. versionadded:: 1.0.7
