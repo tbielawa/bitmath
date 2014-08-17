@@ -183,7 +183,7 @@ bitmath.listdir()
       ('/tmp/tmp.P5lqtyqwPh/some_files/deeper_files/second_file', Byte(13370.0))
 
 
-   If we wish to avoid having to write for-loops, We can collect the
+   If we wish to avoid having to write for-loops, we can collect the
    results into a list rather simply:
 
    .. code-block:: python
