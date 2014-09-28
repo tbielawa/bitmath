@@ -81,11 +81,12 @@ bitmath.listdir()
 
 .. function:: bitmath.listdir(search_base[, followlinks=False[, filter='*'[, relpath=False[, bestprefix=False[, system=NIST]]]]])
 
-   This is a **generator** which recurses a directory tree yielding
-   2-tuples of:
+   This is a `generator
+   <https://docs.python.org/2/tutorial/classes.html#generators>`_
+   which recurses a directory tree yielding 2-tuples of:
 
    * The absolute/relative path to a discovered file
-   * A bitmath instance representing the *apparent size* of the file.
+   * A bitmath instance representing the *apparent size* of the file
 
    :param string search_base: The directory to begin walking down
    :param bool followlinks: **Default:** ``False``, do not follow
