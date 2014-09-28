@@ -60,6 +60,7 @@ Contents
    real_life_examples.rst
    contributing.rst
    appendices.rst
+   NEWS.rst
    copyright.rst
 
 
