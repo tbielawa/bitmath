@@ -1,14 +1,15 @@
-..
-   todo: fix links, don't add section numbers in output for 3'rd level, add local TOC: depth 1 (releases)
-
-
-.. _news:
-
 NEWS
 ####
 
+.. contents::
+   :depth: 1
+   :local:
+
+
 bitmath-1.0.5-1 through 1.0.8-1
 *******************************
+
+bitmath-1.0.8-1 was published on 2014-08-14.
 
 Major Updates
 =============
@@ -77,3 +78,32 @@ Project
   [16]: http://bitmath.readthedocs.org/en/latest/instances.html#instance-properties "Documentation for instance properties"
   [17]: https://github.com/tbielawa/bitmath/blob/master/Makefile#L177 "Test suite entry point for virtualenv tests"
   [18]: https://coveralls.io/r/tbielawa/bitmath?branch=master "Code coverage report"
+
+
+bitmath-1.0.4-1
+***************
+
+This is the first release of **bitmath**. bitmath-1.0.4-1 was
+published on 2014-03-20.
+
+Project
+=======
+
+Available via:
+
+* `PyPi <https://pypi.python.org/pypi/bitmath/>`_
+* `Fedora 19 <https://admin.fedoraproject.org/updates/FEDORA-2014-4235/python-bitmath-1.0.4-1.fc19>`_
+* `Fedora 20 <https://admin.fedoraproject.org/updates/FEDORA-2014-4235/python-bitmath-1.0.4-1.fc20>`_
+
+bitmath had been under development for 12 days when the 1.0.4-1
+release was made available.
+
+Debut Functionality
+===================
+
+* Converting between **SI** and **NIST** prefix units (``GiB`` to ``kB``)
+* Converting between units of the same type (SI to SI, or NIST to NIST)
+* Basic arithmetic operations (subtracting 42KiB from 50GiB)
+* Rich comparison operations (``1024 Bytes == 1KiB``)
+* Sorting
+* Useful *console* and *print* representations
