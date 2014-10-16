@@ -8,3 +8,6 @@ exclude_lines =
 
     # This is for python3 compat only. And py3 is not yet supported
     long = int
+
+    # Don't test the __main__ entry point
+    __main__

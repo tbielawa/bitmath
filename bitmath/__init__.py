@@ -1076,7 +1076,7 @@ using their current prefix unit.
         bitmath.format_string = orig_fmt_str
 
 
-def cli_script():
+def cli_script_main():
     """
     A command line interface to basic bitmath operations.
     """
@@ -1091,12 +1091,13 @@ def cli_script():
     parser.add_argument('--from-stdin', default=False, action='store_true',
                         help='Reads number from stdin rather than the cli')
     parser.add_argument(
-        '-f', '--from', choices=choices, nargs=1, type=str, dest='fromunit',
+        '-f', '--from', choices=choices, nargs=1,
+        type=str, dest='fromunit', default=['Byte'],
         help='Input type you are converting from. Defaultes to Byte.')
     parser.add_argument(
         '-t', '--to', choices=choices, required=False, nargs=1, type=str,
         help=('Input type you are converting to. '
-              'Attempts to sense best result if omitted.'), dest='tounit')
+              'Attempts to detect best result if omitted.'), dest='tounit')
     parser.add_argument(
         'size', nargs='*', type=float,
         help='The number to convert.')
@@ -1106,20 +1107,29 @@ def cli_script():
     if args.from_stdin:
         args.size = [float(sys.stdin.readline()[:-1])]
 
-    # Find the proper class from input
-    if not args.fromunit:
-        args.fromunit = ['Byte']
+    results = []
 
-    instance = getattr(__import__(
-        'bitmath', fromlist=['True']), args.fromunit[0])(args.size[0])
+    for size in args.size:
+        instance = getattr(__import__(
+            'bitmath', fromlist=['True']), args.fromunit[0])(size)
 
-    # If we have a unit provided then use it
-    if args.tounit:
-        print(getattr(instance, args.tounit[0]))
-    # Otherwise use the best_prefix call
-    else:
-        print(instance.best_prefix())
+        # If we have a unit provided then use it
+        if args.tounit:
+            result = getattr(instance, args.tounit[0])
+        # Otherwise use the best_prefix call
+        else:
+            result = instance.best_prefix()
 
+        results.append(result)
+
+    return results
+
+
+def cli_script():
+    # Wrapper around cli_script_main so we can unittest the command
+    # line functionality
+    for result in cli_script_main():
+        print(result)
 
 if __name__ == '__main__':
     cli_script()
