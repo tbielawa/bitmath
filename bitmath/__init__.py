@@ -2,6 +2,7 @@
 # The MIT License (MIT)
 #
 # Copyright © 2014 Tim Bielawa <timbielawa@gmail.com>
+# See GitHub Contributors Graph for more information
 #
 # Permission is hereby granted, free of charge, to any person
 # obtaining a copy of this software and associated documentation files
@@ -1114,7 +1115,7 @@ def cli_script():
 
     # If we have a unit provided then use it
     if args.tounit:
-        print(getattr(instance, args.tounit[0]).value)
+        print(getattr(instance, args.tounit[0]))
     # Otherwise use the best_prefix call
     else:
         print(instance.best_prefix())

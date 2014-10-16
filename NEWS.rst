@@ -5,6 +5,24 @@ NEWS
    :depth: 1
    :local:
 
+.. _bitmath-1.1.0-0:
+
+bitmath-1.0.0-1
+***************
+
+**Not yet released**
+
+* `GitHub Milestone Tracker for 1.0.0 <https://github.com/tbielawa/bitmath/milestones/1.1.0>`_
+
+Changes
+=======
+
+**Added Functionality**
+
+* New ``bitmath`` `command-line tool
+  <https://github.com/tbielawa/bitmath/issues/35>`_ added. Provides
+  CLI access to basic unit conversion functions
+
 
 .. _bitmath-1.0.8-1:
 
@@ -13,12 +31,14 @@ bitmath-1.0.5-1 through 1.0.8-1
 
 bitmath-1.0.8-1 was published on 2014-08-14.
 
+* `GitHub Milestone Tracker for 1.0.8 <https://github.com/tbielawa/bitmath/issues?q=milestone%3A1.0.8>`_
+
 Major Updates
 =============
 
 * bitmath has a proper documentation website up now on Read the Docs,
-  check it out:
-* `bitmath.readthedocs.org <http://bitmath.readthedocs.org/en/latest/>`_
+  check it out: `bitmath.readthedocs.org
+  <http://bitmath.readthedocs.org/en/latest/>`_
 * bitmath is now Python 3.x compatible
 * bitmath is now included in the `Extra Packages for Enterprise Linux
   <https://fedoraproject.org/wiki/EPEL>`_ `EPEL6

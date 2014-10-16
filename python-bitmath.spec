@@ -5,11 +5,11 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 3
+%global _short_release 1
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
-Version: 1.0.8
+Version: 1.1.0
 Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
