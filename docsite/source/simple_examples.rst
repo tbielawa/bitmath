@@ -155,7 +155,7 @@ Rich Comparison
 
 Rich Comparison (as per the `Python Basic Customization
 <https://docs.python.org/2.7/reference/datamodel.html#basic-customization>`_
-magic methods): ``<``, ``≤``, ``==``, ``≠``, ``>``, ``≥`` is fully
+magic methods): ``<``, ``<=``, ``==``, ``!=``, ``>``, ``>=`` is fully
 supported:
 
 .. code-block:: python
