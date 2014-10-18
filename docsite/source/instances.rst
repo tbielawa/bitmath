@@ -452,7 +452,7 @@ about what's going on here, let's break the first specifier
 (``{value:.2f}``) down into it's component parts::
 
    {value:.2f}
-      ↑  ↑↑↑↑
+      |  |||
       |  |||\---- The "f" says to format this as a floating point type
       |  ||\----- The 2 indicates we want 2 digits of precision (default is 6)
       |  |\------ The '.' character must precede the precision specifier for floats
