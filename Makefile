@@ -35,11 +35,14 @@ RPMSPECDIR := .
 RPMSPEC := $(RPMSPECDIR)/$(PKGNAME).spec
 
 # Documentation. YAY!!!!
-docs:
+docs: conf.py
 	cd docsite; make html; cd -
 
 viewdocs: docs
 	xdg-open docsite/build/html/index.html
+
+conf.py: docsite/source/conf.py.in
+	sed "s/%VERSION%/$(VERSION)/" $< > docsite/source/conf.py
 
 # Build the spec file on the fly. Substitute version numbers from the
 # canonical VERSION file.
@@ -50,6 +53,7 @@ python-bitmath.spec: python-bitmath.spec.in
 setup.py: setup.py.in VERSION python-bitmath.spec.in
 	sed -e "s/%VERSION%/$(VERSION)/" -e "s/%RELEASE%/$(RPMRELEASE)/" $< > $@
 
+# usage example: make tag TAG=1.1.0-1
 tag:
 	git tag -s -m $(TAG) $(TAG)
 
