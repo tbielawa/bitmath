@@ -1046,7 +1046,7 @@ def parse_string(s):
     """Parse a string with units and try to make a bitmath object out of it"""
 
     # get the index of the first alphabetic character
-    index = map(str.isalpha, s).index(True)
+    index = list(map(str.isalpha, s)).index(True)
     # split the string into the value and the unit
     val, unit = s[:index], s[index:]
 
