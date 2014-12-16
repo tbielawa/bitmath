@@ -1041,13 +1041,14 @@ def listdir(search_base, followlinks=False, filter='*',
                 else:
                     yield (_return_path, getsize(_path, bestprefix=bestprefix, system=system))
 
+
 def parse_string(s):
     """Parse a string with units and try to make a bitmath object out of it"""
 
     # get the index of the first alphabetic character
-    index = map(str.isalpha,s).index(True)
+    index = map(str.isalpha, s).index(True)
     # split the string into the value and the unit
-    val, unit = s[:index],s[index:]
+    val, unit = s[:index], s[index:]
 
     # see if the unit exists as a type in our namespace
 
