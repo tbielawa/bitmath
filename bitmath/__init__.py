@@ -1072,6 +1072,7 @@ def parse_string(s):
         raise ValueError("Can't parse string %s into a bitmath object")
     return obj
 
+
 @contextlib.contextmanager
 def format(fmt_str=None, plural=False, bestprefix=False):
     """Context manager for printing bitmath instances.
