@@ -1,7 +1,7 @@
 from . import TestCase
 import bitmath
 
-class TestBasicMath(TestCase):
+class TestParse(TestCase):
     def test_b(self):
         self.assertEqual(
             bitmath.parse_string("123b"),
