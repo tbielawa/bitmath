@@ -220,12 +220,17 @@ bitmath.parse_string()
 
 .. function:: bitmath.parse_string(str_repr)
 
-   Parse a string representing a unit into a proper bitmath object.
+   Parse a string representing a unit into a proper bitmath
+   object. All non-string inputs are rejected and will raise a
+   :py:exc:`ValueError`. Strings without units are also rejected. See
+   the examples below for additional clarity.
 
    :param string str_repr: The string to parse. May contain whitespace
                            between the value and the unit.
    :return: A bitmath object representing ``str_repr``
    :raises ValueError: if ``str_repr`` can not be parsed
+
+   A simple usage example:
 
    .. code-block:: python
 
@@ -238,7 +243,7 @@ bitmath.parse_string()
 
    .. caution::
 
-      Caution is advised if you are sourcing values from an unverified
+      Caution is advised if you are reading values from an unverified
       external source, such as output from a shell command or a
       generated file. Many applications (even ``/usr/bin/ls``) still
       do not produce file size strings with valid (or even correct)
@@ -258,6 +263,26 @@ bitmath.parse_string()
       ...
       Error while parsing string into bitmath object
 
+
+   Here we can see some more examples of invalid input, as well as two
+   acceptable inputs:
+
+   .. code-block:: python
+
+      >>> import bitmath
+      >>> sizes = [ 1337, 1337.7, "1337", "1337.7", "1337 B", "1337B" ]
+      >>> for size in sizes:
+      ...     try:
+      ...         print "Parsed size into %s" % bitmath.parse_string(size).best_prefix()
+      ...     except ValueError:
+      ...         print "Could not parse input: %s" % size
+      ...
+      Could not parse input: 1337
+      Could not parse input: 1337.7
+      Could not parse input: 1337
+      Could not parse input: 1337.7
+      Parsed size into 1.3056640625 KiB
+      Parsed size into 1.3056640625 KiB
 
    .. versionadded:: 1.1.0
 
