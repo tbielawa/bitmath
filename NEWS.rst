@@ -7,12 +7,12 @@ NEWS
 
 .. _bitmath-1.1.0-0:
 
-bitmath-1.0.0-1
+bitmath-1.1.0-1
 ***************
 
 **Not yet released**
 
-* `GitHub Milestone Tracker for 1.0.0 <https://github.com/tbielawa/bitmath/milestones/1.1.0>`_
+* `GitHub Milestone Tracker for 1.1.0 <https://github.com/tbielawa/bitmath/milestones/1.1.0>`_
 
 Changes
 =======
@@ -22,6 +22,12 @@ Changes
 * New ``bitmath`` `command-line tool
   <https://github.com/tbielawa/bitmath/issues/35>`_ added. Provides
   CLI access to basic unit conversion functions
+* New utility function `bitmath.parse_string
+  <http://bitmath.readthedocs.org/en/latest//module.html#bitmath-parse-string>`_
+  for parsing a human-readable string into a bitmath object. `Patch
+  submitted <https://github.com/tbielawa/bitmath/pull/42>`_ by new
+  contributor `tonycpsu <https://github.com/tonycpsu>`_.
+
 
 
 .. _bitmath-1.0.8-1:
