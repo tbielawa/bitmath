@@ -213,6 +213,54 @@ bitmath.listdir()
 
    .. versionadded:: 1.0.7
 
+
+
+bitmath.parse_string()
+======================
+
+.. function:: bitmath.parse_string(str_repr)
+
+   Parse a string representing a unit into a proper bitmath object.
+
+   :param string str_repr: The string to parse. May contain whitespace
+                           between the value and the unit.
+   :return: A bitmath object representing ``str_repr``
+   :raises ValueError: if ``str_repr`` can not be parsed
+
+   .. code-block:: python
+
+      >>> import bitmath
+      >>> a_dvd = bitmath.parse_string("4.7 GiB")
+      >>> print type(a_dvd)
+      <class 'bitmath.GiB'>
+      >>> print a_dvd
+      4.7 GiB
+
+   .. caution::
+
+      Caution is advised if you are sourcing values from an unverified
+      external source, such as output from a shell command or a
+      generated file. Many applications (even ``/usr/bin/ls``) still
+      do not produce file size strings with valid (or even correct)
+      prefix units.
+
+   To protect your application from unexpected runtime errors it is
+   recommended that calls to :py:func:`bitmath.parse_string` are
+   wrapped in a ``try`` statement:
+
+   .. code-block:: python
+
+      >>> import bitmath
+      >>> try:
+      ...     a_dvd = bitmath.parse_string("4.7 G")
+      ... except ValueError:
+      ...    print "Error while parsing string into bitmath object"
+      ...
+      Error while parsing string into bitmath object
+
+
+   .. versionadded:: 1.1.0
+
 .. _module_context_managers:
 
 Context Managers
