@@ -47,7 +47,7 @@ import sys
 __all__ = [
     'Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB',
     'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb',
-    'getsize', 'listdir', 'format', 'format_string', 'format_plural'
+    'getsize', 'listdir', 'format', 'format_string', 'format_plural', 'parse_string'
 ]
 
 # Python 3.x compat
@@ -1043,10 +1043,24 @@ def listdir(search_base, followlinks=False, filter='*',
 
 
 def parse_string(s):
-    """Parse a string with units and try to make a bitmath object out of it"""
+    """Parse a string with units and try to make a bitmath object out of
+it.
+
+String inputs may include whitespace characters between the value and
+the unit.
+    """
+    # Strings only please
+    if type(s) is not str:
+        raise ValueError("parse_string only accepts string inputs but a %s was given" %
+                         type(s))
 
     # get the index of the first alphabetic character
-    index = list(map(str.isalpha, s)).index(True)
+    try:
+        index = list(map(str.isalpha, s)).index(True)
+    except ValueError:
+        # If there's no alphabetic characters we won't be able to .index(True)
+        raise ValueError("No unit detected, can not parse string '%s' into a bitmath object" % s)
+
     # split the string into the value and the unit
     val, unit = s[:index], s[index:]
 
@@ -1067,10 +1081,9 @@ def parse_string(s):
     except ValueError:
         raise
     try:
-        obj = unit_class(val)
-    except:
-        raise ValueError("Can't parse string %s into a bitmath object")
-    return obj
+        return unit_class(val)
+    except:  # pragma: no cover
+        raise ValueError("Can't parse string %s into a bitmath object" % s)
 
 
 @contextlib.contextmanager
