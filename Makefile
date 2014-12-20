@@ -172,7 +172,7 @@ virtualenv:
 	@echo "#############################################"
 	virtualenv $(NAME)env
 	. $(NAME)env/bin/activate && pip install -r requirements.txt
-	. $(NAME)env/bin/activate && pip install pep8 nose mock coverage nose-cover3
+	. $(NAME)env/bin/activate && pip install pep8 nose coverage nose-cover3
 
 ci-unittests:
 	@echo "#############################################"
@@ -208,7 +208,7 @@ virtualenv3:
 	@echo "#############################################"
 	virtualenv $(NAME)env3 --python=python3.3
 	. $(NAME)env3/bin/activate && pip install -r requirements.txt
-	. $(NAME)env3/bin/activate && pip install pep8 nose mock coverage nose-cover3
+	. $(NAME)env3/bin/activate && pip install pep8 nose coverage nose-cover3
 
 ci-unittests3:
 	@echo ""
