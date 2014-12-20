@@ -1,0 +1,61 @@
+bitmath(1)
+==========
+:man source:   bitmath
+:man version:  %VERSION%
+:man manual:   python-bitmath
+
+
+NAME
+----
+bitmath - command line utility for converting between prefix units
+
+
+
+SYNOPSIS
+--------
+bitmath [-f IN_UNIT] [-t OUT_UNIT] SIZE ...
+
+
+
+DESCRIPTION
+-----------
+
+Run it. Say what units you're giving/wanting, or not. Give a number as
+the last parameter.
+
+
+OPTIONS
+-------
+
+*-f* 'UNIT', *--from* 'UNIT'::
+
+The unit you are converting from. Default is **Byte**.
+
+*-t* 'UNIT, *--to* 'UNIT'::
+
+The unit you are converting to. The default is auto-selected for best
+human-readability.
+
+
+AUTHOR
+------
+
+* Tim Bielawa <timbielawa@gmail.com>
+
+For a complete list of contributors, please visit the GitHub charts
+page.
+
+
+COPYRIGHT
+---------
+Copyright © 2014, Tim Bielawa.
+
+bitmath is released under the terms of the "MIT" License.
+
+
+
+SEE ALSO
+--------
+*units*(7)
+
+*The bitmath GitHub Project* -- <https://github.com/tbielawa/bitmath>
