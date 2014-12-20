@@ -191,6 +191,15 @@ Example:
     >>> print bitmath.getsize('python-bitmath.spec')
     3.7060546875 KiB
 
+**bitmath.parse_string()**
+
+    >>> import bitmath
+    >>> a_dvd = bitmath.parse_string("4.7 GiB")
+    >>> print type(a_dvd)
+    <class 'bitmath.GiB'>
+    >>> print a_dvd
+    4.7 GiB
+
 **bitmath.listdir()**
 
     >>> for i in bitmath.listdir('./tests/', followlinks=True, relpath=True, bestprefix=True):
