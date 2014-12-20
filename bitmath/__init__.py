@@ -1120,7 +1120,7 @@ using their current prefix unit.
         bitmath.format_string = orig_fmt_str
 
 
-def cli_script_main():
+def cli_script_main(cli_args):
     """
     A command line interface to basic bitmath operations.
     """
@@ -1146,7 +1146,7 @@ def cli_script_main():
         'size', nargs='*', type=float,
         help='The number to convert.')
 
-    args = parser.parse_args()
+    args = parser.parse_args(cli_args)
 
     if args.from_stdin:
         args.size = [float(sys.stdin.readline()[:-1])]
@@ -1169,10 +1169,10 @@ def cli_script_main():
     return results
 
 
-def cli_script():
+def cli_script():  # pragma: no cover
     # Wrapper around cli_script_main so we can unittest the command
     # line functionality
-    for result in cli_script_main():
+    for result in cli_script_main(sys.argv):
         print(result)
 
 if __name__ == '__main__':

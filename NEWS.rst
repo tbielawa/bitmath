@@ -10,7 +10,7 @@ NEWS
 bitmath-1.1.0-1
 ***************
 
-**Not yet released**
+bitmath-1.1.0-1 was published on 2014-12-20.
 
 * `GitHub Milestone Tracker for 1.1.0 <https://github.com/tbielawa/bitmath/milestones/1.1.0>`_
 

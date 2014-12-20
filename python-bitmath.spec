@@ -35,7 +35,7 @@ In addition to the conversion and math operations, bitmath provides
 human readable representations of values which are suitable for use in
 interactive shells as well as larger scripts and applications.
 
-bitmath is thoroughly unittested, with over 100 individual tests (a
+bitmath is thoroughly unittested, with over 150 individual tests (a
 number which is always increasing). bitmaths test-coverage is almost
 always at 100%.
 
@@ -50,12 +50,19 @@ nosetests -v
 
 %install
 %{__python2} setup.py install -O1 --root=$RPM_BUILD_ROOT --record=python-bitmath-files.txt
+mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1/
+cp -v *.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
 
 %files -f python-bitmath-files.txt
 %dir %{python2_sitelib}/%{_short_name}
 %doc README.md LICENSE
+%doc %{_mandir}/man1/bitmath.1*
 
 %changelog
+* Sat Dec 20 2014 Tim Bielawa <tbielawa@redhat.com> - 1.1.0-1
+- New parse_string utility function from tonycpsu
+- 'bitmath' tool added for converting on the command line
+
 * Fri Aug 15 2014 Tim Bielawa <tbielawa@redhat.com> - 1.0.8-3
 - Actually fix this whole specfile and version mixup
 

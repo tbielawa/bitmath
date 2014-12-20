@@ -34,9 +34,29 @@ RPMRELEASE = $(shell awk '/global _short_release/{print $$NF; exit}' $(RPMSPEC).
 RPMSPECDIR := .
 RPMSPEC := $(RPMSPECDIR)/$(PKGNAME).spec
 
+# This doesn't evaluate until it's called. The -D argument is the
+# directory of the target file ($@), kinda like `dirname`.
+ASCII2MAN = a2x -D $(dir $@) -d manpage -f manpage $<
+ASCII2HTMLMAN = a2x -D docs/html/man/ -d manpage -f xhtml
+MANPAGES := bitmath.1
+
+######################################################################
+# Begin make targets
+######################################################################
+
 # Documentation. YAY!!!!
-docs: conf.py
+docs: conf.py $(MANPAGES)
 	cd docsite; make html; cd -
+
+# Regenerate %.1.asciidoc if %.1.asciidoc.in has been modified more
+# recently than %.1.asciidoc.
+%.1.asciidoc: %.1.asciidoc.in VERSION
+	sed "s/%VERSION%/$(VERSION)/" $< > $@
+
+# Regenerate %.1 if %.1.asciidoc or VERSION has been modified more
+# recently than %.1. (Implicitly runs the %.1.asciidoc recipe)
+%.1: %.1.asciidoc
+	$(ASCII2MAN)
 
 viewdocs: docs
 	xdg-open docsite/build/html/index.html
