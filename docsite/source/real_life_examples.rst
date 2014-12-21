@@ -97,27 +97,45 @@ returns). We can use ``bitmath`` to do that too:
 
 .. code-block:: python
    :linenos:
+   :emphasize-lines: 6
 
    >>> import os
-
    >>> from bitmath import *
-
    >>> these_files = os.listdir('.')
-
    >>> for f in these_files:
    ...    f_size = Byte(os.path.getsize(f))
    ...    print "%s - %s" % (f, f_size.to_KiB())
 
-   test_basic_math.py - 3.048828125KiB
-   __init__.py - 0.1181640625KiB
-   test_representation.py - 0.744140625KiB
-   test_to_Type_conversion.py - 2.2119140625KiB
+   test_basic_math.py - 3.048828125 KiB
+   __init__.py - 0.1181640625 KiB
+   test_representation.py - 0.744140625 KiB
+   test_to_Type_conversion.py - 2.2119140625 KiB
+
+
+Alternatively, we could simplify things and use
+:ref:`bitmath.getsize() <bitmath_getsize>` to read the file size
+directly into a bitmath object:
+
+.. code-block:: python
+   :linenos:
+   :emphasize-lines: 5
+
+   >>> import os
+   >>> import bitmath
+   >>> these_files = os.listdir('.')
+   >>> for f in these_files:
+   ...     print "%s - %s" % (f, bitmath.getsize(f))
+
+   test_basic_math.py - 3.048828125 KiB
+   __init__.py - 0.1181640625 KiB
+   test_representation.py - 0.744140625 KiB
+   test_to_Type_conversion.py - 2.2119140625 KiB
+
 
 .. seealso::
 
    :ref:`Instance Formatting <instances_format>`
       How to print results in a *prettier* format
-
 
 
 Calculating Linux BDP and TCP Window Scaling

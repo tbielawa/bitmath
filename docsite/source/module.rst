@@ -1,6 +1,7 @@
 .. _module:
 
-.. currentmodule:: bitmath
+.. py:module:: bitmath
+
 
 The ``bitmath`` Module
 ######################
@@ -15,8 +16,11 @@ Functions
 This section describes utility functions included in the bitmath
 module.
 
+.. _bitmath_getsize:
+
 bitmath.getsize()
 =================
+
 .. function:: bitmath.getsize(path[, bestprefix=True[, system=NIST]])
 
    Return a bitmath instance representing the size of a file at any

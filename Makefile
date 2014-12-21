@@ -84,7 +84,7 @@ unittests:
 	@echo "#############################################"
 	@echo "# Running Unit Tests"
 	@echo "#############################################"
-	nosetests -v --with-coverage --cover-html --cover-package=bitmath
+	nosetests -v --with-coverage --cover-html --cover-package=bitmath --cover-min-percentage=90
 
 clean:
 	@find . -type f -regex ".*\.py[co]$$" -delete
@@ -95,7 +95,7 @@ pep8:
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests"
 	@echo "#############################################"
-	pep8 --ignore=E501,E121,E124 bitmath/
+	pep8 --ignore=E501 bitmath/
 
 pyflakes:
 	@echo "#############################################"
@@ -109,7 +109,6 @@ uniquetestnames:
 	@echo "# Running Unique TestCase checker"
 	@echo "#############################################"
 	./tests/test_unique_testcase_names.sh
-
 
 install: clean
 	python ./setup.py install
@@ -178,7 +177,7 @@ ci-unittests:
 	@echo "#############################################"
 	@echo "# Running Unit Tests in virtualenv"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && nosetests -v --with-coverage --cover-html --cover-package=bitmath tests/
+	. $(NAME)env/bin/activate && nosetests -v --with-coverage --cover-html --cover-min-percentage=90 --cover-package=bitmath tests/
 
 ci-list-deps:
 	@echo "#############################################"
@@ -190,7 +189,7 @@ ci-pep8:
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests in virtualenv"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && pep8 --ignore=E501,E121,E124 bitmath/
+	. $(NAME)env/bin/activate && pep8 --ignore=E501 bitmath/
 
 ci-pyflakes:
 	@echo "#################################################"

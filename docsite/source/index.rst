@@ -46,7 +46,7 @@ OH! And did we mention it has 150+ unittests? `Check them out for
 yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
 
 
-**Examples After The TOC**
+* :ref:`Examples <index_examples>` after the TOC.
 
 
 Contents
@@ -66,6 +66,9 @@ Contents
    NEWS.rst
    copyright.rst
 
+
+
+.. _index_examples:
 
 Examples
 ########
