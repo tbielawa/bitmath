@@ -21,6 +21,7 @@ BuildArch: noarch
 BuildRequires: python2-devel
 BuildRequires: python-nose
 %{?el6:Requires: python-argparse}
+%{?el6:BuildRequires: python-argparse}
 %{?el6:BuildRequires: python-unittest2}
 
 %description
