@@ -24,14 +24,30 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""
-Reference material:
+"""Reference material:
 
 Prefixes for binary multiples:
 http://physics.nist.gov/cuu/Units/binary.html
 
 decimal and binary prefixes:
 man 7 units (from the Linux Documentation Project 'man-pages' package)
+
+
+BEFORE YOU GET HASTY WITH EXCLUDING CODE FROM COVERAGE: If you
+absolutely need to skip code coverage because of a strange Python 2.x
+vs 3.x thing, use the fancy environment substitution stuff from the
+.coverage RC file. In review:
+
+* If you *NEED* to skip a statement because of Python 2.x issues add the following:
+
+  # pragma: PY2X no cover
+
+* If you *NEED* to skip a statement because of Python 3.x issues add the following:
+
+  # pragma: PY3X no cover
+
+In this configuration, statements which are skipped in 2.x are still
+covered in 3.x, and the reverse holds true for tests skipped in 3.x.
 """
 
 from __future__ import print_function
@@ -766,16 +782,11 @@ equivalent of the this instances prefix Unix value. That is to say:
 
     def __int__(self):
         """Return this instances prefix unit as an integer"""
-        if sys.version > '3':
-            # Python 3 does not do that whole 'long' thing
-            # anymore. Let's just make a call to the __long__ method
-            # so it gets a green-light in the code coverage report.
-            self.__long__()
         return int(self.prefix_value)
 
     def __long__(self):
         """Return this instances prefix unit as a long integer"""
-        return long(self.prefix_value)
+        return long(self.prefix_value)  # pragma: PY3X no cover
 
     def __float__(self):
         """Return this instances prefix unit as a floating point number"""

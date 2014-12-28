@@ -216,7 +216,7 @@ ci-unittests3:
 	@echo "# Running Unit Tests in virtualenv"
 	@echo "# Using python: $(shell ./bitmathenv3/bin/python --version 2>&1)"
 	@echo "#############################################"
-	. $(NAME)env3/bin/activate && nosetests-3.3 -v --with-coverage --cover-html --cover-package=bitmath tests/
+	. $(NAME)env3/bin/activate && export PYVER=PY3X && nosetests-3.3 -v --with-coverage --cover-html --cover-package=bitmath tests/
 
 ci-list-deps3:
 	@echo ""
