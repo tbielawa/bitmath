@@ -171,14 +171,14 @@ virtualenv:
 	@echo "#############################################"
 	virtualenv $(NAME)env
 	. $(NAME)env/bin/activate && pip install -r requirements.txt
-	. $(NAME)env/bin/activate && pip install pep8 nose coverage nose-cover3
+	. $(NAME)env/bin/activate && pip install pep8 nose coverage
 
 ci-unittests:
 	@echo "#############################################"
 	@echo "# Running Unit Tests in virtualenv"
 	@echo "# Using python: $(shell ./bitmathenv/bin/python --version 2>&1)"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && nosetests -v --with-coverage --cover-html --cover-min-percentage=90 --cover-package=bitmath tests/
+	. $(NAME)env/bin/activate && export PYVER=PY2X && nosetests -v --with-coverage --cover-html --cover-min-percentage=90 --cover-package=bitmath tests/
 
 ci-list-deps:
 	@echo "#############################################"

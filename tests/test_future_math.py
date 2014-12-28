@@ -52,11 +52,18 @@ class TestFutureMath(TestCase):
         self.assertEqual(result, bitmath.KiB(0.5))
         self.assertIs(type(result), bitmath.KiB)
 
-    # Disabling this test until https://github.com/tbielawa/bitmath/issues/2 is fixed
     def test_number_div_bitmath_is_number(self):
         """truediv: number / bitmath = number"""
         num1 = 2
         bm1 = bitmath.KiB(1)
         result = num1 / bm1
+        self.assertEqual(result, 2.0)
+        self.assertIs(type(result), float)
+
+    def test_number_truediv_bitmath_is_number(self):
+        """truediv: number // bitmath = number"""
+        num1 = 2
+        bm1 = bitmath.KiB(1)
+        result = bm1.__rdiv__(num1)
         self.assertEqual(result, 2.0)
         self.assertIs(type(result), float)

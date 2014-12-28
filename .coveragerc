@@ -7,11 +7,12 @@ exclude_lines =
     raise ValueError."Instances mathematical base is an unsupported value
     raise ValueError."Can't parse string %s into a bitmath object
 
-    # This is for python3 compat only. And py3 is not yet supported
-    long = int
-
     # Don't test the __main__ entry point
     __main__
 
     # Explicitly label a line as 'do not cover'
     pragma: no cover
+
+    # Stuff to skip only on Python 2.x. Insert a line like:"  # pragma: PY2X no cover" to indicate
+    # And export the var "PYVER" as "PY2X" to activate
+    pragma: ${PYVER} no cover

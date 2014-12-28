@@ -24,9 +24,9 @@
 # SOFTWARE.
 
 
-"""
-Test that bitmath instances can only be instantiated with 0 or 1
-arguments.
+"""Test that bitmath instances can only be instantiated with 0 or 1
+arguments. Make sure the base 'bitmath.Bitmath' class can not be
+instantiated either.
 """
 
 from . import TestCase
@@ -95,3 +95,10 @@ class TestInstantiating(TestCase):
         """Instantiation fails if value and bytes and bits are all provided"""
         with self.assertRaises(ValueError):
             bitmath.Byte(value=1, bytes=1, bits=1)
+
+    ##################################################################
+    # Double check we can't create rogue instances of bitmath.Bitmath
+    def test_bitmath_Bitmath_cannot_be_instantiated(self):
+        """Instantiation fails if we try to instantiate bitmath.Bitmath"""
+        with self.assertRaises(NotImplementedError):
+            bitmath.Bitmath(1337)
