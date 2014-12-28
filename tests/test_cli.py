@@ -60,7 +60,7 @@ class TestCli(TestCase):
         self.assertEqual(results[0], bitmath.KiB(512))
         self.assertIs(type(results[0]), bitmath.KiB)
 
-    def test_cli_script_main_from_unit(self):
+    def test_cli_script_main_from_and_to_unit(self):
         """CLI script returns correct if given FROM and TO units"""
         args = ['-f', 'MiB', '-t', 'Byte', '1']
         # Testing FROM 1 MiB TO equivalent Bytes

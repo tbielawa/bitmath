@@ -76,22 +76,22 @@ class TestInstantiating(TestCase):
     def test_bad_init_value_bytes(self):
         """Instantiation fails if value and bytes are both provided"""
         with self.assertRaises(ValueError):
-            b = bitmath.Byte(value=1, bytes=1)
+            bitmath.Byte(value=1, bytes=1)
 
     # value and bits
     def test_bad_init_value_bits(self):
         """Instantiation fails if value and bits are both provided"""
         with self.assertRaises(ValueError):
-            b = bitmath.Byte(value=1, bits=1)
+            bitmath.Byte(value=1, bits=1)
 
     # bytes and bits
     def test_bad_init_bytes_bits(self):
         """Instantiation fails if bytes and bits are both provided"""
         with self.assertRaises(ValueError):
-            b = bitmath.Byte(bytes=1, bits=1)
+            bitmath.Byte(bytes=1, bits=1)
 
     # value and bytes and bits
     def test_bad_init_value_bytes_bits(self):
         """Instantiation fails if value and bytes and bits are all provided"""
         with self.assertRaises(ValueError):
-            b = bitmath.Byte(value=1, bytes=1, bits=1)
+            bitmath.Byte(value=1, bytes=1, bits=1)

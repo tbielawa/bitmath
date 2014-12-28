@@ -263,4 +263,4 @@ class TestToTypeConversion(TestCase):
     def test_from_other_bad_input(self):
         """from_other raises if "other" isn't a bitmath instance"""
         with self.assertRaises(ValueError):
-            a = bitmath.Byte.from_other(str("not a bitmath instance!"))
+            bitmath.Byte.from_other(str("not a bitmath instance!"))

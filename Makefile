@@ -95,14 +95,14 @@ pep8:
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests"
 	@echo "#############################################"
-	pep8 --ignore=E501 bitmath/
+	pep8 -v --ignore=E501 bitmath/__init__.py tests/*.py
 
 pyflakes:
 	@echo "#############################################"
 	@echo "# Running Pyflakes Sanity Tests"
 	@echo "# Note: most import errors may be ignored"
 	@echo "#############################################"
-	-pyflakes bitmath
+	-pyflakes bitmath/__init__.py tests/*.py
 
 uniquetestnames:
 	@echo "#############################################"
@@ -176,6 +176,7 @@ virtualenv:
 ci-unittests:
 	@echo "#############################################"
 	@echo "# Running Unit Tests in virtualenv"
+	@echo "# Using python: $(shell ./bitmathenv/bin/python --version 2>&1)"
 	@echo "#############################################"
 	. $(NAME)env/bin/activate && nosetests -v --with-coverage --cover-html --cover-min-percentage=90 --cover-package=bitmath tests/
 
@@ -189,13 +190,13 @@ ci-pep8:
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests in virtualenv"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && pep8 --ignore=E501 bitmath/
+	. $(NAME)env/bin/activate && pep8 -v --ignore=E501 bitmath/__init__.py tests/*.py
 
 ci-pyflakes:
 	@echo "#################################################"
 	@echo "# Running Pyflakes Compliance Tests in virtualenv"
 	@echo "#################################################"
-	. $(NAME)env/bin/activate && pyflakes bitmath/
+	. $(NAME)env/bin/activate && pyflakes bitmath/__init__.py tests/*.py
 
 ci: clean uniquetestnames virtualenv ci-list-deps ci-pep8 ci-pyflakes ci-unittests
 	:
@@ -213,7 +214,7 @@ ci-unittests3:
 	@echo ""
 	@echo "#############################################"
 	@echo "# Running Unit Tests in virtualenv"
-	@echo "# Using python: $(shell ./bitmathenv3/bin/python3.3 --version)"
+	@echo "# Using python: $(shell ./bitmathenv3/bin/python --version 2>&1)"
 	@echo "#############################################"
 	. $(NAME)env3/bin/activate && nosetests-3.3 -v --with-coverage --cover-html --cover-package=bitmath tests/
 
@@ -229,14 +230,14 @@ ci-pep83:
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests in virtualenv"
 	@echo "#############################################"
-	. $(NAME)env3/bin/activate && pep8 --ignore=E501,E121,E124 bitmath/
+	. $(NAME)env3/bin/activate && pep8 -v --ignore=E501 bitmath/__init__.py tests/*.py
 
 ci-pyflakes3:
 	@echo ""
 	@echo "#################################################"
 	@echo "# Running Pyflakes Compliance Tests in virtualenv"
 	@echo "#################################################"
-	. $(NAME)env3/bin/activate && pyflakes bitmath/
+	. $(NAME)env3/bin/activate && pyflakes bitmath/__init__.py tests/*.py
 
 ci3: clean uniquetestnames virtualenv3 ci-list-deps3 ci-pep83 ci-pyflakes3 ci-unittests3
 	:
