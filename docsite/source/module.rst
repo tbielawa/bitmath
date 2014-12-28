@@ -13,15 +13,15 @@ The ``bitmath`` Module
 Functions
 *********
 
-This section describes utility functions included in the bitmath
-module.
+This section describes utility functions included in the
+:py:mod:`bitmath` module.
 
 .. _bitmath_getsize:
 
 bitmath.getsize()
 =================
 
-.. function:: bitmath.getsize(path[, bestprefix=True[, system=NIST]])
+.. function:: getsize(path[, bestprefix=True[, system=NIST]])
 
    Return a bitmath instance representing the size of a file at any
    given path.
@@ -31,17 +31,17 @@ bitmath.getsize()
                            instance will be in the best human-readable
                            prefix unit. If set to ``False`` the result
                            is a ``bitmath.Byte`` instance.
-   :param system: **Default:** ``bitmath.NIST``. The preferred system
-                  of units for the returned instance.
-   :type system: One of ``bitmath.NIST`` or ``bitmath.SI``
+   :param system: **Default:** :py:data:`bitmath.NIST`. The preferred
+                  system of units for the returned instance.
+   :type system: One of :py:data:`bitmath.NIST` or :py:data:`bitmath.SI`
 
    Internally :py:func:`bitmath.getsize` calls
    :py:func:`os.path.realpath` before calling
    :py:func:`os.path.getsize` on any paths.
 
    Here's an example of where we'll run :py:func:`bitmath.getsize` on
-   the bitmath source code using the defaults for ``bestprefix`` and
-   ``system``:
+   the bitmath source code using the defaults for the ``bestprefix``
+   and ``system`` parameters:
 
    .. code-block:: python
 
@@ -83,7 +83,7 @@ bitmath.getsize()
 bitmath.listdir()
 =================
 
-.. function:: bitmath.listdir(search_base[, followlinks=False[, filter='*'[, relpath=False[, bestprefix=False[, system=NIST]]]]])
+.. function:: listdir(search_base[, followlinks=False[, filter='*'[, relpath=False[, bestprefix=False[, system=NIST]]]]])
 
    This is a `generator
    <https://docs.python.org/2/tutorial/classes.html#generators>`_
@@ -113,10 +113,10 @@ bitmath.listdir()
                            ``bitmath.Byte`` instances. Set to ``True``
                            to return the best human-readable prefix
                            unit for representation
-   :param system: **Default:** ``bitmath.NIST``. Set a prefix
+   :param system: **Default:** :py:data:`bitmath.NIST`. Set a prefix
                   preferred unit system. Requires ``bestprefix`` is
                   ``True``
-   :type system: One of ``bitmath.NIST`` or ``bitmath.SI``
+   :type system: One of :py:data:`bitmath.NIST` or :py:data:`bitmath.SI`
 
    .. note::
 
@@ -222,7 +222,7 @@ bitmath.listdir()
 bitmath.parse_string()
 ======================
 
-.. function:: bitmath.parse_string(str_repr)
+.. function:: parse_string(str_repr)
 
    Parse a string representing a unit into a proper bitmath
    object. All non-string inputs are rejected and will raise a
@@ -251,7 +251,8 @@ bitmath.parse_string()
       external source, such as output from a shell command or a
       generated file. Many applications (even ``/usr/bin/ls``) still
       do not produce file size strings with valid (or even correct)
-      prefix units.
+      prefix units unless `specially configured to do so
+      <https://www.gnu.org/software/coreutils/manual/html_node/Block-size.html#Block-size>`_.
 
    To protect your application from unexpected runtime errors it is
    recommended that calls to :py:func:`bitmath.parse_string` are
@@ -326,7 +327,7 @@ provided by the bitmath class.
 bitmath.format()
 ================
 
-.. function:: bitmath.format([fmt_str=None[, plural=False[, bestprefix=False]]])
+.. function:: format([fmt_str=None[, plural=False[, bestprefix=False]]])
 
    The :py:func:`bitmath.format` context manager allows you to specify
    the string representation of all bitmath instances within a
@@ -451,6 +452,89 @@ bitmath.format()
    .. versionadded:: 1.0.8
 
 
+3rd Party Module Integrations
+*****************************
+
+This section describes the various ways in which :py:mod:`bitmath` can
+be integrated with other 3rd pary modules.
+
+.. _bitmath_BitmathType:
+
+argparse
+========
+
+.. versionadded:: 1.1.1
+
+The `argparse module
+<https://docs.python.org/2/library/argparse.html>`_ (part of stdlib)
+is used to parse command line arguments. By default, parsed options
+and arguments are turned into strings. However, one useful feature
+:py:mod:`argparse` provides is the ability to `specify what datatype
+<https://docs.python.org/2/library/argparse.html#type>`_ any given
+argument or option should be interpreted as.
+
+.. function:: BitmathType(bmstring)
+
+   The :func:`BitmathType` factory creates objects that can be passed
+   to the type argument of `ArgumentParser.add_argument()
+   <https://docs.python.org/2/library/argparse.html#argparse.ArgumentParser.add_argument>`_. Arguments
+   that have :func:`BitmathType` objects as their type will
+   automatically parse the command line argument into a matching
+   :ref:`bitmath object <classes>`.
+
+   :param str bmstring: The command-line option to parse into a
+                        bitmath object
+   :returns: A bitmath object representing ``bmstring``
+   :raises ValueError: on any input that
+                       :py:func:`bitmath.parse_string` already rejects
+   :raises ValueError: on **unquoted inputs** with whitespace
+                       separating the value from the unit (e.g.,
+                       ``--some-option 10 MiB`` is bad, but
+                       ``--some-option '10 MiB'`` is good)
+
+   Let's take a look at a more in-depth example.
+
+   A feature found in many command-line utilities is the ability to
+   specify some kind of file size using a string which roughly
+   describes some kind of parameter. For example, let's look at the
+   :program:`du` (disk usage) command. Invoking it as :option:`du -B`
+   allows one to specify a desired block-size scaling factor in
+   printed results.
+
+   Let's say we wanted to implement a similar mechanism in an
+   application of our own. Except, instead of abbreviating down to
+   ambiguous capital letters, we accept scaling factors as
+   :ref:`properly written values <appendix_on_units>` with associated
+   units. Such as **10 MiB**, or **1 MB**.
+
+   To accomplish this, we'll use :py:mod:`argparse` to create an
+   argument parser and add one option to it, ``--block-size``. This
+   option will have a type of :func:`BitmathType` set.
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 3,6,7
+
+      >>> import argparse, bitmath
+      >>> parser = argparse.ArgumentParser()
+      >>> parser.add_argument('--block-size', type=bitmath.BitmathType)
+      >>> args = "--block-size 1MiB"
+      >>> results = parser.parse_args(args.split())
+      >>> print type(results.block_size)
+      <class 'bitmath.MiB'>
+
+   On line **3** we add the ``--block-size`` option to the parser,
+   explicitly defining it's type as :func:`BitmathType`. In lines
+   **6** and **7** when we parse the provided arguments we find that
+   :py:mod:`argparse` has automatically created a bitmath object for
+   us.
+
+   If an invalid scaling factor is provided by the user, such as one
+   which does not represent a recognizable unit, the bitmath library
+   will automatically detect this for us and signal to the argument
+   parser that an error has occurred.
+
+
 .. _module_class_variables:
 
 Module Variables
@@ -460,8 +544,12 @@ This section describes the module-level variables. Some of which are
 constants and are used for reference. Some of which effect output or
 behavior.
 
-.. versionchanged:: 1.0.7 The formatting strings were not available
-   for manupulate/inspection in earlier versions
+.. versionchanged:: 1.0.7
+   The formatting strings were not available for manupulate/inspection
+   in earlier versions
+
+.. versionadded:: 1.1.1
+   Prior to this version :py:data:`ALL_UNIT_TYPES` was not defined
 
 .. note:: Modifying these variables will change the default
           representation indefinitely. Use the
@@ -470,7 +558,7 @@ behavior.
 
 .. _module_format_string:
 
-.. py:data:: bitmath.format_string
+.. py:data:: format_string
 
    This is the default string representation of all bitmath
    instances. The default value is ``{value} {unit}`` which, when
@@ -500,7 +588,7 @@ behavior.
       >>> print bitmath.MiB(1337), bitmath.kb(0.1234567), bitmath.Byte(0)
       [1337.00-MiB] [0.12-kb] [0.00-Byte]
 
-.. py:data:: bitmath.format_plural
+.. py:data:: format_plural
 
    A boolean which controls the pluralization of instances in string
    representation. The default is ``False``.
@@ -532,22 +620,22 @@ behavior.
    On line **5** we disable pluralization again and then see that the
    output has no trailing "s" character.
 
-.. py:data:: bitmath.NIST
+.. py:data:: NIST
 
    Constant used as an argument to some functions to specify the
    **NIST** system.
 
-.. py:data:: bitmath.SI
+.. py:data:: SI
 
    Constant used as an argument to some functions to specify the
    **SI** system.
 
-.. py:data:: bitmath.SI_PREFIXES
+.. py:data:: SI_PREFIXES
 
    An array of all of the SI unit prefixes (e.g., ``k``, ``M``, or
    ``E``)
 
-.. py:data:: bitmath.SI_STEPS
+.. py:data:: SI_STEPS
 
    .. code-block:: python
 
@@ -563,13 +651,13 @@ behavior.
       }
 
 
-.. py:data:: bitmath.NIST_PREFIXES
+.. py:data:: NIST_PREFIXES
 
    An array of all of the NIST unit prefixes (e.g., ``Ki``, ``Mi``, or
    ``Ei``)
 
 
-.. py:data:: bitmath.NIST_STEPS
+.. py:data:: NIST_STEPS
 
    .. code-block:: python
 
@@ -583,3 +671,16 @@ behavior.
           'Pi': 1125899906842624,
           'Ei': 1152921504606846976
       }
+
+
+.. py:data:: ALL_UNIT_TYPES
+
+   An array of all combinations of known valid prefix units mixed with
+   both bit and byte suffixes.
+
+   .. code-block:: python
+
+      ALL_UNIT_TYPES = ['b', 'B', 'kb', 'kB', 'Mb', 'MB', 'Gb', 'GB',
+         'Tb', 'TB', 'Pb', 'PB', 'Eb', 'EB', 'Kib', 'KiB', 'Mib',
+         'MiB', 'Gib', 'GiB', 'Tib', 'TiB', 'Pib', 'PiB', 'Eib',
+         'EiB']
