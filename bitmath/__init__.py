@@ -36,6 +36,7 @@ man 7 units (from the Linux Documentation Project 'man-pages' package)
 
 from __future__ import print_function
 
+import argparse
 import contextlib
 import fnmatch
 import math
@@ -81,6 +82,12 @@ NIST_STEPS = {
     'Pi': 1125899906842624,
     'Ei': 1152921504606846976
 }
+
+# A list of all the valid prefix unit types. Mostly for reference, I
+# suppose. May be useful later on down the road, I think?
+ALL_UNIT_TYPES = ['b', 'B', 'kb', 'kB', 'Mb', 'MB', 'Gb', 'GB', 'Tb', 'TB',
+                  'Pb', 'PB', 'Eb', 'EB', 'Kib', 'KiB', 'Mib', 'MiB', 'Gib',
+                  'GiB', 'Tib', 'TiB', 'Pib', 'PiB', 'Eib', 'EiB']
 
 ######################################################################
 # Set up our module variables/constants
@@ -981,6 +988,59 @@ class Eb(Bit):
 
 
 ######################################################################
+# Integrations with 3rd party modules
+def BitmathType(bmstring):
+    """An 'argument type' for integrations with the argparse module.
+
+For more information, see
+https://docs.python.org/2/library/argparse.html#type Of particular
+interest to us is this bit:
+
+   ``type=`` can take any callable that takes a single string
+   argument and returns the converted value
+
+I.e., ``type`` can be a function (such as this function) or a class
+which implements the ``__call__`` method.
+
+Example usage of the bitmath.BitmathType argparser type:
+
+   >>> import bitmath
+   >>> import argparse
+   >>> parser = argparse.ArgumentParser()
+   >>> parser.add_argument("--file-size", type=bitmath.BitmathType)
+   >>> parser.parse_args("--file-size 1337MiB".split())
+   Namespace(file_size=MiB(1337.0))
+
+Invalid usage includes any input that the bitmath.parse_string
+function already rejects. Additionally, **UNQUOTED** arguments with
+spaces in them are rejected (shlex.split used in the following
+examples to conserve single quotes in the parse_args call):
+
+   >>> parser = argparse.ArgumentParser()
+   >>> parser.add_argument("--file-size", type=bitmath.BitmathType)
+   >>> import shlex
+
+   >>> # The following is ACCEPTABLE USAGE:
+   ...
+   >>> parser.parse_args(shlex.split("--file-size '1337 MiB'"))
+   Namespace(file_size=MiB(1337.0))
+
+   >>> # The following is INCORRECT USAGE because the string "1337 MiB" is not quoted!
+   ...
+   >>> parser.parse_args(shlex.split("--file-size 1337 MiB"))
+   error: argument --file-size: 1337 can not be parsed into a valid bitmath object
+
+    """
+    try:
+        argvalue = parse_string(bmstring)
+    except ValueError:
+        raise argparse.ArgumentTypeError("'%s' can not be parsed into a valid bitmath object" %
+                                         bmstring)
+    else:
+        return argvalue
+
+
+######################################################################
 # Utility functions
 def getsize(path, bestprefix=True, system=NIST):
     """Return a bitmath instance in the best human-readable representation
@@ -1124,8 +1184,6 @@ def cli_script_main(cli_args):
     """
     A command line interface to basic bitmath operations.
     """
-    import argparse
-
     choices = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB',
                'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib',
                'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb']
