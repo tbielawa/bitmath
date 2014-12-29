@@ -84,6 +84,13 @@ python-bitmath.spec: python-bitmath.spec.in
 setup.py: setup.py.in VERSION python-bitmath.spec.in
 	sed -e "s/%VERSION%/$(VERSION)/" -e "s/%RELEASE%/$(RPMRELEASE)/" $< > $@
 
+# Upload sources to pypi/pypi-test
+pypi:
+	python ./setup.py sdist upload
+
+pypitest:
+	python ./setup.py sdist upload -r test
+
 # usage example: make tag TAG=1.1.0-1
 tag:
 	git tag -s -m $(TAG) $(TAG)
