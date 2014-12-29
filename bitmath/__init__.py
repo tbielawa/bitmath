@@ -1255,7 +1255,7 @@ def cli_script_main(cli_args):
 def cli_script():  # pragma: no cover
     # Wrapper around cli_script_main so we can unittest the command
     # line functionality
-    for result in cli_script_main(sys.argv):
+    for result in cli_script_main(sys.argv[1:]):
         print(result)
 
 if __name__ == '__main__':

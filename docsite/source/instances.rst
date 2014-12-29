@@ -135,25 +135,25 @@ and what you can expect their printed representation to look like:
 .. code-block:: python
    :linenos:
 
-   In [13]: dvd_capacity = GB(4.7)
+   >>> dvd_capacity = GB(4.7)
 
-   In [14]: print "Capacity in bits: %s\nbytes: %s\n" % \
+   >>> print "Capacity in bits: %s\nbytes: %s\n" % \
                 (dvd_capacity.bits, dvd_capacity.bytes)
 
       Capacity in bits: 37600000000.0
       bytes: 4700000000.0
 
-   In [15]: dvd_capacity.value
+   >>> dvd_capacity.value
 
-   Out[16]: 4.7
+   4.7
 
-   In [17]: dvd_capacity.bin
+   >>> dvd_capacity.bin
 
-   Out[17]: '0b100011000001001000100111100000000000'
+   '0b100011000001001000100111100000000000'
 
-   In [18]: dvd_capacity.binary
+   >>> dvd_capacity.binary
 
-   Out[18]: '0b100011000001001000100111100000000000'
+   '0b100011000001001000100111100000000000'
 
 
 
@@ -178,33 +178,33 @@ classes. You can even ``to_THING()`` an instance into itself again:
    :linenos:
    :emphasize-lines: 5,11,19
 
-   In [1]: from bitmath import *
+   >>> from bitmath import *
 
-   In [2]: one_mib = MiB(1)
+   >>> one_mib = MiB(1)
 
-   In [3]: one_mib_in_kb = one_mib.to_kb()
+   >>> one_mib_in_kb = one_mib.to_kb()
 
-   In [4]: one_mib == one_mib_in_kb
+   >>> one_mib == one_mib_in_kb
 
-   Out[4]: True
+   True
 
-   In [5]: another_mib = one_mib.to_MiB()
+   >>> another_mib = one_mib.to_MiB()
 
-   In [6]: print one_mib, one_mib_in_kb, another_mib
+   >>> print one_mib, one_mib_in_kb, another_mib
 
    1.0 MiB 8388.608 kb 1.0 MiB
 
-   In [7]: six_TB = TB(6)
+   >>> six_TB = TB(6)
 
-   In [8]: six_TB_in_bits = six_TB.to_Bit()
+   >>> six_TB_in_bits = six_TB.to_Bit()
 
-   In [9]: print six_TB, six_TB_in_bits
+   >>> print six_TB, six_TB_in_bits
 
    6.0 TB 4.8e+13 Bit
 
-   In [10]: six_TB == six_TB_in_bits
+   >>> six_TB == six_TB_in_bits
 
-   Out[10]: True
+   True
 
 
 best_prefix()
@@ -250,7 +250,7 @@ even easier to read.
 .. code-block:: python
 
 
-   In [9]: for _rate in tx_rate():
+   >>> for _rate in tx_rate():
        print "Rate: %s/second" % Bit(_rate)
        time.sleep(1)
 
@@ -269,7 +269,7 @@ And now using a custom formatting definition:
 
 .. code-block:: python
 
-   In [50]: for _rate in tx_rate():
+   >>> for _rate in tx_rate():
        print Bit(_rate).best_prefix().format("Rate: {value:.3f} {unit}/sec")
        time.sleep(1)
 
@@ -304,9 +304,9 @@ bitmath instances come with a verbose built-in string representation:
 
 .. code-block:: python
 
-   In [1]: leet_bits = Bit(1337)
+   >>> leet_bits = Bit(1337)
 
-   In [2]: print leet_bits
+   >>> print leet_bits
    1337.0 Bit
 
 However, for instances which aren't whole numbers (as in ``MiB(1/3.0)
@@ -339,8 +339,8 @@ First, for reference, the default formatting:
 
 .. code-block:: python
 
-   In [1]: ugly_number = MB(50).to_MiB() / 8.0
-   In [2]: print ugly_number
+   >>> ugly_number = MB(50).to_MiB() / 8.0
+   >>> print ugly_number
    5.96046447754 MiB
 
 Now, let's use the :py:meth:`format` method to limit that to two
@@ -348,7 +348,7 @@ digits of precision:
 
 .. code-block:: python
 
-   In [3]: print ugly_number.format("{value:.2f}{unit}")
+   >>> print ugly_number.format("{value:.2f}{unit}")
    5.96 MiB
 
 By changing the **2** character, you increase or decrease the
@@ -366,7 +366,7 @@ of how an attribute may be referenced multiple times.
    :linenos:
    :emphasize-lines: 4,16
 
-   In [8]: longer_format = """Formatting attributes for %s
+   >>> longer_format = """Formatting attributes for %s
       ...: This instances prefix unit is {unit}, which is a {system} type unit
       ...: The unit value is {value}
       ...: This value can be truncated to just 1 digit of precision: {value:.1f}
@@ -377,7 +377,7 @@ of how an attribute may be referenced multiple times.
       ...: The instance is {bits} bits large
       ...: bytes/bits without trailing decimals: {bytes:.0f}/{bits:.0f}""" % str(ugly_number)
 
-   In [9]: print ugly_number.format(longer_format)
+   >>> print ugly_number.format(longer_format)
    Formatting attributes for 5.96046447754 MiB
    This instances prefix unit is MiB, which is a NIST type unit
    The unit value is 5.96046447754
@@ -409,27 +409,27 @@ classes. Under the covers these properties call ``to_THING``.
    :linenos:
    :emphasize-lines: 5,9,15
 
-   In [1]: from bitmath import *
+   >>> from bitmath import *
 
-   In [2]: one_mib = MiB(1)
+   >>> one_mib = MiB(1)
 
-   In [3]: one_mib == one_mib.kb
+   >>> one_mib == one_mib.kb
 
-   Out[3]: True
+   True
 
-   In [4]: print one_mib, one_mib.kb, one_mib.MiB
+   >>> print one_mib, one_mib.kb, one_mib.MiB
 
    1.0 MiB 8388.608 kb 1.0 MiB
 
-   In [5]: six_TB = TB(6)
+   >>> six_TB = TB(6)
 
-   In [6]: print six_TB, six_TB.Bit
+   >>> print six_TB, six_TB.Bit
 
    6.0 TB 4.8e+13 Bit
 
-   In [7]: six_TB == six_TB.Bit
+   >>> six_TB == six_TB.Bit
 
-   Out[7]: True
+   True
 
 
 

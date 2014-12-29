@@ -35,9 +35,11 @@ selection, and completely customizable formatting.
 
 In addition to the conversion and math operations, bitmath provides
 human readable representations of values which are suitable for use in
-interactive shells as well as larger scripts and applications.
+interactive shells as well as larger scripts and applications. bitmath
+can parse strings into proper objects and has support for integration
+with argparse as a custom argument type.
 
-bitmath is thoroughly unittested, with over 150 individual tests (a
+bitmath is thoroughly unittested, with over 170 individual tests (a
 number which is always increasing). bitmaths test-coverage is almost
 always at 100%.
 
@@ -57,10 +59,13 @@ cp -v *.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
 
 %files -f python-bitmath-files.txt
 %dir %{python2_sitelib}/%{_short_name}
-%doc README.md LICENSE
+%doc README.rst LICENSE
 %doc %{_mandir}/man1/bitmath.1*
 
 %changelog
+* Mon Dec 29 2014 Tim Bielawa <tbielawa@redhat.com> - 1.2.0-1
+- Add argparse integration with a BitmathType argument type
+
 * Sat Dec 20 2014 Tim Bielawa <tbielawa@redhat.com> - 1.1.0-1
 - New parse_string utility function from tonycpsu
 - 'bitmath' tool added for converting on the command line

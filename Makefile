@@ -45,8 +45,16 @@ MANPAGES := bitmath.1
 ######################################################################
 
 # Documentation. YAY!!!!
-docs: conf.py $(MANPAGES)
+docs: conf.py $(MANPAGES) docsite/source/index.rst
 	cd docsite; make html; cd -
+
+# Add examples to the RTD docs by taking it from the README
+docsite/source/index.rst: docsite/source/index.rst.in README.rst VERSION
+	@echo "#############################################"
+	@echo "# Building $@ Now"
+	@echo "#############################################"
+	awk 'BEGIN{P=0} /^Examples/ { P=1} { if (P == 1) print $$0 }' README.rst | cat $< - > $@
+
 
 # Regenerate %.1.asciidoc if %.1.asciidoc.in has been modified more
 # recently than %.1.asciidoc.
@@ -56,6 +64,9 @@ docs: conf.py $(MANPAGES)
 # Regenerate %.1 if %.1.asciidoc or VERSION has been modified more
 # recently than %.1. (Implicitly runs the %.1.asciidoc recipe)
 %.1: %.1.asciidoc
+	@echo "#############################################"
+	@echo "# Building $@ NOW"
+	@echo "#############################################"
 	$(ASCII2MAN)
 
 viewdocs: docs
@@ -114,9 +125,15 @@ install: clean
 	python ./setup.py install
 
 sdist: setup.py clean
+	@echo "#############################################"
+	@echo "# Creating SDIST"
+	@echo "#############################################"
 	python setup.py sdist
 
 rpmcommon: sdist python-bitmath.spec setup.py
+	@echo "#############################################"
+	@echo "# Building (S)RPM Now"
+	@echo "#############################################"
 	@mkdir -p rpm-build
 	@cp dist/$(NAME)-$(VERSION)-$(RPMRELEASE).tar.gz rpm-build/$(VERSION)-$(RPMRELEASE).tar.gz
 

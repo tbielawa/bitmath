@@ -31,7 +31,7 @@ except ImportError:
     from distutils.core import setup
 
 
-pypi_notice = open('.pypi_notice', 'r').read()
+pypi_notice = open('README.rst', 'r').read()
 
 setup(
     name='bitmath',

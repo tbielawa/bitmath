@@ -14,17 +14,20 @@
 bitmath
 #######
 
+`bitmath <http://bitmath.readthedocs.org/en/latest/>`_ simplifies many
+facets of interacting with file sizes in various units. Functionality
+includes:
 
-*bitmath* simplifies many facets of interacting with file sizes in
-various units. Functionality includes:
-
-* Converting between **SI** and **NIST** prefix units (``GiB`` to ``kB``)
+* Converting between **SI** and **NIST** prefix units (``kB`` to ``GiB``)
 * Converting between units of the same type (SI to SI, or NIST to NIST)
+* Automatic human-readable prefix selection (like in `hurry.filesize <https://pypi.python.org/pypi/hurry.filesize>`_)
 * Basic arithmetic operations (subtracting 42KiB from 50GiB)
 * Rich comparison operations (``1024 Bytes == 1KiB``)
 * bitwise operations (``<<``, ``>>``, ``&``, ``|``, ``^``)
+* `argparse <https://docs.python.org/2/library/argparse.html>`_ integration
+* String parsing
 * Sorting
-* Automatic human-readable prefix selection (like in `hurry.filesize <https://pypi.python.org/pypi/hurry.filesize>`_)
+
 
 In addition to the conversion and math operations, `bitmath` provides
 human readable representations of values which are suitable for use in
@@ -42,9 +45,8 @@ most of the time what you're really seeing are the base-2 sizes/rates.
 **Don't Forget!** The source for bitmath `is available on GitHub
 <https://github.com/tbielawa/bitmath>`_.
 
-OH! And did we mention it has 150+ unittests? `Check them out for
+OH! And did we mention it has 170+ unittests? `Check them out for
 yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
-
 
 * :ref:`Examples <index_examples>` after the TOC.
 
@@ -71,117 +73,82 @@ Contents
 .. _index_examples:
 
 Examples
-########
+========
+
 
 Arithmetic
-**********
+----------
 
 .. code-block:: python
 
-   In [1]: from bitmath import *
-
-   In [2]: log_size = kB(137.4)
-
-   In [3]: log_zipped_size = Byte(987)
-
-   In [4]: print "Compression saved %s space" % (log_size - log_zipped_size)
+   >>> import bitmath
+   >>> log_size = bitmath.kB(137.4)
+   >>> log_zipped_size = bitmath.Byte(987)
+   >>> print "Compression saved %s space" % (log_size - log_zipped_size)
    Compression saved 136.413kB space
-
-   In [5]: thumb_drive = GiB(12)
-
-   In [6]: song_size = MiB(5)
-
-   In [7]: songs_per_drive = thumb_drive / song_size
-
-   In [8]: print songs_per_drive
+   >>> thumb_drive = bitmath.GiB(12)
+   >>> song_size = bitmath.MiB(5)
+   >>> songs_per_drive = thumb_drive / song_size
+   >>> print songs_per_drive
    2457.6
 
 
 Convert Units
-#############
-
-With ``to_`` method
-*******************
+-------------
 
 .. code-block:: python
 
-   In [1]: from bitmath import *
-
-   In [2]: dvd_size = GiB(4.7)
-
-   In [3]: print "DVD Size in MiB: %s" % dvd_size.to_MiB()
-   DVD Size in MiB: 4812.8MiB
-
-
-With Properties
-***************
-
-.. code-block:: python
-
-   In [1]: from bitmath import *
-
-   In [2]: dvd_size = GiB(4.7)
-
-   In [3]: print "DVD Size in MiB: %s" % dvd_size.MiB
-   DVD Size in MiB: 4812.8MiB
+   >>> from bitmath import *
+   >>> dvd_size = GiB(4.7)
+   >>> print "DVD Size in MiB: %s" % dvd_size.to_MiB()
+   DVD Size in MiB: 4812.8 MiB
 
 
 Select a human-readable unit
-############################
+----------------------------
 
 .. code-block:: python
 
-   In [3]: import bitmath
+   >>> small_number = kB(100)
+   >>> ugly_number = small_number.to_TiB()
 
-   In [4]: small_number = bitmath.kB(100)
-
-   In [5]: ugly_number = small_number.TiB
-
-   In [6]: print ugly_number
-   9.09494701773e-08TiB
-
-   In [7]: print ugly_number.best_prefix()
-   97.65625KiB
-
-   In [8]: print ugly_number.best_prefix(system=bitmath.SI)
-   kB(100.0)
+   >>> print ugly_number
+   9.09494701773e-08 TiB
+   >>> print ugly_number.best_prefix()
+   97.65625 KiB
 
 
 Rich Comparison
-###############
+---------------
 
 .. code-block:: python
 
-   In [8]: cd_size = MiB(700)
-
-   In [9]: cd_size > dvd_size
-   Out[9]: False
-
-   In [10]: cd_size < dvd_size
-   Out[10]: True
-
-   In [11]: MiB(1) == KiB(1024)
-   Out[11]: True
-
-   In [12]: MiB(1) <= KiB(1024)
-   Out[12]: True
+   >>> cd_size = MiB(700)
+   >>> cd_size > dvd_size
+   False
+   >>> cd_size < dvd_size
+   True
+   >>> MiB(1) == KiB(1024)
+   True
+   >>> MiB(1) <= KiB(1024)
+   True
 
 Sorting
-#######
+-------
 
 .. code-block:: python
 
-   In [13]: sizes = [KiB(7337.0), KiB(1441.0), KiB(2126.0), KiB(2178.0),
+   >>> sizes = [KiB(7337.0), KiB(1441.0), KiB(2126.0), KiB(2178.0),
                      KiB(2326.0), KiB(4003.0), KiB(48.0), KiB(1770.0),
                      KiB(7892.0), KiB(4190.0)]
 
-   In [14]: print sorted(sizes)
+   >>> print sorted(sizes)
    [KiB(48.0), KiB(1441.0), KiB(1770.0), KiB(2126.0), KiB(2178.0),
    KiB(2326.0), KiB(4003.0), KiB(4190.0), KiB(7337.0), KiB(7892.0)]
 
 
 Custom Formatting
-#################
+-----------------
 
 * Use of the custom formatting system
 * All of the available instance properties
@@ -190,11 +157,10 @@ Example:
 
 .. code-block:: python
 
-   In [8]: longer_format = """Formatting attributes for %s
+   >>> longer_format = """Formatting attributes for %s
       ...: This instances prefix unit is {unit}, which is a {system} type unit
       ...: The unit value is {value}
       ...: This value can be truncated to just 1 digit of precision: {value:.1f}
-      ...: This value can be truncated to just 2 significant digits: {value:.2g}
       ...: In binary this looks like: {binary}
       ...: The prefix unit is derived from a base of {base}
       ...: Which is raised to the power {power}
@@ -202,8 +168,8 @@ Example:
       ...: The instance is {bits} bits large
       ...: bytes/bits without trailing decimals: {bytes:.0f}/{bits:.0f}""" % str(ugly_number)
 
-   In [9]: print ugly_number.format(longer_format)
-   Formatting attributes for 5.96046447754MiB
+   >>> print ugly_number.format(longer_format)
+   Formatting attributes for 5.96046447754 MiB
    This instances prefix unit is MiB, which is a NIST type unit
    The unit value is 5.96046447754
    This value can be truncated to just 1 digit of precision: 6.0
@@ -215,19 +181,16 @@ Example:
    bytes/bits without trailing decimals: 6250000/50000000
 
 Utility Functions
-#################
+-----------------
 
-``bitmath.getsize()``
-*********************
+**bitmath.getsize()**
 
 .. code-block:: python
 
    >>> print bitmath.getsize('python-bitmath.spec')
    3.7060546875 KiB
 
-
-``bitmath.parse_string()``
-**************************
+**bitmath.parse_string()**
 
 .. code-block:: python
 
@@ -238,11 +201,7 @@ Utility Functions
    >>> print a_dvd
    4.7 GiB
 
-
-``bitmath.listdir()``
-*********************
-
-**Simple listdir example**
+**bitmath.listdir()**
 
 .. code-block:: python
 
@@ -276,11 +235,12 @@ Utility Functions
    ('tests/listdir/10_byte_file', Byte(10.0))
 
 
-**listdir example with formatting**
+Formatting
+----------
 
 .. code-block:: python
 
-   >> with bitmath.format(fmt_str="[{value:.3f}@{unit}]"):
+   >>> with bitmath.format(fmt_str="[{value:.3f}@{unit}]"):
    ...     for i in bitmath.listdir('./tests/', followlinks=True, relpath=True, bestprefix=True):
    ...         print i[1]
    ...
@@ -309,3 +269,31 @@ Utility Functions
    [1.000@KiB]
    [38.000@Byte]
    [10.000@Byte]
+
+``argparse`` Integration
+------------------------
+
+Example script using ``bitmath.BitmathType`` as an argparser argument
+type:
+
+.. code-block:: python
+
+   import argparse
+   import bitmath
+   parser = argparse.ArgumentParser(
+       description="Arg parser with a bitmath type argument")
+   parser.add_argument('--block-size',
+                       type=bitmath.BitmathType,
+                       required=True)
+
+   results = parser.parse_args()
+   print "Parsed in: {PARSED}; Which looks like {TOKIB} as a Kibibit".format(
+       PARSED=results.block_size,
+       TOKIB=results.block_size.Kib)
+
+If ran as a script the results would be similar to this:
+
+.. code-block:: bash
+
+   $ python ./bmargparse.py --block-size 100MiB
+   Parsed in: 100.0 MiB; Which looks like 819200.0 Kib as a Kibibit
