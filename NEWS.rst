@@ -11,7 +11,9 @@ NEWS
 bitmath-1.2.0-1
 ***************
 
-bitmath-1.2.0-1 was published on 2014-12-29.
+`bitmath-1.2.0-1
+<https://github.com/tbielawa/bitmath/releases/tag/1.2.0-1>`_ was
+published on 2014-12-29.
 
 Changes
 =======
@@ -42,7 +44,9 @@ Project
 bitmath-1.1.0-1
 ***************
 
-bitmath-1.1.0-1 was published on 2014-12-20.
+`bitmath-1.1.0-1
+<https://github.com/tbielawa/bitmath/releases/tag/1.1.0-1>`_ was
+published on 2014-12-20.
 
 * `GitHub Milestone Tracker for 1.1.0 <https://github.com/tbielawa/bitmath/milestones/1.1.0>`_
 
@@ -65,7 +69,9 @@ Changes
 bitmath-1.0.5-1 through 1.0.8-1
 *******************************
 
-bitmath-1.0.8-1 was published on 2014-08-14.
+`bitmath-1.0.8-1
+<https://github.com/tbielawa/bitmath/releases/tag/1.0.8-1>`_ was
+published on 2014-08-14.
 
 * `GitHub Milestone Tracker for 1.0.8 <https://github.com/tbielawa/bitmath/issues?q=milestone%3A1.0.8>`_
 
@@ -143,7 +149,8 @@ Project
 bitmath-1.0.4-1
 ***************
 
-This is the first release of **bitmath**. bitmath-1.0.4-1 was
+This is the first release of **bitmath**. `bitmath-1.0.4-1
+<https://github.com/tbielawa/bitmath/releases/tag/1.0.4-1>`_ was
 published on 2014-03-20.
 
 Project
