@@ -5,6 +5,38 @@ NEWS
    :depth: 1
    :local:
 
+
+.. _bitmath-1.2.0-0:
+
+bitmath-1.2.0-1
+***************
+
+bitmath-1.2.0-1 was published on 2014-12-29.
+
+Changes
+=======
+
+**Added Functionality**
+
+* New utility: ``argparse`` integration: `bitmath.BitmathType
+  <https://bitmath.readthedocs.org/en/latest/module.html#argparse>`_.
+  Allows you to specify arguments as bitmath types.
+
+Documentation
+=============
+
+* The command-line ``bitmath`` tool now has a `proper manpage
+  <https://github.com/tbielawa/bitmath/blob/master/bitmath.1.asciidoc.in>`_
+
+Project
+=======
+
+**Tests**
+
+* The command-line ``bitmath`` tool is now properly unittested. Code
+  coverage back to ~100%.
+
+
 .. _bitmath-1.1.0-0:
 
 bitmath-1.1.0-1
@@ -27,8 +59,6 @@ Changes
   for parsing a human-readable string into a bitmath object. `Patch
   submitted <https://github.com/tbielawa/bitmath/pull/42>`_ by new
   contributor `tonycpsu <https://github.com/tonycpsu>`_.
-
-
 
 .. _bitmath-1.0.8-1:
 
