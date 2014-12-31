@@ -21,12 +21,9 @@ as such:
 .. code-block:: python
    :linenos:
 
-   >>> from bitmath import *
-
-   >>> downstream = Mib(50)
-
+   >>> import bitmath
+   >>> downstream = bitmath.Mib(50)
    >>> print downstream.to_MB()
-
    MB(6.25)
 
 This tells us that if our ISP advertises **50Mbps** we can expect to

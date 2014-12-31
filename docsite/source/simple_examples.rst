@@ -116,13 +116,9 @@ bitmath supports all arithmetic operations
    :linenos:
 
    >>> eighty_four_mib = fourty_two_mib + fourty_two_mib_in_kib
-
    >>> eighty_four_mib
-
    MiB(84.0)
-
    >>> eighty_four_mib == fourty_two_mib * 2
-
    True
 
 
@@ -133,21 +129,15 @@ Unit Conversion
    :linenos:
 
    >>> from bitmath import *
-
    >>> fourty_two_mib = MiB(42)
-
    >>> fourty_two_mib_in_kib = fourty_two_mib.to_KiB()
-
    >>> fourty_two_mib_in_kib
-
    KiB(43008.0)
 
    >>> fourty_two_mib
-
    MiB(42.0)
 
    >>> fourty_two_mib.KiB
-
    KiB(43008.0)
 
 Rich Comparison
@@ -163,28 +153,20 @@ supported:
 
    >>> GB(1) < GiB(1)
    True
-
    >>> GB(1.073741824) == GiB(1)
    True
-
    >>> GB(1.073741824) <= GiB(1)
    True
-
    >>> Bit(1) == TiB(bits=1)
    True
-
    >>> kB(100) > EiB(bytes=1024)
    True
-
    >>> kB(100) >= EiB.from_other(kB(100))
    True
-
    >>> kB(100) >= EiB.from_other(kB(99))
    True
-
    >>> kB(100) >= EiB.from_other(kB(9999))
    False
-
    >>> KiB(100) != Byte(1)
    True
 
@@ -204,13 +186,10 @@ out sorted by increasing magnitude (lines **13** and **14**, and
    :emphasize-lines: 7,8,13,14,18,19
 
    >>> from bitmath import *
-
    >>> import os
-
    >>> sizes = []
-
    >>> for f in os.listdir('./tests/'):
-               sizes.append(KiB(os.path.getsize('./tests/' + f)))
+   ...     sizes.append(KiB(os.path.getsize('./tests/' + f)))
 
    >>> print sizes
    [KiB(7337.0), KiB(1441.0), KiB(2126.0), KiB(2178.0), KiB(2326.0), KiB(4003.0), KiB(48.0), KiB(1770.0), KiB(7892.0), KiB(4190.0)]
@@ -219,7 +198,6 @@ out sorted by increasing magnitude (lines **13** and **14**, and
    [KiB(48.0), KiB(1441.0), KiB(1770.0), KiB(2126.0), KiB(2178.0), KiB(2326.0), KiB(4003.0), KiB(4190.0), KiB(7337.0), KiB(7892.0)]
 
    >>> human_sizes = [s.best_prefix() for s in sizes]
-
    >>> print sorted(human_sizes)
    [KiB(48.0), MiB(1.4072265625), MiB(1.728515625), MiB(2.076171875), MiB(2.126953125), MiB(2.271484375), MiB(3.9091796875), MiB(4.091796875), MiB(7.1650390625), MiB(7.70703125)]
 

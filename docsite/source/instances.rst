@@ -136,23 +136,19 @@ and what you can expect their printed representation to look like:
    :linenos:
 
    >>> dvd_capacity = GB(4.7)
-
    >>> print "Capacity in bits: %s\nbytes: %s\n" % \
                 (dvd_capacity.bits, dvd_capacity.bytes)
 
-      Capacity in bits: 37600000000.0
-      bytes: 4700000000.0
+   Capacity in bits: 37600000000.0
+   bytes: 4700000000.0
 
    >>> dvd_capacity.value
-
    4.7
 
    >>> dvd_capacity.bin
-
    '0b100011000001001000100111100000000000'
 
    >>> dvd_capacity.binary
-
    '0b100011000001001000100111100000000000'
 
 
@@ -176,34 +172,24 @@ classes. You can even ``to_THING()`` an instance into itself again:
 
 .. code-block:: python
    :linenos:
-   :emphasize-lines: 5,11,19
+   :emphasize-lines: 3,7,12
 
    >>> from bitmath import *
-
    >>> one_mib = MiB(1)
-
    >>> one_mib_in_kb = one_mib.to_kb()
-
    >>> one_mib == one_mib_in_kb
-
    True
 
    >>> another_mib = one_mib.to_MiB()
-
    >>> print one_mib, one_mib_in_kb, another_mib
-
    1.0 MiB 8388.608 kb 1.0 MiB
 
    >>> six_TB = TB(6)
-
    >>> six_TB_in_bits = six_TB.to_Bit()
-
    >>> print six_TB, six_TB_in_bits
-
    6.0 TB 4.8e+13 Bit
 
    >>> six_TB == six_TB_in_bits
-
    True
 
 
@@ -251,8 +237,8 @@ even easier to read.
 
 
    >>> for _rate in tx_rate():
-       print "Rate: %s/second" % Bit(_rate)
-       time.sleep(1)
+   ...    print "Rate: %s/second" % Bit(_rate)
+   ...    time.sleep(1)
 
    Rate: 100.0 Bit/sec
    Rate: 24000.0 Bit/sec
@@ -270,8 +256,8 @@ And now using a custom formatting definition:
 .. code-block:: python
 
    >>> for _rate in tx_rate():
-       print Bit(_rate).best_prefix().format("Rate: {value:.3f} {unit}/sec")
-       time.sleep(1)
+   ...    print Bit(_rate).best_prefix().format("Rate: {value:.3f} {unit}/sec")
+   ...    time.sleep(1)
 
    Rate: 12.500 Byte/sec
    Rate: 2.930 KiB/sec
@@ -305,7 +291,6 @@ bitmath instances come with a verbose built-in string representation:
 .. code-block:: python
 
    >>> leet_bits = Bit(1337)
-
    >>> print leet_bits
    1337.0 Bit
 
@@ -407,28 +392,21 @@ classes. Under the covers these properties call ``to_THING``.
 
 .. code-block:: python
    :linenos:
-   :emphasize-lines: 5,9,15
+   :emphasize-lines: 3,6,10
 
    >>> from bitmath import *
-
    >>> one_mib = MiB(1)
-
    >>> one_mib == one_mib.kb
-
    True
 
    >>> print one_mib, one_mib.kb, one_mib.MiB
-
    1.0 MiB 8388.608 kb 1.0 MiB
 
    >>> six_TB = TB(6)
-
    >>> print six_TB, six_TB.Bit
-
    6.0 TB 4.8e+13 Bit
 
    >>> six_TB == six_TB.Bit
-
    True
 
 
