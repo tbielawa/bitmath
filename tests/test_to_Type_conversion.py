@@ -51,6 +51,8 @@ class TestToTypeConversion(TestCase):
         self.tb = bitmath.TB(1)
         self.pb = bitmath.PB(1)
         self.eb = bitmath.EB(1)
+        self.zb = bitmath.ZB(1)
+        self.yb = bitmath.YB(1)
 
     def test_to_same_unit(self):
         """bitmath type converted to the same unit is properly converted"""
@@ -224,6 +226,34 @@ class TestToTypeConversion(TestCase):
         to_eb = self.gib.to_Eb()
         self.assertIs(type(to_eb), bitmath.Eb)
         self.assertIs(type(self.pib.Eb), bitmath.Eb)
+
+    ##################################################################
+    # to z's
+    def test_to_ZB(self):
+        """Convert a bitmath GiB into a ZB"""
+        to_zb = self.gib.to_ZB()
+        self.assertIs(type(to_zb), bitmath.ZB)
+        self.assertIs(type(self.pib.ZB), bitmath.ZB)
+
+    def test_to_Zb(self):
+        """Convert a bitmath GiB into a Zb"""
+        to_zb = self.gib.to_Zb()
+        self.assertIs(type(to_zb), bitmath.Zb)
+        self.assertIs(type(self.pib.Zb), bitmath.Zb)
+
+    ##################################################################
+    # to y's
+    def test_to_YB(self):
+        """Convert a bitmath GiB into a YB"""
+        to_yb = self.gib.to_YB()
+        self.assertIs(type(to_yb), bitmath.YB)
+        self.assertIs(type(self.pib.YB), bitmath.YB)
+
+    def test_to_Yb(self):
+        """Convert a bitmath GiB into a Yb"""
+        to_yb = self.gib.to_Yb()
+        self.assertIs(type(to_yb), bitmath.Yb)
+        self.assertIs(type(self.pib.Yb), bitmath.Yb)
 
     ##################################################################
     # to other stuff

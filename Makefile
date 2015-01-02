@@ -72,6 +72,9 @@ docsite/source/index.rst: docsite/source/index.rst.in README.rst VERSION
 viewdocs: docs
 	xdg-open docsite/build/html/index.html
 
+viewcover:
+	xdg-open cover/index.html
+
 conf.py: docsite/source/conf.py.in
 	sed "s/%VERSION%/$(VERSION)/" $< > docsite/source/conf.py
 
@@ -231,7 +234,7 @@ virtualenv3:
 	@echo "# Creating a virtualenv"
 	@echo "#############################################"
 	virtualenv $(NAME)env3 --python=python3.3
-	. $(NAME)env3/bin/activate && pip install -r requirements.txt
+	. $(NAME)env3/bin/activate && pip install -r requirements-py3.txt
 	. $(NAME)env3/bin/activate && pip install pep8 nose coverage nose-cover3
 
 ci-unittests3:

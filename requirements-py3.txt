@@ -3,4 +3,4 @@ nose
 distribute
 pyflakes
 pep8
-progressbar231
+progressbar33

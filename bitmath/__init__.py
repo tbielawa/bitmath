@@ -61,11 +61,11 @@ import os
 import os.path
 import sys
 
-__all__ = [
-    'Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB',
-    'Kib', 'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb',
-    'getsize', 'listdir', 'format', 'format_string', 'format_plural', 'parse_string'
-]
+__all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB',
+           'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB', 'Kib',
+           'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb',
+           'Pb', 'Eb', 'Zb', 'Yb', 'getsize', 'listdir', 'format',
+           'format_string', 'format_plural', 'parse_string']
 
 # Python 3.x compat
 if sys.version > '3':
@@ -75,7 +75,7 @@ if sys.version > '3':
 NIST = int(2)
 SI = int(10)
 
-SI_PREFIXES = ['k', 'M', 'G', 'T', 'P', 'E']
+SI_PREFIXES = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
 SI_STEPS = {
     'Bit': 1 / 8.0,
     'Byte': 1,
@@ -84,7 +84,9 @@ SI_STEPS = {
     'G': 1000000000,
     'T': 1000000000000,
     'P': 1000000000000000,
-    'E': 1000000000000000000
+    'E': 1000000000000000000,
+    'Z': 1000000000000000000000,
+    'Y': 1000000000000000000000000
 }
 
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
@@ -99,11 +101,13 @@ NIST_STEPS = {
     'Ei': 1152921504606846976
 }
 
-# A list of all the valid prefix unit types. Mostly for reference, I
-# suppose. May be useful later on down the road, I think?
-ALL_UNIT_TYPES = ['b', 'B', 'kb', 'kB', 'Mb', 'MB', 'Gb', 'GB', 'Tb', 'TB',
-                  'Pb', 'PB', 'Eb', 'EB', 'Kib', 'KiB', 'Mib', 'MiB', 'Gib',
-                  'GiB', 'Tib', 'TiB', 'Pib', 'PiB', 'Eib', 'EiB']
+# A list of all the valid prefix unit types. Mostly for reference,
+# also used by the CLI tool as valid types
+
+ALL_UNIT_TYPES = ['Bit', 'Byte', 'kb', 'kB', 'Mb', 'MB', 'Gb', 'GB', 'Tb',
+                  'TB', 'Pb', 'PB', 'Eb', 'EB', 'Zb', 'ZB', 'Yb',
+                  'YB', 'Kib', 'KiB', 'Mib', 'MiB', 'Gib', 'GiB',
+                  'Tib', 'TiB', 'Pib', 'PiB', 'Eib', 'EiB']
 
 ######################################################################
 # Set up our module variables/constants
@@ -590,6 +594,32 @@ prefix unit' for representation:
     Eb = property(lambda s: s.to_Eb())
 
     ##################################################################
+    # The SI units go beyond the NIST units. They also have the Zetta
+    # and Yotta prefixes.
+
+    def to_ZB(self):
+        return ZB(bits=self._bit_value)
+
+    def to_Zb(self):
+        return Zb(bits=self._bit_value)
+
+    # Properties
+    ZB = property(lambda s: s.to_ZB())
+    Zb = property(lambda s: s.to_Zb())
+
+    ##################################################################
+
+    def to_YB(self):
+        return YB(bits=self._bit_value)
+
+    def to_Yb(self):
+        return Yb(bits=self._bit_value)
+
+    # Properties
+    YB = property(lambda s: s.to_YB())
+    Yb = property(lambda s: s.to_Yb())
+
+    ##################################################################
     # Rich comparison operations
     ##################################################################
 
@@ -929,6 +959,16 @@ class EB(Byte):
         return (10, 18, 'EB', 'EBs')
 
 
+class ZB(Byte):
+    def _setup(self):
+        return (10, 21, 'ZB', 'ZBs')
+
+
+class YB(Byte):
+    def _setup(self):
+        return (10, 24, 'YB', 'YBs')
+
+
 ######################################################################
 # And now the bit types
 class Bit(Bitmath):
@@ -1011,56 +1051,14 @@ class Eb(Bit):
         return (10, 18, 'Eb', 'Ebs')
 
 
-######################################################################
-# Integrations with 3rd party modules
-def BitmathType(bmstring):
-    """An 'argument type' for integrations with the argparse module.
+class Zb(Bit):
+    def _setup(self):
+        return (10, 21, 'Zb', 'Zbs')
 
-For more information, see
-https://docs.python.org/2/library/argparse.html#type Of particular
-interest to us is this bit:
 
-   ``type=`` can take any callable that takes a single string
-   argument and returns the converted value
-
-I.e., ``type`` can be a function (such as this function) or a class
-which implements the ``__call__`` method.
-
-Example usage of the bitmath.BitmathType argparser type:
-
-   >>> import bitmath
-   >>> import argparse
-   >>> parser = argparse.ArgumentParser()
-   >>> parser.add_argument("--file-size", type=bitmath.BitmathType)
-   >>> parser.parse_args("--file-size 1337MiB".split())
-   Namespace(file_size=MiB(1337.0))
-
-Invalid usage includes any input that the bitmath.parse_string
-function already rejects. Additionally, **UNQUOTED** arguments with
-spaces in them are rejected (shlex.split used in the following
-examples to conserve single quotes in the parse_args call):
-
-   >>> parser = argparse.ArgumentParser()
-   >>> parser.add_argument("--file-size", type=bitmath.BitmathType)
-   >>> import shlex
-
-   >>> # The following is ACCEPTABLE USAGE:
-   ...
-   >>> parser.parse_args(shlex.split("--file-size '1337 MiB'"))
-   Namespace(file_size=MiB(1337.0))
-
-   >>> # The following is INCORRECT USAGE because the string "1337 MiB" is not quoted!
-   ...
-   >>> parser.parse_args(shlex.split("--file-size 1337 MiB"))
-   error: argument --file-size: 1337 can not be parsed into a valid bitmath object
-"""
-    try:
-        argvalue = parse_string(bmstring)
-    except ValueError:
-        raise argparse.ArgumentTypeError("'%s' can not be parsed into a valid bitmath object" %
-                                         bmstring)
-    else:
-        return argvalue
+class Yb(Bit):
+    def _setup(self):
+        return (10, 24, 'Yb', 'Ybs')
 
 
 ######################################################################
@@ -1209,9 +1207,7 @@ def cli_script_main(cli_args):
     """
     A command line interface to basic bitmath operations.
     """
-    choices = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'kB',
-               'MB', 'GB', 'TB', 'PB', 'EB', 'Kib', 'Mib', 'Gib', 'Tib',
-               'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb', 'Pb', 'Eb']
+    choices = ALL_UNIT_TYPES
 
     parser = argparse.ArgumentParser(
         description='Converts from one type of size to another.')
@@ -1231,7 +1227,10 @@ def cli_script_main(cli_args):
 
     args = parser.parse_args(cli_args)
 
-    if args.from_stdin:
+    # Not sure how to cover this with tests, or if the functionality
+    # will remain in this form long enough for it to make writing a
+    # test worth the effort.
+    if args.from_stdin:  # pragma: no cover
         args.size = [float(sys.stdin.readline()[:-1])]
 
     results = []

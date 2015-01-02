@@ -29,21 +29,21 @@ Test the argparse 'BitmathType' integration
 """
 
 from . import TestCase
-import bitmath
+import bitmath.integrations
 import argparse
 import shlex
 
 
-class TestARgparseType(TestCase):
+class TestArgparseType(TestCase):
     def setUp(self):
         """Needful for the tests"""
         # A simple one-argument parser that only accept one value.
         self.parser_one_arg = argparse.ArgumentParser()
-        self.parser_one_arg.add_argument("--one-arg", type=bitmath.BitmathType)
+        self.parser_one_arg.add_argument("--one-arg", type=bitmath.integrations.BitmathType)
 
         # This parser take one argument, '--two-args'. It requires two values.
         self.parser_two_args = argparse.ArgumentParser()
-        self.parser_two_args.add_argument("--two-args", type=bitmath.BitmathType,
+        self.parser_two_args.add_argument("--two-args", type=bitmath.integrations.BitmathType,
                                           nargs=2)
 
     def _parse_one_arg(self, arg_str):
