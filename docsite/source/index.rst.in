@@ -46,10 +46,45 @@ most of the time what you're really seeing are the base-2 sizes/rates.
 **Don't Forget!** The source for bitmath `is available on GitHub
 <https://github.com/tbielawa/bitmath>`_.
 
-OH! And did we mention it has 170+ unittests? `Check them out for
+OH! And did we mention it has 180+ unittests? `Check them out for
 yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
 
 * :ref:`Examples <index_examples>` after the TOC.
+
+
+Installation
+############
+
+The easiest way to install bitmath is via ``yum`` if you're on a
+Fedora/RHEL based distribution. bitmath is available in the main
+Fedora repositories, as well as the `EPEL6
+<http://download.fedoraproject.org/pub/epel/6/i386/repoview/epel-release.html>`_
+and `EPEL7
+<http://download.fedoraproject.org/pub/epel/7/x86_64/repoview/epel-release.html>`_
+repositories.
+
+.. code-block:: bash
+
+   $ sudo yum install python-bitmath
+
+You could also install bitmath from `PyPi
+<https://pypi.python.org/pypi/bitmath>`_ if you like:
+
+.. code-block:: bash
+
+   $ sudo pip install bitmath
+
+Or, if you want to install from source:
+
+.. code-block:: bash
+
+   $ sudo python ./setup.py install
+
+If you want the bitmath manpage installed as well:
+
+.. code-block:: bash
+
+   $ sudo make install
 
 
 Contents
@@ -73,4 +108,5 @@ Contents
 
 
 .. _index_examples:
+
 
