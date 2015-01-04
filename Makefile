@@ -133,6 +133,8 @@ uniquetestnames:
 
 install: clean
 	python ./setup.py install
+	mkdir -p /usr/share/man/man1/
+	gzip -9 -c bitmath.1 > /usr/share/man/man1/bitmath.1.gz
 
 sdist: setup.py clean
 	@echo "#############################################"
