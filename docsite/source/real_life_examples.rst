@@ -1,5 +1,6 @@
 .. highlight:: python
 
+.. _real_life_examples:
 
 Real Life Examples
 ##################
@@ -376,3 +377,14 @@ Set the **per-socket** buffer sizes:
 And it's done! Testing this is left as an exercise for the
 reader. Note that in my experience this is less useful on wireless
 connections.
+
+
+.. _real_life_examples_download_progress_bars:
+
+Creating Download Progress Bars
+*******************************
+
+
+.. literalinclude:: full_demo.py
+
+* View the the source for the `demo suite < on GitHub

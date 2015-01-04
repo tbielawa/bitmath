@@ -6,13 +6,13 @@ NEWS
    :local:
 
 
-.. _bitmath-1.2.0-0:
+.. _bitmath-1.2.0-1:
 
 bitmath-1.2.0-1
 ***************
 
 `bitmath-1.2.0-1
-<https://github.com/tbielawa/bitmath/releases/tag/1.2.0-1>`_ was
+<https://github.com/tbielawa/bitmath/releases/tag/1.2.0-1>`__ was
 published on 2014-12-29.
 
 Changes
@@ -70,7 +70,7 @@ bitmath-1.0.5-1 through 1.0.8-1
 *******************************
 
 `bitmath-1.0.8-1
-<https://github.com/tbielawa/bitmath/releases/tag/1.0.8-1>`_ was
+<https://github.com/tbielawa/bitmath/releases/tag/1.0.8-1>`__ was
 published on 2014-08-14.
 
 * `GitHub Milestone Tracker for 1.0.8 <https://github.com/tbielawa/bitmath/issues?q=milestone%3A1.0.8>`_
@@ -137,7 +137,7 @@ Project
   <https://github.com/tbielawa/bitmath/blob/master/Makefile#L177>`_
   for consistency across across platforms
 * Test suite now contains 150 unit tests. This is **110** more tests
-  than the previous major release (:ref:`1.0.4-1 <bitmath-1.0.4-1>`)
+  than the previous major release (`1.0.4-1 <bitmath-1.0.4-1>`__)
 * Test suite now runs on EPEL6 and EPEL7
 * `Code coverage
   <https://coveralls.io/r/tbielawa/bitmath?branch=master>`_ is stable
@@ -150,7 +150,7 @@ bitmath-1.0.4-1
 ***************
 
 This is the first release of **bitmath**. `bitmath-1.0.4-1
-<https://github.com/tbielawa/bitmath/releases/tag/1.0.4-1>`_ was
+<https://github.com/tbielawa/bitmath/releases/tag/1.0.4-1>`__ was
 published on 2014-03-20.
 
 Project

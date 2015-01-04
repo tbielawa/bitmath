@@ -338,8 +338,8 @@ bitmath.format()
    code.
 
    :param str fmt_str: a formatting mini-language compat formatting
-                       string. See the :ref:`instances attributes
-                       <instance_attributes>` for a list of available
+                       string. See the :ref:`instance attributes
+                       <instances_attributes>` for a list of available
                        items.
    :param bool plural: ``True`` enables printing instances with
                        trailing **s**'s if they're plural. ``False``
@@ -450,89 +450,6 @@ bitmath.format()
 
 
    .. versionadded:: 1.0.8
-
-
-3rd Party Module Integrations
-*****************************
-
-This section describes the various ways in which :py:mod:`bitmath` can
-be integrated with other 3rd pary modules.
-
-.. _bitmath_BitmathType:
-
-argparse
-========
-
-.. versionadded:: 1.1.1
-
-The `argparse module
-<https://docs.python.org/2/library/argparse.html>`_ (part of stdlib)
-is used to parse command line arguments. By default, parsed options
-and arguments are turned into strings. However, one useful feature
-:py:mod:`argparse` provides is the ability to `specify what datatype
-<https://docs.python.org/2/library/argparse.html#type>`_ any given
-argument or option should be interpreted as.
-
-.. function:: BitmathType(bmstring)
-
-   The :func:`BitmathType` factory creates objects that can be passed
-   to the type argument of `ArgumentParser.add_argument()
-   <https://docs.python.org/2/library/argparse.html#argparse.ArgumentParser.add_argument>`_. Arguments
-   that have :func:`BitmathType` objects as their type will
-   automatically parse the command line argument into a matching
-   :ref:`bitmath object <classes>`.
-
-   :param str bmstring: The command-line option to parse into a
-                        bitmath object
-   :returns: A bitmath object representing ``bmstring``
-   :raises ValueError: on any input that
-                       :py:func:`bitmath.parse_string` already rejects
-   :raises ValueError: on **unquoted inputs** with whitespace
-                       separating the value from the unit (e.g.,
-                       ``--some-option 10 MiB`` is bad, but
-                       ``--some-option '10 MiB'`` is good)
-
-   Let's take a look at a more in-depth example.
-
-   A feature found in many command-line utilities is the ability to
-   specify some kind of file size using a string which roughly
-   describes some kind of parameter. For example, let's look at the
-   :program:`du` (disk usage) command. Invoking it as :option:`du -B`
-   allows one to specify a desired block-size scaling factor in
-   printed results.
-
-   Let's say we wanted to implement a similar mechanism in an
-   application of our own. Except, instead of abbreviating down to
-   ambiguous capital letters, we accept scaling factors as
-   :ref:`properly written values <appendix_on_units>` with associated
-   units. Such as **10 MiB**, or **1 MB**.
-
-   To accomplish this, we'll use :py:mod:`argparse` to create an
-   argument parser and add one option to it, ``--block-size``. This
-   option will have a type of :func:`BitmathType` set.
-
-   .. code-block:: python
-      :linenos:
-      :emphasize-lines: 3,6,7
-
-      >>> import argparse, bitmath
-      >>> parser = argparse.ArgumentParser()
-      >>> parser.add_argument('--block-size', type=bitmath.BitmathType)
-      >>> args = "--block-size 1MiB"
-      >>> results = parser.parse_args(args.split())
-      >>> print type(results.block_size)
-      <class 'bitmath.MiB'>
-
-   On line **3** we add the ``--block-size`` option to the parser,
-   explicitly defining it's type as :func:`BitmathType`. In lines
-   **6** and **7** when we parse the provided arguments we find that
-   :py:mod:`argparse` has automatically created a bitmath object for
-   us.
-
-   If an invalid scaling factor is provided by the user, such as one
-   which does not represent a recognizable unit, the bitmath library
-   will automatically detect this for us and signal to the argument
-   parser that an error has occurred.
 
 
 .. _module_class_variables:
@@ -684,3 +601,211 @@ behavior.
          'Tb', 'TB', 'Pb', 'PB', 'Eb', 'EB', 'Kib', 'KiB', 'Mib',
          'MiB', 'Gib', 'GiB', 'Tib', 'TiB', 'Pib', 'PiB', 'Eib',
          'EiB']
+
+.. py:module:: bitmath.integrations
+
+3rd Party Module Integrations
+*****************************
+
+This section describes the various ways in which :py:mod:`bitmath` can
+be integrated with other 3rd pary modules.
+
+To see a full demo of the :mod:`argparse` and :mod:`progressbar`
+integrations, as well as a comprehensive demonstrations of the full
+capabilities of the bitmath library, see :ref:`Creating Download
+Progress Bars <real_life_examples_download_progress_bars>` in the
+*Real Life Examples* section.
+
+.. _bitmath_BitmathType:
+
+argparse
+========
+
+.. versionadded:: 1.2.0
+
+The `argparse module
+<https://docs.python.org/2/library/argparse.html>`_ (part of stdlib)
+is used to parse command line arguments. By default, parsed options
+and arguments are turned into strings. However, one useful feature
+:py:mod:`argparse` provides is the ability to `specify what datatype
+<https://docs.python.org/2/library/argparse.html#type>`_ any given
+argument or option should be interpreted as.
+
+.. function:: BitmathType(bmstring)
+
+   The :func:`BitmathType` factory creates objects that can be passed
+   to the type argument of `ArgumentParser.add_argument()
+   <https://docs.python.org/2/library/argparse.html#argparse.ArgumentParser.add_argument>`_. Arguments
+   that have :func:`BitmathType` objects as their type will
+   automatically parse the command line argument into a matching
+   :ref:`bitmath object <classes>`.
+
+   :param str bmstring: The command-line option to parse into a
+                        bitmath object
+   :returns: A bitmath object representing ``bmstring``
+   :raises ValueError: on any input that
+                       :py:func:`bitmath.parse_string` already rejects
+   :raises ValueError: on **unquoted inputs** with whitespace
+                       separating the value from the unit (e.g.,
+                       ``--some-option 10 MiB`` is bad, but
+                       ``--some-option '10 MiB'`` is good)
+
+   Let's take a look at a more in-depth example.
+
+   A feature found in many command-line utilities is the ability to
+   specify some kind of file size using a string which roughly
+   describes some kind of parameter. For example, let's look at the
+   :program:`du` (disk usage) command. Invoking it as :option:`du -B`
+   allows one to specify a desired block-size scaling factor in
+   printed results.
+
+   Let's say we wanted to implement a similar mechanism in an
+   application of our own. Except, instead of abbreviating down to
+   ambiguous capital letters, we accept scaling factors as
+   :ref:`properly written values <appendix_on_units>` with associated
+   units. Such as **10 MiB**, or **1 MB**.
+
+   To accomplish this, we'll use :py:mod:`argparse` to create an
+   argument parser and add one option to it, ``--block-size``. This
+   option will have a type of :func:`BitmathType` set.
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 3,6,7
+
+      >>> import argparse, bitmath
+      >>> parser = argparse.ArgumentParser()
+      >>> parser.add_argument('--block-size', type=bitmath.BitmathType)
+      >>> args = "--block-size 1MiB"
+      >>> results = parser.parse_args(args.split())
+      >>> print type(results.block_size)
+      <class 'bitmath.MiB'>
+
+   On line **3** we add the ``--block-size`` option to the parser,
+   explicitly defining it's type as :func:`BitmathType`. In lines
+   **6** and **7** when we parse the provided arguments we find that
+   :py:mod:`argparse` has automatically created a bitmath object for
+   us.
+
+   If an invalid scaling factor is provided by the user, such as one
+   which does not represent a recognizable unit, the bitmath library
+   will automatically detect this for us and signal to the argument
+   parser that an error has occurred.
+
+
+.. _bitmath_BitmathFileTransferSpeed:
+
+progressbar
+===========
+
+.. versionadded:: 1.2.1
+
+The `progressbar module
+<https://code.google.com/p/python-progressbar/>`_ is typically used to
+display the progress of a long running task, such as a file transfer
+operation. The module provides widgets for custom formatting how
+exactly the 'progress' is displayed. Some examples include: overall
+percentage complete, estimated time until completion, and an ASCII
+progress bar which fills as the operation continues.
+
+While :mod:`progressbar` already includes a widget suitable for
+displaying `file transfer rates
+<https://code.google.com/p/python-progressbar/source/browse/progressbar/widgets.py#166>`_,
+this widget does not support customizing its presentation, and is
+limited to only prefix units from the SI system.
+
+
+.. class:: BitmathFileTransferSpeed([system=bitmath.NIST, [format="{value:.2f} {unit}/s"]])
+
+   The :class:`BitmathFileTransferSpeed` class is a more functional
+   replacement for the upstream `FileTransferSpeed
+   <https://code.google.com/p/python-progressbar/source/browse/progressbar/widgets.py>`_
+   widget.
+
+   While both widgets are able to calculate average transfer rates
+   over a period of time, the :class:`BitmathFileTransferSpeed` widget
+   adds new support for `NIST <appendix_on_units>`_ prefix units (the
+   upstream widget only supports SI prefix units).
+
+   In addition to NIST unit support, :class:`BitmathFileTransferSpeed`
+   enables the user to have **full control** over the look and feel of
+   the displayed rates.
+
+   :param system: **Default:** :py:data:`bitmath.NIST`. The preferred
+                  system of units for the printed rate.
+   :type system: One of :py:data:`bitmath.NIST` or :py:data:`bitmath.SI`
+   :param string format: a formatting mini-language compat formatting
+                       string. **Default** ``{value:.2f} {unit}/s``
+                       (e.g., ``13.37 GiB/s``)
+
+   .. note::
+
+      See :ref:`instance attributes <instances_attributes>` for a list
+      of available formatting items. See the section on
+      :ref:`formatting bitmath instances <instances_format>` for more
+      information on this topic.
+
+
+   Use :class:`BitmathFileTransferSpeed` exactly like the upstream
+   ``FileTransferSpeed`` widget (example copied and modified from the
+   progressbar project page):
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 2,4
+
+      >>> from progressbar import ProgressBar, Percentage, Bar, ETA, RotatingMarker
+      >>> from bitmath.integrations import BitmathFileTransferSpeed
+      >>> widgets = ['Something: ', Percentage(), ' ', Bar(marker=RotatingMarker()),
+      ...           ' ', ETA(), ' ', BitmathFileTransferSpeed()]
+      >>> pbar = ProgressBar(widgets=widgets, maxval=10000000).start()
+      >>> for i in range(1000000):
+      ...     # do something
+      ...     pbar.update(10*i+1)
+      >>> pbar.finish()
+
+   If this was ran from a script we would see output similar to the
+   following::
+
+      Something: 100% ||||||||||||||||||||||||||||||||||| Time: 0:00:01 9.27 MiB/s
+
+   If we wanted behavior identical to :class:`FileTransferSpeed` we
+   would set the ``system`` parameter to :py:data:`bitmath.SI` (line
+   **5** below):
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 5
+
+      >>> import bitmath
+      >>> # ...
+      >>> widgets = ['Something: ', Percentage(), ' ', Bar(marker=RotatingMarker()),
+      ...           ' ', ETA(), ' ',
+      ...           BitmathFileTransferSpeed(system=bitmath.SI)]
+      >>> pbar = ProgressBar(widgets=widgets, maxval=10000000).start()
+      >>> # ...
+
+   If this was ran from a script we would see output similar to the
+   following::
+
+      Something: 100% ||||||||||||||||||||||||||||||||||| Time: 0:00:01 9.80 MB/s
+
+   Note how the only difference is in the displayed unit. The former
+   example produced a rate with a unit of ``MiB`` (a NIST unit)
+   whereas the latter examples unit is ``MB`` (an SI unit).
+
+   As noted previously, :class:`BitmathFileTransferSpeed` allows for
+   full control over the formatting of the calculated rate of
+   transfer.
+
+   For example, if we wished to see the rate printed using more
+   verbose language and plauralized units, we could do exactly that by
+   constructing our widget in the following way:
+
+   .. code-block:: python
+
+      BitmathFileTransferSpeed(format="{value:.2f} {unit_plural} per second")
+
+   And if this were run from a script like the previous examples::
+
+      Something: 100% ||||||||||||||||||||||||||||||||||| Time: 0:00:01 9.41 MiBs per second

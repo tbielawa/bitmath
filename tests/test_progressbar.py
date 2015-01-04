@@ -29,14 +29,61 @@ Test the progressbar 'FileTransferSpeed' integration
 """
 
 from . import TestCase
-import bitmath.integrations
+import bitmath
+from bitmath.integrations import BitmathFileTransferSpeed
+import mock
+import progressbar
 
 
 class TestProgressbar(TestCase):
     def setUp(self):
         """Needful for the tests"""
-        self.widget = bitmath.integrations.FileTransferSpeed()
+        self.widget_NIST = BitmathFileTransferSpeed(system=bitmath.NIST)
+        self.widget_SI = BitmathFileTransferSpeed(system=bitmath.SI)
+        self.widget_formatted = BitmathFileTransferSpeed(format="{value:.6f} {unit_plural} per second")
 
-    def test_BitmathType_good_one_arg(self):
-        """Progressbar: FileTransferType stuff"""
-        pass
+    def test_FileTransferSpeed_0_seconds(self):
+        """Widget renders 0 correctly when no seconds have elapsed"""
+        pbar = mock.MagicMock(progressbar.ProgressBar)
+        pbar.seconds_elapsed = 0
+        pbar.currval = 0
+        update = self.widget_NIST.update(pbar)
+        self.assertEqual(update, '0.00 Byte/s')
+
+    def test_FileTransferSpeed_1_seconds_Bytes(self):
+        """Widget renders a non-zero rate after time has elapsed in Bytes"""
+        pbar = mock.MagicMock(progressbar.ProgressBar)
+        pbar.seconds_elapsed = 1
+        pbar.currval = 512
+        update = self.widget_NIST.update(pbar)
+        self.assertEqual(update, '512.00 Byte/s')
+
+    def test_FileTransferSpeed_10_seconds_MiB(self):
+        """Widget renders a rate after time has elapsed in MiB/s"""
+        pbar = mock.MagicMock(progressbar.ProgressBar)
+        pbar.seconds_elapsed = 10
+        # Let's say we've downloaded 512 MiB in that time (we need
+        # that value in Bytes, though)
+        pbar.currval = bitmath.MiB(512).bytes
+        update = self.widget_NIST.update(pbar)
+        # 512 MiB in 10 seconds is equal to a rate of 51.20 MiB/s
+        self.assertEqual(update, '51.20 MiB/s')
+
+    def test_FileTransferSpeed_10_seconds_MB(self):
+        """Widget renders a rate after time has elapsed in MB/s"""
+        pbar = mock.MagicMock(progressbar.ProgressBar)
+        pbar.seconds_elapsed = 10
+        # Let's say we've downloaded 512 MB in that time (we need that
+        # value in Bytes, though)
+        pbar.currval = bitmath.MB(512).bytes
+        update = self.widget_SI.update(pbar)
+        # 512 MB in 10 seconds is equal to a rate of 51.20 MB/s
+        self.assertEqual(update, '51.20 MB/s')
+
+    def test_FileTransferSpeed_custom_format(self):
+        """Widget renders a custom format string"""
+        pbar = mock.MagicMock(progressbar.ProgressBar)
+        pbar.seconds_elapsed = 10
+        pbar.currval = 10240
+        update = self.widget_formatted.update(pbar)
+        self.assertEqual(update, '1.000000 KiBs per second')

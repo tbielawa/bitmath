@@ -1,5 +1,6 @@
+# -*- mode: conf -*-
 [run]
-include = bitmath/__init__.py
+include = bitmath/__init__.py,bitmath/integrations.py
 [report]
 exclude_lines =
     # These should be impossible to trigger.

@@ -79,9 +79,9 @@ examples to conserve single quotes in the parse_args call):
     else:
         return argvalue
 
-# ---------------------------------------------------------------------
+######################################################################
 # Speed widget for integration with the Progress bar module
-class FileTransferSpeed(progressbar.widgets.Widget):
+class BitmathFileTransferSpeed(progressbar.widgets.Widget):
     """Widget for showing the transfer speed (useful for file transfers)."""
     __slots__ = ('system', 'format')
 
@@ -95,7 +95,7 @@ class FileTransferSpeed(progressbar.widgets.Widget):
 Basically, this calculates the average rate of update and figures out
 how to make a "pretty" prefix unit"""
 
-        if pbar.seconds_elapsed < 2e-6 or pbar.currval < 2e-6: # =~ 0
+        if pbar.seconds_elapsed < 2e-6 or pbar.currval < 2e-6:
             scaled = bitmath.Byte()
         else:
             speed = pbar.currval / pbar.seconds_elapsed
