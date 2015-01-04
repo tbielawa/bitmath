@@ -9,7 +9,7 @@
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
-Version: 1.2.2
+Version: 1.2.3
 Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
@@ -63,6 +63,9 @@ cp -v *.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
 %doc %{_mandir}/man1/bitmath.1*
 
 %changelog
+* Sun Jan  4 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.3-1
+- Add progressbar example to the README
+
 * Sun Jan  4 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.2-1
 - Fix some problems with the automated build system
 

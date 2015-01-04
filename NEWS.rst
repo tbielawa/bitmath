@@ -6,6 +6,49 @@ NEWS
    :local:
 
 
+.. _bitmath-1.2.3-1:
+
+bitmath-1.2.3-1
+***************
+
+`bitmath-1.2.3-1
+<https://github.com/tbielawa/bitmath/releases/tag/1.2.3-1>`__ was
+published on 2015-01-03.
+
+Changes
+=======
+
+**Added Functionality**
+
+* New utility: ``progressbar`` integration:
+  `bitmath.integrations.BitmathFileTransferSpeed
+  <http://bitmath.readthedocs.org/en/latest/module.html#progressbar>`_.
+  A more functional file transfer speed widget.
+
+
+Documentation
+=============
+
+* The command-line ``bitmath`` tool now has `online documentation
+  <http://bitmath.readthedocs.org/en/latest/commandline.html>`_
+* A full demo of the ``argparse`` and ``progressbar`` integrations has
+  been written. Additionally, it includes a comprehensive
+  demonstration of the full capabilities of the bitmath library. View
+  it in the *Real Life Demos* `Creating Download Progress Bars
+  <http://bitmath.readthedocs.org/en/latest/real_life_examples.html#real-life-examples-download-progress-bars>`_
+  example.
+
+
+Project
+=======
+
+**Tests**
+
+* Travis-CI had some issues with installing dependencies for the 3.x
+  build unittests. These were fixed and the build status has returned
+  back to normal.
+
+
 .. _bitmath-1.2.0-1:
 
 bitmath-1.2.0-1

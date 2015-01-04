@@ -315,8 +315,8 @@ Formatting
 ``argparse`` Integration
 ------------------------
 
-Example script using ``bitmath.BitmathType`` as an argparser argument
-type:
+Example script using ``bitmath.integrations.BitmathType`` as an
+argparser argument type:
 
 .. code-block:: python
 
@@ -339,3 +339,42 @@ If ran as a script the results would be similar to this:
 
    $ python ./bmargparse.py --block-size 100MiB
    Parsed in: 100.0 MiB; Which looks like 819200.0 Kib as a Kibibit
+
+
+``progressbar`` Integration
+---------------------------
+
+Use ``bitmath.integrations.BitmathFileTransferSpeed`` as a
+``progressbar`` file transfer speed widget to monitor download speeds:
+
+.. code-block:: python
+
+   import requests
+   import progressbar
+   import bitmath
+   import bitmath.integrations
+
+   FETCH = 'https://www.kernel.org/pub/linux/kernel/v3.0/patch-3.16.gz'
+   widgets = ['Bitmath Progress Bar Demo: ', ' ',
+              progressbar.Bar(marker=progressbar.RotatingMarker()), ' ',
+              bitmath.integrations.BitmathFileTransferSpeed()]
+
+   r = requests.get(FETCH, stream=True)
+   size = bitmath.Byte(int(r.headers['Content-Length']))
+   pbar = progressbar.ProgressBar(widgets=widgets, maxval=int(size),
+                                  term_width=80).start()
+   chunk_size = 2048
+   with open('/dev/null', 'wb') as fd:
+       for chunk in r.iter_content(chunk_size):
+           fd.write(chunk)
+           if (pbar.currval + chunk_size) < pbar.maxval:
+               pbar.update(pbar.currval + chunk_size)
+   pbar.finish()
+
+
+If ran as a script the results would be similar to this:
+
+.. code-block:: bash
+
+   $ python ./smalldl.py
+   Bitmath Progress Bar Demo:  ||||||||||||||||||||||||||||||||||||||||| 1.58 MiB/s
