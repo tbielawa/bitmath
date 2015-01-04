@@ -5,7 +5,7 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 2
+%global _short_release 3
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
@@ -21,6 +21,7 @@ BuildArch: noarch
 BuildRequires: python2-devel
 BuildRequires: python-nose
 BuildRequires: python-progressbar
+BuildRequires: python-mock
 %{?el6:Requires: python-argparse}
 %{?el6:BuildRequires: python-argparse}
 %{?el6:BuildRequires: python-unittest2}
@@ -64,6 +65,9 @@ cp -v *.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
 %doc %{_mandir}/man1/bitmath.1*
 
 %changelog
+* Sun Jan  4 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.3-3
+- Add mock to build requires
+
 * Sun Jan  4 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.3-2
 - Add python-progressbar build-dependency to satisfy 'check' tests
 
