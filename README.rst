@@ -73,6 +73,8 @@ Topics include:
   * ``argparse`` integration
   * ``progressbar`` integration
 
+* The ``bitmath`` command-line Tool
+
 * Classes
 
   * Initializing

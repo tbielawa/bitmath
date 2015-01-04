@@ -60,6 +60,7 @@ Contents
    :numbered:
 
    module.rst
+   commandline.rst
    classes.rst
    instances.rst
    simple_examples.rst

@@ -13,7 +13,7 @@ bitmath - command line utility for converting between prefix units
 
 SYNOPSIS
 --------
-bitmath [-f IN_UNIT] [-t OUT_UNIT] SIZE ...
+bitmath [--from-stdin] [-f IN_UNIT] [-t OUT_UNIT] SIZE ...
 
 
 

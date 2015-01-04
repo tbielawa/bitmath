@@ -193,6 +193,8 @@ classes. You can even ``to_THING()`` an instance into itself again:
    True
 
 
+.. _instances_best_prefix:
+
 best_prefix()
 =============
 
