@@ -31,6 +31,7 @@ includes:
 * Rich comparison operations (``1024 Bytes == 1KiB``)
 * bitwise operations (``<<``, ``>>``, ``&``, ``|``, ``^``)
 * `argparse <https://docs.python.org/2/library/argparse.html>`_ integration
+* `progressbar <https://code.google.com/p/python-progressbar/>`_ integration
 * String parsing
 * Sorting
 
@@ -68,8 +69,9 @@ Topics include:
 
   * Utility Functions
   * Context Managers
-  * ``argparse`` integration
   * Module Variables
+  * ``argparse`` integration
+  * ``progressbar`` integration
 
 * Classes
 
