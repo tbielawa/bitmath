@@ -13,3 +13,4 @@ matrix:
     - python: "3.3"
       env: CI=ci3
 script: make $CI
+install: ""
