@@ -57,7 +57,7 @@ yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
 
 
 Installation
-############
+============
 
 The easiest way to install bitmath is via ``yum`` if you're on a
 Fedora/RHEL based distribution. bitmath is available in the main
