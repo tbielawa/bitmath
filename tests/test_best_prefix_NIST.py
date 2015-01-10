@@ -127,3 +127,17 @@ best_prefix() to it."""
 
         # Let's be thorough and do that one more time
         self.assertIs(type(should_be_EiB.best_prefix()), bitmath.EiB)
+
+    ##################################################################
+    # Tests for the utility function bitmath.best_prefix() where
+    # SYSTEM=NIST
+
+    def test_bitmath_best_prefix_NIST(self):
+        """bitmath.best_prefix return a Kibibyte for 1024"""
+        result = bitmath.best_prefix(1024)
+        self.assertIs(type(result), bitmath.KiB)
+
+    def test_bitmath_best_prefix_NIST_exbi(self):
+        """bitmath.best_prefix return an exbibyte for a huge number of bytes"""
+        result = bitmath.best_prefix(1152921504606846977)
+        self.assertIs(type(result), bitmath.EiB)

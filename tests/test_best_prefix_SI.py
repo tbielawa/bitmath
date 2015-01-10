@@ -127,3 +127,17 @@ best_prefix() to it. again"""
 
         # Let's be thorough and do that one more time
         self.assertIs(type(should_be_EB.best_prefix()), bitmath.EB)
+
+    ##################################################################
+    # Tests for the utility function bitmath.best_prefix() where
+    # SYSTEM=SI
+
+    def test_bitmath_best_prefix_SI(self):
+        """bitmath.best_prefix return a Kilobyte for 1024"""
+        result = bitmath.best_prefix(1024, system=bitmath.SI)
+        self.assertIs(type(result), bitmath.kB)
+
+    def test_bitmath_best_prefix_SI_yotta(self):
+        """bitmath.best_prefix return a yottabyte for a huge number of bytes"""
+        result = bitmath.best_prefix(1000000000000000000000001, system=bitmath.SI)
+        self.assertIs(type(result), bitmath.YB)
