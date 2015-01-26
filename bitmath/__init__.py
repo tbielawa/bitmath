@@ -38,13 +38,13 @@ absolutely need to skip code coverage because of a strange Python 2.x
 vs 3.x thing, use the fancy environment substitution stuff from the
 .coverage RC file. In review:
 
-* If you *NEED* to skip a statement because of Python 2.x issues add the following:
+* If you *NEED* to skip a statement because of Python 2.x issues add the following::
 
-  # pragma: PY2X no cover
+      # pragma: PY2X no cover
 
-* If you *NEED* to skip a statement because of Python 3.x issues add the following:
+* If you *NEED* to skip a statement because of Python 3.x issues add the following::
 
-  # pragma: PY3X no cover
+      # pragma: PY3X no cover
 
 In this configuration, statements which are skipped in 2.x are still
 covered in 3.x, and the reverse holds true for tests skipped in 3.x.
@@ -61,21 +61,56 @@ import os
 import os.path
 import sys
 
+# for the device checking stuff
+import stat
+import fcntl
+import struct
+
+
+
 __all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB',
            'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB', 'Kib',
            'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb',
            'Pb', 'Eb', 'Zb', 'Yb', 'getsize', 'listdir', 'format',
-           'format_string', 'format_plural', 'parse_string']
+           'format_string', 'format_plural', 'parse_string', 'ALL_UNIT_TYPES',
+           'NIST', 'NIST_PREFIXES', 'NIST_STEPS', 'SI', 'SI_PREFIXES',
+           'SI_STEPS']
 
 # Python 3.x compat
 if sys.version > '3':
     long = int  # pragma: PY2X no cover
 
-# Constants for referring to prefix systems
+#: A list of all the valid prefix unit types. Mostly for reference,
+#: also used by the CLI tool as valid types
+ALL_UNIT_TYPES = ['Bit', 'Byte', 'kb', 'kB', 'Mb', 'MB', 'Gb', 'GB', 'Tb',
+                  'TB', 'Pb', 'PB', 'Eb', 'EB', 'Zb', 'ZB', 'Yb',
+                  'YB', 'Kib', 'KiB', 'Mib', 'MiB', 'Gib', 'GiB',
+                  'Tib', 'TiB', 'Pib', 'PiB', 'Eib', 'EiB']
+
+# #####################################################################
+# Set up our module variables/constants
+
+###################################
+# Internal:
+
+# Console repr(), ex: MiB(13.37), or kB(42.0)
+_FORMAT_REPR = '{unit_singular}({value})'
+
+# ##################################
+# Exposed:
+
+#: Constants for referring to NIST prefix system
 NIST = int(2)
+
+#: Constants for referring to NIST prefix system
 SI = int(10)
 
+# ##################################
+
+#: All of the SI prefixes
 SI_PREFIXES = ['k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y']
+
+#: Byte values represented by each SI prefix unit
 SI_STEPS = {
     'Bit': 1 / 8.0,
     'Byte': 1,
@@ -89,7 +124,11 @@ SI_STEPS = {
     'Y': 1000000000000000000000000
 }
 
+
+#: All of the NIST prefixes
 NIST_PREFIXES = ['Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei']
+
+#: Byte values represented by each NIST prefix unit
 NIST_STEPS = {
     'Bit': 1 / 8.0,
     'Byte': 1,
@@ -101,30 +140,10 @@ NIST_STEPS = {
     'Ei': 1152921504606846976
 }
 
-# A list of all the valid prefix unit types. Mostly for reference,
-# also used by the CLI tool as valid types
-
-ALL_UNIT_TYPES = ['Bit', 'Byte', 'kb', 'kB', 'Mb', 'MB', 'Gb', 'GB', 'Tb',
-                  'TB', 'Pb', 'PB', 'Eb', 'EB', 'Zb', 'ZB', 'Yb',
-                  'YB', 'Kib', 'KiB', 'Mib', 'MiB', 'Gib', 'GiB',
-                  'Tib', 'TiB', 'Pib', 'PiB', 'Eib', 'EiB']
-
-######################################################################
-# Set up our module variables/constants
-
-###################################
-# Internal:
-
-# Console repr(), ex: MiB(13.37), or kB(42.0)
-_FORMAT_REPR = '{unit_singular}({value})'
-
-###################################
-# Exposed:
-
-# String representation, ex:13.37 MiB, or 42.0 kB
+#: String representation, ex: ``13.37 MiB``, or ``42.0 kB``
 format_string = "{value} {unit}"
 
-# Pluralization behavior
+#: Pluralization behavior
 format_plural = False
 
 
@@ -212,46 +231,35 @@ type"""
         self._byte_value = value * self._unit_value
         self._bit_value = self._byte_value * 8.0
 
-    @property
-    def base(self):
-        """Return the mathematical base of an instance"""
-        return self._base
+    #: The mathematical base of an instance
+    base = property(lambda s: s._base)
 
-    @property
-    def binary(self):
-        """Returns the binary representation of an instance in binary 1s and
-0s. Note that for very large numbers this will mean a lot of 1s and
-0s. For example, GiB(100) would be represented as:
+    binary = property(lambda s: bin(int(s.bits)))
+    """The binary representation of an instance in binary 1s and 0s. Note
+that for very large numbers this will mean a lot of 1s and 0s. For
+example, GiB(100) would be represented as::
 
-0b1100100000000000000000000000000000000000
+    0b1100100000000000000000000000000000000000
 
-That leading '0b' is normal. That's how Python represents binary."""
-        return bin(int(self.bits))
+That leading ``0b`` is normal. That's how Python represents binary.
 
-    @property
-    def bin(self):
-        """Alias for instance.binary. Returns the binary representation of an
-instance in binary 1s and 0s."""
-        return self.binary
+    """
 
-    @property
-    def bits(self):
-        """Return the number of bits in an instance"""
-        return self._bit_value
+    #: Alias for :attr:`binary`
+    bin = property(lambda s: s.binary)
 
-    @property
-    def bytes(self):
-        """Return the number of bytes in an instance"""
-        return self._byte_value
+    #: The number of bits in an instance
+    bits = property(lambda s: s._bit_value)
 
-    @property
-    def power(self):
-        """Return the mathematical power of an instance"""
-        return self._power
+    #: The number of bytes in an instance
+    bytes = property(lambda s: s._byte_value)
+
+    #: The mathematical power of an instance
+    power = property(lambda s: s._power)
 
     @property
     def system(self):
-        """Return the system of units used to measure this instance"""
+        """The system of units used to measure an instance"""
         if self._base == 2:
             return "NIST"
         elif self._base == 10:
@@ -265,14 +273,20 @@ instance in binary 1s and 0s."""
 
     @property
     def unit(self):
-        """Return the string that is this instances prefix unit name
-in agreement with this instance value (singular or plural). Following
-the convention that only 1 is singular. This method will always return
-the singular form when bitmath.format_plural is False (default value).
+        """The string that is this instances prefix unit name in agreement
+with this instance value (singular or plural). Following the
+convention that only 1 is singular. This will always be the singular
+form when :attr:`bitmath.format_plural` is ``False`` (default value).
 
-For instance, when plural form is enabled, KiB(1).unit == 'KiB',
-Byte(0).unit == 'Bytes', Byte(1).unit == 'Byte', Byte(1.1).unit == 'Bytes'
-and Gb(2).unit == 'Gbs'"""
+For example:
+
+   >>> KiB(1).unit == 'KiB'
+   >>> Byte(0).unit == 'Bytes'
+   >>> Byte(1).unit == 'Byte'
+   >>> Byte(1.1).unit == 'Bytes'
+   >>> Gb(2).unit == 'Gbs'
+
+        """
         global format_plural
 
         if self.prefix_value == 1:
@@ -287,47 +301,58 @@ and Gb(2).unit == 'Gbs'"""
 
     @property
     def unit_plural(self):
-        """Return the string that is this instances prefix unit name in the
-plural form.
+        """The string that is an instances prefix unit name in the plural
+form.
 
-For instance, KiB(1).unit_plural == 'KiB', Byte(1024).unit_plural == 'Bytes',
-and Gb(1).unit_plural == 'Gb'"""
+For example:
+
+   >>> KiB(1).unit_plural == 'KiB'
+   >>> Byte(1024).unit_plural == 'Bytes'
+   >>> Gb(1).unit_plural == 'Gb'
+
+        """
         return self._name_plural
 
     @property
     def unit_singular(self):
-        """Return the string that is this instances prefix unit name in the
-singular form.
+        """The string that is an instances prefix unit name in the singular
+form.
 
-For instance, KiB(1).unit_singular == 'KiB', Byte(1024).unit == 'B', and
-Gb(1).unit_singular == 'Gb'"""
+For example:
+
+   >>> KiB(1).unit_singular == 'KiB'
+   >>> Byte(1024).unit == 'B'
+   >>> Gb(1).unit_singular == 'Gb'
+        """
         return self._name_singular
 
-    @property
-    def value(self):
-        """Returns the "prefix" value of an instance"""
-        return self.prefix_value
+    #: The "prefix" value of an instance
+    value = property(lambda s: s.prefix_value)
 
     @classmethod
     def from_other(cls, item):
-        """Factory function to return instances of `item` converted in a new
-instance of `cls`. Because this is a class method, it may be called
+        """Factory function to return instances of `item` converted into a new
+instance of ``cls``. Because this is a class method, it may be called
 from any bitmath class object without the need to explicitly
 instantiate the class ahead of time.
 
 *Implicit Parameter:*
-- `cls` A bitmath class, implicitly set to the class of the class
-  object it is called on
+
+* ``cls`` A bitmath class, implicitly set to the class of the
+  instance object it is called on
 
 *User Supplied Parameter:*
-- `item` A bitmath class instance
+
+* ``item`` A :class:`bitmath.Bitmath` subclass instance
 
 *Example:*
->>> import bitmath
->>> kib = bitmath.KiB.from_other(bitmath.MiB(1))
->>> print kib
-KiB(1024.0)
-"""
+
+   >>> import bitmath
+   >>> kib = bitmath.KiB.from_other(bitmath.MiB(1))
+   >>> print kib
+   KiB(1024.0)
+
+        """
         if isinstance(item, Bitmath):
             return cls(bits=item.bits)
         else:
@@ -616,6 +641,8 @@ prefix unit' for representation:
         return Yb(bits=self._bit_value)
 
     # Properties
+
+    #: A new object representing this instance as a Yottabyte
     YB = property(lambda s: s.to_YB())
     Yb = property(lambda s: s.to_Yb())
 
