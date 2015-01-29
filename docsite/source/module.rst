@@ -291,6 +291,47 @@ bitmath.parse_string()
 
    .. versionadded:: 1.1.0
 
+
+bitmath.query_device_capacity()
+===============================
+
+.. function:: query_device_capacity(device_fd)
+
+   Create :class:`bitmath.Byte` instances representing the capacity of
+   a block device.
+
+   :param file device_fd: A file handle (``handle =
+                          open('/dev/sda')``) open on a device to
+                          query the capacity of.
+   :return: A :class:`bitmath.Byte` equal to the size of ``device_fd``
+   :raises ValueError: if file descriptor ``device_fd`` is not of a
+                       device type
+   :raises IOError:
+
+      * :py:exc:`IOError[13]` - If the effective **uid** of this
+        process does not have access to issue raw commands to block
+        devices. I.e., this process does not have super-user rights
+      * :py:exc:`IOError[2]` - If the device ``device_fd`` points to
+        does not exist
+
+   .. important:: :func:`bitmath.query_device_capacity` requires
+                super-user privileges. Use of this function on a
+                device the user does not have access to will result in
+                run-time errors.
+
+   Here's an example using the ``with`` context manager to open a
+   device and print its capacity with the best-human readable prefix.
+
+   .. code-block:: python
+
+      >>> import bitmath
+      >>> with open("/dev/sda") as device:
+      ...     size = bitmath.query_device_capacity(device).best_prefix()
+      ...     print "Device %s capacity: %s (%s Bytes)" % (device.name, size, size_bytes)
+      Device /dev/sda capacity: 238.474937439 GiB (2.56060514304e+11 Bytes)
+
+   .. versionadded:: 1.2.4
+
 .. _module_context_managers:
 
 Context Managers

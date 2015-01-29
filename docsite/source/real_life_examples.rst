@@ -391,3 +391,7 @@ Creating Download Progress Bars
   <https://raw.githubusercontent.com/tbielawa/bitmath/master/full_demo.py>`_
   on GitHub
 
+
+Reading a System Devices Storage Capacity
+*****************************************
+

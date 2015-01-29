@@ -104,6 +104,10 @@ Initializing
 .. class:: Tb([value=0[, bytes=None[, bits=None]]])
 .. class:: TiB([value=0[, bytes=None[, bits=None]]])
 .. class:: Tib([value=0[, bytes=None[, bits=None]]])
+.. class:: YB([value=0[, bytes=None[, bits=None]]])
+.. class:: Yb([value=0[, bytes=None[, bits=None]]])
+.. class:: ZB([value=0[, bytes=None[, bits=None]]])
+.. class:: Zb([value=0[, bytes=None[, bits=None]]])
 
 .. class:: Bitmath([value=0[, bytes=None[, bits=None]]])
 

@@ -1129,10 +1129,6 @@ device. Perform any processing required to compute the final capacity
 value. Return the device capacity in bytes as a :class:`bitmath.Byte`
 instance.
 
-
- the Query the capacity of
-a block-device
-
 Thanks to the following resources for help figuring this out Linux/Mac
 ioctl's for querying block device sizes:
 
@@ -1144,8 +1140,7 @@ ioctl's for querying block device sizes:
 
    :return: a bitmath :class:`bitmath.Byte` instance equivalent to the
    capacity of the target device in bytes.
-
-    """
+"""
 
     s = os.stat(device_fd.name).st_mode
     if not stat.S_ISBLK(s):
@@ -1250,7 +1245,7 @@ ioctl's for querying block device sizes:
 
         # Unpack the raw result from the ioctl call into a familiar
         # python data type according to the ``fmt`` rules.
-        result = struct.unpack(fmt, buffer)[0]
+        result = struct.unpack(fmt, bytes(buffer, encoding="ascii"))[0]
         # Add the new result to our collection
         results[req_name] = result
 
