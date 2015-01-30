@@ -1245,7 +1245,7 @@ ioctl's for querying block device sizes:
 
         # Unpack the raw result from the ioctl call into a familiar
         # python data type according to the ``fmt`` rules.
-        result = struct.unpack(fmt, bytes(buffer, encoding="ascii"))[0]
+        result = struct.unpack(fmt, buffer)[0]
         # Add the new result to our collection
         results[req_name] = result
 

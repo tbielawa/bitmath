@@ -52,7 +52,9 @@ class TestQueryDeviceCapacity(TestCase):
             os_stat.return_value = mock.Mock(st_mode=25008)
             stat_is_block.return_value = True
             plat_system.return_value = 'Linux'
-            ioctl.return_value = '\x00`e\x9e;\x00\x00\x00'  # = 256060514304 ~= 256 GB (in SI)
+            ioctl.return_value = struct.pack('L', 256060514304)
+            # = '\x00`e\x9e;\x00\x00\x00'
+            # = 256060514304 ~= 256 GB (in SI)
             buffer_test = ' ' * struct.calcsize('L')
 
             bytes = bitmath.query_device_capacity(device)
@@ -69,7 +71,11 @@ class TestQueryDeviceCapacity(TestCase):
             # These are the struct.pack() equivalents of 244140625
             # (type: u64) and 4096 (type: u32). Multiplied together
             # they equal the number of bytes in 1 TB.
-            returns = ['QJ\x8d\x0e\x00\x00\x00\x00', '\x00\x10\x00\x00']
+            returns = [
+                struct.pack('L', 244140625),
+                struct.pack('I', 4096)
+            ]
+            # 'QJ\x8d\x0e\x00\x00\x00\x00', '\x00\x10\x00\x00']
 
             def side_effect(*args, **kwargs):
                 return returns.pop(0)
