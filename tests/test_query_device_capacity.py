@@ -72,10 +72,9 @@ class TestQueryDeviceCapacity(TestCase):
             # (type: u64) and 4096 (type: u32). Multiplied together
             # they equal the number of bytes in 1 TB.
             returns = [
-                struct.pack('L', 244140625),
-                struct.pack('I', 4096)
+                struct.pack('L', 244140625),  # 'QJ\x8d\x0e\x00\x00\x00\x00'
+                struct.pack('I', 4096)  # , '\x00\x10\x00\x00'
             ]
-            # 'QJ\x8d\x0e\x00\x00\x00\x00', '\x00\x10\x00\x00']
 
             def side_effect(*args, **kwargs):
                 return returns.pop(0)

@@ -74,6 +74,8 @@ release = '%VERSION%'
 exclude_patterns = [
     'appendices/mixed_math.rst',
     'appendices/*',
+    'example_block_devices.rst',
+    'query_device_capacity_warning.rst'
 ]
 
 # The reST default role (used for this markup: `text`) to use for all documents.

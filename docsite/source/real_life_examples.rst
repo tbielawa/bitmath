@@ -392,6 +392,15 @@ Creating Download Progress Bars
   on GitHub
 
 
-Reading a System Devices Storage Capacity
-*****************************************
+.. _real_life_examples_read_device_storage_capacity:
 
+Reading a Devices Storage Capacity
+**********************************
+
+
+.. include:: query_device_capacity_warning.rst
+
+Using :func:`bitmath.query_device_capacity` we can read the size of a
+storage device or a partition on a device.
+
+.. include:: example_block_devices.rst

@@ -10,10 +10,12 @@ This section describes the guidelines for contributing to bitmath.
    :local:
 
 
+.. _contributing_issue_reporting:
+
 Issue Reporting
 ***************
 
-If you are reporting an issue with the bitmath library, please use the
+If you are encounter an issue with the bitmath library, please use the
 following template when describing your issue::
 
 
@@ -30,6 +32,9 @@ following template when describing your issue::
    What you expected to happen:
 
    What actually happened:
+
+* `Open a new issue <https://github.com/tbielawa/bitmath/issues/new>`_
+* `View open issues <https://github.com/tbielawa/bitmath/issues>`_
 
 
 Code Style/Formatting
