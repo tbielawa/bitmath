@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import logging
 import time
 import bitmath
@@ -49,8 +50,8 @@ def cleanup():
 
 ######################################################################
 for f in REMOTES:
-    print """
-######################################################################"""
+    print("""
+######################################################################""")
     fname = os.path.basename(f)
     # An array of widgets to design our progress bar. Note how we use
     # BitmathFileTransferSpeed
@@ -76,14 +77,14 @@ for f in REMOTES:
     #
     # http://bitmath.readthedocs.org/en/latest/module.html#bitmath-format
     with bitmath.format("{value:.2f} {unit}"):
-        print "Downloading %s (%s) in %s chunks" % (f,
+        print("Downloading %s (%s) in %s chunks" % (f,
                                                     size.best_prefix(),
-                                                    args.down.best_prefix())
+                                                    args.down.best_prefix()))
 
     # We have to save these files somewhere
     save_path = os.path.join(DESTDIR, fname)
-    print "Saving to: %s" % save_path
-    print ""
+    print("Saving to: %s" % save_path)
+    print("")
 
     # OK. Let's create our actual progress bar now. See the 'maxval'
     # keyword? That's the size of our payload in bytes.
@@ -120,50 +121,50 @@ for f in REMOTES:
     pbar.finish()
 
 ######################################################################
-print """
+print("""
 ######################################################################
 List downloaded contents
 * Filter for .xz files only
-"""
+""")
 
 for p,bm in bitmath.listdir(DESTDIR,
                             filter='*.xz'):
-    print p, bm
+    print(p, bm)
 
 ######################################################################
-print """
+print("""
 ######################################################################
 List downloaded contents
 * Filter for .gz files only
 * Print using best human readable prefix
-"""
+""")
 
 for p,bm in bitmath.listdir(DESTDIR,
                             filter='*.gz',
                             bestprefix=True):
-    print p, bm
+    print(p, bm)
 
 ######################################################################
-print """
+print("""
 ######################################################################
 List downloaded contents
 * No filter set, to display all files
 * Limit precision of printed file size to 3 digits
 * Print using best human readable prefix
-"""
+""")
 
 for p,bm in bitmath.listdir(DESTDIR,
                             bestprefix=True):
     with bitmath.format("{value:.3f} {unit}"):
-        print p, bm
+        print(p, bm)
 
 ######################################################################
-print """
+print("""
 ######################################################################
 Sum the size of all downloaded files together
 * Print with best prefix and 3 digits of precision
-"""
+""")
 
 discovered_files = [f[1] for f in bitmath.listdir(DESTDIR)]
 total_size = reduce(lambda x,y: x+y, discovered_files).best_prefix().format("{value:.3f} {unit}")
-print "Total size of %s downloaded items: %s" % (len(discovered_files), total_size)
+print("Total size of %s downloaded items: %s" % (len(discovered_files), total_size))
