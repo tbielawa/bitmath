@@ -360,7 +360,7 @@ argparser argument type:
    parser = argparse.ArgumentParser(
        description="Arg parser with a bitmath type argument")
    parser.add_argument('--block-size',
-                       type=bitmath.BitmathType,
+                       type=bitmath.integrations.BitmathType,
                        required=True)
 
    results = parser.parse_args()
