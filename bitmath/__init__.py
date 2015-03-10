@@ -1352,8 +1352,7 @@ the unit.
     elif unit == "B":
         unit_class = Byte
     else:
-        if not (hasattr(sys.modules[__name__], unit)
-                and isinstance(getattr(sys.modules[__name__], unit), type)):
+        if not (hasattr(sys.modules[__name__], unit) and isinstance(getattr(sys.modules[__name__], unit), type)):
             raise ValueError("The unit %s is not a valid bitmath unit" % unit)
         unit_class = globals()[unit]
 
