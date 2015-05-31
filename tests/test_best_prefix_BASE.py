@@ -53,3 +53,9 @@ class TestBestPrefixBASE(TestCase):
         one_byte = bitmath.Byte(1)
         # Byte(1.0) should stay the same, Byte(1.0)
         self.assertIs(type(one_byte.best_prefix()), bitmath.Byte)
+
+    def test_best_prefix_with_bitmath_input(self):
+        """best_prefix can handle bitmath type inputs"""
+        bm1 = bitmath.Byte(1024)
+        expected = bitmath.KiB(1)
+        self.assertEqual(bitmath.best_prefix(bm1), expected)
