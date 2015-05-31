@@ -79,6 +79,7 @@ __all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB',
 # Python 3.x compat
 if sys.version > '3':
     long = int  # pragma: PY2X no cover
+    unicode = str  # pragma: PY2X no cover
 
 #: A list of all the valid prefix unit types. Mostly for reference,
 #: also used by the CLI tool as valid types
@@ -1331,13 +1332,13 @@ String inputs may include whitespace characters between the value and
 the unit.
     """
     # Strings only please
-    if type(s) is not str:
+    if type(s) is not str and type(s) is not unicode:
         raise ValueError("parse_string only accepts string inputs but a %s was given" %
                          type(s))
 
     # get the index of the first alphabetic character
     try:
-        index = list(map(str.isalpha, s)).index(True)
+        index = list([i.isalpha() for i in s]).index(True)
     except ValueError:
         # If there's no alphabetic characters we won't be able to .index(True)
         raise ValueError("No unit detected, can not parse string '%s' into a bitmath object" % s)

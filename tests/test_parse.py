@@ -81,3 +81,9 @@ class TestParse(TestCase):
         """parse_string can identify a non-string input"""
         with self.assertRaises(ValueError):
             bitmath.parse_string(12345)
+
+    def test_parse_string_unicode(self):
+        """parse_string can handle a unicode string"""
+        self.assertEqual(
+            bitmath.parse_string(u"750 GiB"),
+            bitmath.GiB(750))
