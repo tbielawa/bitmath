@@ -27,7 +27,7 @@
 try:
     from setuptools import setup
 except ImportError:
-    print "Command line script will not be created."
+    print("Command line script will not be created.")
     from distutils.core import setup
 
 
