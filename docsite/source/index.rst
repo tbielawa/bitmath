@@ -374,3 +374,10 @@ If ran as a script the results would be similar to this:
 
    $ python ./smalldl.py
    Bitmath Progress Bar Demo:  ||||||||||||||||||||||||||||||||||||||||| 1.58 MiB/s
+
+
+Click the **slow**, or **fast** links below to start the screen
+capture.
+
+.. showterm:: aeea3ae1b8af7f0be2fc4
+   :speed: stop
