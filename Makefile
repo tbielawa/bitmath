@@ -235,7 +235,7 @@ virtualenv3:
 	@echo "#############################################"
 	@echo "# Creating a virtualenv"
 	@echo "#############################################"
-	virtualenv $(NAME)env3 --python=python3.3
+	virtualenv $(NAME)env3 --python=python3
 	. $(NAME)env3/bin/activate && pip install -r requirements-py3.txt
 	. $(NAME)env3/bin/activate && pip install pep8 nose coverage nose-cover3 mock
 

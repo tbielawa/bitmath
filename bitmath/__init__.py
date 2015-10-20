@@ -62,10 +62,12 @@ import os.path
 import platform
 import sys
 
-# for device capacity reading in get_device_capacity()
-import stat
-import fcntl
-import struct
+# For device capacity reading in query_device_capacity(). Only supported
+# on posix systems for now. Will be addressed in issue #52 on GitHub.
+if os.name == 'posix':
+    import stat
+    import fcntl
+    import struct
 
 
 __all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB',
@@ -146,6 +148,11 @@ format_string = "{value} {unit}"
 
 #: Pluralization behavior
 format_plural = False
+
+
+def os_name():
+    # makes unittesting platform specific code easier
+    return os.name
 
 
 ######################################################################
@@ -1153,6 +1160,8 @@ ioctl's for querying block device sizes:
    :return: a bitmath :class:`bitmath.Byte` instance equivalent to the
    capacity of the target device in bytes.
 """
+    if os_name() != 'posix':
+        raise NotImplementedError("'bitmath.query_device_capacity' is not supported on this platform: %s" % os_name())
 
     s = os.stat(device_fd.name).st_mode
     if not stat.S_ISBLK(s):

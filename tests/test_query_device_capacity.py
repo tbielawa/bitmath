@@ -102,3 +102,10 @@ class TestQueryDeviceCapacity(TestCase):
                 bitmath.query_device_capacity(non_device_file)
 
             self.assertEqual(ioctl.call_count, 0)
+
+    def test_query_device_capacity_non_posix_system_fails(self):
+        """query device capacity fails on a non-posix host"""
+        with mock.patch('bitmath.os_name') as os_name:
+            os_name.return_value = 'nt'
+            with self.assertRaises(NotImplementedError):
+                bitmath.query_device_capacity(device)
