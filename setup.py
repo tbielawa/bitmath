@@ -27,7 +27,7 @@
 try:
     from setuptools import setup
 except ImportError:
-    print("Command line script will not be created.")
+    print "Command line script will not be created."
     from distutils.core import setup
 
 
@@ -35,7 +35,7 @@ pypi_notice = open('README.rst', 'r').read()
 
 setup(
     name='bitmath',
-    version='1.2.3-3',
+    version='1.2.3.3',
     description='Pythonic module for representing and manipulating file sizes with different prefix notations.',
     long_description=pypi_notice,
     maintainer='Tim Bielawa',

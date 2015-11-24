@@ -14,7 +14,7 @@ Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
 License: BSD
-Source0: https://github.com/tbielawa/bitmath/archive/%{version}-%{_short_release}.tar.gz
+Source0: https://github.com/tbielawa/bitmath/archive/%{version}.%{_short_release}.tar.gz
 Url: https://github.com/tbielawa/bitmath
 
 BuildArch: noarch
@@ -49,7 +49,7 @@ always at 100%.
 nosetests -v
 
 %prep
-%setup -n bitmath-%{version}-%{_short_release} -q
+%setup -n bitmath-%{version}.%{_short_release} -q
 
 %build
 %{__python2} setup.py build
