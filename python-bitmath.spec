@@ -60,7 +60,7 @@ mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1/
 cp -v *.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
 mkdir -p $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs
 cp -v -r docsite/source/* $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/
-rm -vf $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/NEWS.rst
+rm -f $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/NEWS.rst
 
 %files -f python-bitmath-files.txt
 %dir %{python2_sitelib}/%{_short_name}
