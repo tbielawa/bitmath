@@ -6,6 +6,59 @@ NEWS
    :local:
 
 
+.. _bitmath-1.2.4-1:
+
+bitmath-1.2.4-1
+***************
+
+`bitmath-1.2.4-1
+<https://github.com/tbielawa/bitmath/releases/tag/1.2.4-1>`__ was
+published on 2015-11-30.
+
+Changes
+=======
+
+**Added Functionality**
+
+* New bitmath module function: :func:`bitmath.query_device_capacity`. Create
+  :class:`bitmath.Byte` instances representing the capacity of a block
+  device. Support is presently limited to Linux and Mac.
+
+**Bug Fixes**
+
+* `#49 <https://github.com/tbielawa/bitmath/pull/49>`_ - Fix handling
+  unicode input in the `bitmath.parse_string
+  <https://bitmath.readthedocs.org/en/latest/module.html#bitmath-parse-string>`__
+  function. Thanks `drewbrew <https://github.com/drewbrew>`_!
+
+* `#50 <https://github.com/tbielawa/bitmath/pull/50>`_ - Update the
+  ``setup.py`` script to be python3.x compat. Thanks `ssut
+  <https://github.com/ssut>`_!
+
+
+Documentation
+=============
+
+* The project documentation is now installed along with the bitmath
+  library in RPM packages.
+
+
+Project
+=======
+
+**Fedora/EPEL**
+
+Look for separate python3.x and python2.x packages coming soon to
+`Fedora <https://getfedora.org/>`_ and `EPEL
+<https://fedoraproject.org/wiki/EPEL>`_. This is happening because of
+the `initiative
+<https://fedoraproject.org/wiki/FAD_Python_3_Porting_2015>`_ to update
+the base Python implementation on Fedora to Python 3.x
+
+* `BZ1282560 <https://bugzilla.redhat.com/show_bug.cgi?id=1282560>`_
+
+
+
 .. _bitmath-1.2.3-1:
 
 bitmath-1.2.3-1
