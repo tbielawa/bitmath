@@ -58,11 +58,14 @@ nosetests -v
 %{__python2} setup.py install -O1 --root=$RPM_BUILD_ROOT --record=python-bitmath-files.txt
 mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1/
 cp -v *.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
+mkdir -p $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs
+cp -v -r docsite/source/* $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/
 
 %files -f python-bitmath-files.txt
 %dir %{python2_sitelib}/%{_short_name}
 %doc README.rst LICENSE
 %doc %{_mandir}/man1/bitmath.1*
+%doc %{_docdir}/%{name}/docs/
 
 %changelog
 * Sun Jan  4 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.3-3
