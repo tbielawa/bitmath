@@ -1,3 +1,4 @@
 include README.rst LICENSE bitmath.1
 graft bitmath
 graft tests
+recursive-include docsite/source *.rst
