@@ -23,11 +23,11 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
+from __future__ import print_function
 try:
     from setuptools import setup
 except ImportError:
-    print "Command line script will not be created."
+    print("Command line script will not be created.")
     from distutils.core import setup
 
 

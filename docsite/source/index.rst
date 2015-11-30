@@ -321,7 +321,7 @@ argparser argument type:
    parser = argparse.ArgumentParser(
        description="Arg parser with a bitmath type argument")
    parser.add_argument('--block-size',
-                       type=bitmath.BitmathType,
+                       type=bitmath.integrations.BitmathType,
                        required=True)
 
    results = parser.parse_args()
@@ -374,10 +374,3 @@ If ran as a script the results would be similar to this:
 
    $ python ./smalldl.py
    Bitmath Progress Bar Demo:  ||||||||||||||||||||||||||||||||||||||||| 1.58 MiB/s
-
-
-Click the **slow**, or **fast** links below to start the screen
-capture.
-
-.. showterm:: aeea3ae1b8af7f0be2fc4
-   :speed: stop
