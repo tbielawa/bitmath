@@ -5,11 +5,11 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 3
+%global _short_release 1
 
 Name: python-bitmath
 Summary: Aids representing and manipulating sizes in various prefix notations
-Version: 1.2.3
+Version: 1.2.4
 Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
@@ -60,14 +60,20 @@ mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1/
 cp -v *.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
 mkdir -p $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs
 cp -v -r docsite/source/* $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/
+rm -vf $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/NEWS.rst
 
 %files -f python-bitmath-files.txt
 %dir %{python2_sitelib}/%{_short_name}
-%doc README.rst LICENSE
+%doc README.rst NEWS.rst LICENSE
 %doc %{_mandir}/man1/bitmath.1*
 %doc %{_docdir}/%{name}/docs/
 
 %changelog
+* Mon Nov 30 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.4-1
+- New release. Now builds dual python2.x and 3.x packages.
+- New function: query_device_capacity
+- Minor bug fixes for everyone!
+
 * Sun Jan  4 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.3-3
 - Add mock to build requires
 
