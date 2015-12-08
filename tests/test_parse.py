@@ -46,7 +46,7 @@ class TestParse(TestCase):
             bitmath.Byte(321))
 
     def test_parse_Gb(self):
-        """parse_string works on gigabyte strings"""
+        """parse_string works on gigabit strings"""
         self.assertEqual(
             bitmath.parse_string("456Gb"),
             bitmath.Gb(456))
@@ -56,6 +56,35 @@ class TestParse(TestCase):
         self.assertEqual(
             bitmath.parse_string("654 MiB"),
             bitmath.MiB(654))
+
+    ######################################################################
+    # NIST 'octet' based units
+    def test_parse_Mio(self):
+        """parse_string works on mebioctet strings"""
+        self.assertEqual(
+            bitmath.parse_string("654 Mio"),
+            bitmath.MiB(654))
+
+    def test_parse_Eio(self):
+        """parse_string works on exbioctet strings"""
+        self.assertEqual(
+            bitmath.parse_string("654 Eio"),
+            bitmath.EiB(654))
+
+    # SI 'octet' based units
+    def test_parse_Mo(self):
+        """parse_string works on megaoctet strings"""
+        self.assertEqual(
+            bitmath.parse_string("654 Mo"),
+            bitmath.MB(654))
+
+    def test_parse_Eo(self):
+        """parse_string works on exaoctet strings"""
+        self.assertEqual(
+            bitmath.parse_string("654 Eo"),
+            bitmath.EB(654))
+
+    ######################################################################
 
     def test_parse_bad_float(self):
         """parse_string can identify invalid float values"""

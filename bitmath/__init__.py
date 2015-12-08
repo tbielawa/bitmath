@@ -950,31 +950,37 @@ class Byte(Bitmath):
 class KiB(Byte):
     def _setup(self):
         return (2, 10, 'KiB', 'KiBs')
+Kio = KiB
 
 
 class MiB(Byte):
     def _setup(self):
         return (2, 20, 'MiB', 'MiBs')
+Mio = MiB
 
 
 class GiB(Byte):
     def _setup(self):
         return (2, 30, 'GiB', 'GiBs')
+Gio = GiB
 
 
 class TiB(Byte):
     def _setup(self):
         return (2, 40, 'TiB', 'TiBs')
+Tio = TiB
 
 
 class PiB(Byte):
     def _setup(self):
         return (2, 50, 'PiB', 'PiBs')
+Pio = PiB
 
 
 class EiB(Byte):
     def _setup(self):
         return (2, 60, 'EiB', 'EiBs')
+Eio = EiB
 
 
 ######################################################################
@@ -982,41 +988,49 @@ class EiB(Byte):
 class kB(Byte):
     def _setup(self):
         return (10, 3, 'kB', 'kBs')
+ko = kB
 
 
 class MB(Byte):
     def _setup(self):
         return (10, 6, 'MB', 'MBs')
+Mo = MB
 
 
 class GB(Byte):
     def _setup(self):
         return (10, 9, 'GB', 'GBs')
+Go = GB
 
 
 class TB(Byte):
     def _setup(self):
         return (10, 12, 'TB', 'TBs')
+To = TB
 
 
 class PB(Byte):
     def _setup(self):
         return (10, 15, 'PB', 'PBs')
+Po = PB
 
 
 class EB(Byte):
     def _setup(self):
         return (10, 18, 'EB', 'EBs')
+Eo = EB
 
 
 class ZB(Byte):
     def _setup(self):
         return (10, 21, 'ZB', 'ZBs')
+Zo = ZB
 
 
 class YB(Byte):
     def _setup(self):
         return (10, 24, 'YB', 'YBs')
+Yo = YB
 
 
 ######################################################################
