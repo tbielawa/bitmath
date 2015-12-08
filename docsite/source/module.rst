@@ -224,6 +224,8 @@ bitmath.parse_string()
 
 .. function:: parse_string(str_repr)
 
+   .. versionadded:: 1.1.0
+
    Parse a string representing a unit into a proper bitmath
    object. All non-string inputs are rejected and will raise a
    :py:exc:`ValueError`. Strings without units are also rejected. See
@@ -289,7 +291,41 @@ bitmath.parse_string()
       Parsed size into 1.3056640625 KiB
       Parsed size into 1.3056640625 KiB
 
-   .. versionadded:: 1.1.0
+
+   .. versionchanged:: 1.2.4
+      Added support for parsing *octet* units via issue `#53 - parse
+      french units
+      <https://github.com/tbielawa/bitmath/issues/53>`_. The `usage
+      <https://en.wikipedia.org/wiki/Octet_(computing)#Use>`_ of
+      "octet" is still common in some `RFCs
+      <https://en.wikipedia.org/wiki/Request_for_Comments>`_, as well
+      as France, French Canada and Romania. See also, a table of the
+      octet units and their values on `Wikipedia
+      <https://en.wikipedia.org/wiki/Octet_(computing)#Unit_multiples>`_.
+
+   Here are some simple examples of parsing *octet* based units:
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 4,5
+
+      >>> import bitmath
+      >>> a_mebibyte = bitmath.parse_string("1 MiB")
+      >>> a_mebioctet = bitmath.parse_string("1 Mio")
+      >>> print a_mebibyte, a_mebioctet
+      1.0 MiB 1.0 MiB
+      >>> print bitmath.parse_string("1Po")
+      1.0 PB
+      >>> print bitmath.parse_string("1337 Eio")
+      1337.0 EiB
+
+   Notice how on lines **4** and **5** that the variable
+   ``a_mebibyte`` from the input ``1 MiB`` is exactly equivalent to
+   ``a_mebioctet`` from the different input ``1 Mio``. This is because
+   after :py:mod:`bitmath` parses the octet units the results are
+   normalized into their **standard** NIST/SI equivalents
+   automatically.
+
 
 
 bitmath.query_device_capacity()
