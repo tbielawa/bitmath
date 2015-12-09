@@ -31,8 +31,10 @@ includes:
 * Rich comparison operations (``1024 Bytes == 1KiB``)
 * bitwise operations (``<<``, ``>>``, ``&``, ``|``, ``^``)
 * Reading a device's storage capacity (Linux/OS X support only)
-* `argparse <https://docs.python.org/2/library/argparse.html>`_ integration
-* `progressbar <https://code.google.com/p/python-progressbar/>`_ integration
+* `argparse <https://docs.python.org/2/library/argparse.html>`_
+  integration as a custom type
+* `progressbar <https://code.google.com/p/python-progressbar/>`_
+  integration as a better file transfer speed widget
 * String parsing
 * Sorting
 

@@ -37,12 +37,14 @@ selection, and completely customizable formatting.
 
 In addition to the conversion and math operations, bitmath provides
 human readable representations of values which are suitable for use in
-interactive shells as well as larger scripts and applications. bitmath
-can parse strings into proper objects and has support for integration
-with argparse as a custom argument type.
+interactive shells as well as larger scripts and applications. It can
+also read the capacity of system storage devices. bitmath can parse
+strings (like "1 KiB") into proper objects and has support for
+integration with the argparse module as a custom argument type and the
+progressbar module as a custom file transfer speed widget.
 
-bitmath is thoroughly unittested, with over 170 individual tests (a
-number which is always increasing). bitmaths test-coverage is almost
+bitmath is thoroughly unittested, with almost 200 individual tests (a
+number which is always increasing). bitmath's test-coverage is almost
 always at 100%.
 
 %check
