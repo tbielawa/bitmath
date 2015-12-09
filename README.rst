@@ -30,6 +30,7 @@ includes:
 * Basic arithmetic operations (subtracting 42KiB from 50GiB)
 * Rich comparison operations (``1024 Bytes == 1KiB``)
 * bitwise operations (``<<``, ``>>``, ``&``, ``|``, ``^``)
+* Reading a device's storage capacity (Linux/OS X support only)
 * `argparse <https://docs.python.org/2/library/argparse.html>`_ integration
 * `progressbar <https://code.google.com/p/python-progressbar/>`_ integration
 * String parsing
@@ -277,6 +278,17 @@ Utility Functions
    <class 'bitmath.GiB'>
    >>> print a_dvd
    4.7 GiB
+
+**bitmath.query_device_capacity()**
+
+.. code-block:: python
+
+   >>> import bitmath
+   >>> with open('/dev/sda') as fp:
+   ...     root_disk = bitmath.query_device_capacity(fp)
+   ...     print root_disk.best_prefix()
+   ...
+   238.474937439 GiB
 
 **bitmath.listdir()**
 
