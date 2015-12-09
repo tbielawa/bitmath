@@ -24,6 +24,11 @@ Changes
   :class:`bitmath.Byte` instances representing the capacity of a block
   device. Support is presently limited to Linux and Mac.
 
+* The :func:`bitmath.parse_string` function now can parse 'octet'
+  based units. Enhancement requested in `#53 parse french unit names
+  <https://github.com/tbielawa/bitmath/issues/53>`_ by `walidsa3d
+  <https://github.com/walidsa3d>`_.
+
 **Bug Fixes**
 
 * `#49 <https://github.com/tbielawa/bitmath/pull/49>`_ - Fix handling
