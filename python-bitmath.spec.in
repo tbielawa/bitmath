@@ -10,7 +10,7 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 2
+%global _short_release 3
 
 Name: python-bitmath
 Summary: Aids representing and manipulating file sizes in various prefix notations
@@ -177,8 +177,9 @@ rm -f $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/NEWS.rst
 
 ######################################################################
 %changelog
-* Tue Dec 29 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.4-2
-- Fix tests to run on koji. Minor packaging changes
+* Tue Dec 29 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.4-3
+- Fix tests to run on koji
+- Minor packaging changes
 
 * Mon Nov 30 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.4-1
 - New release. Now builds dual python2.x and 3.x packages.
