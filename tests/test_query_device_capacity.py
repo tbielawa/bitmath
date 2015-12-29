@@ -52,13 +52,13 @@ class TestQueryDeviceCapacity(TestCase):
             os_stat.return_value = mock.Mock(st_mode=25008)
             stat_is_block.return_value = True
             plat_system.return_value = 'Linux'
-            ioctl.return_value = struct.pack('L', 256060514304)
-            # = '\x00`e\x9e;\x00\x00\x00'
-            # = 256060514304 ~= 256 GB (in SI)
+            ioctl.return_value = struct.pack('L', 244140625)
+            # = 'QJ\x8d\x0e\x00\x00\x00\x00'
+            # = 244140625 ~= 244.140625 MB (in SI)
             buffer_test = ' ' * struct.calcsize('L')
 
             bytes = bitmath.query_device_capacity(device)
-            self.assertEqual(bytes, 256060514304)
+            self.assertEqual(bytes, 244140625)
             self.assertEqual(ioctl.call_count, 1)
             ioctl.assert_called_once_with(4, 0x80081272, buffer_test)
 

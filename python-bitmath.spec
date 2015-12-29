@@ -10,7 +10,7 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 1
+%global _short_release 2
 
 Name: python-bitmath
 Summary: Aids representing and manipulating file sizes in various prefix notations
