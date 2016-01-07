@@ -457,7 +457,10 @@ prefix unit' for representation:
 * 0 < result < len(SYSTEM_STEPS), best represented as SYSTEM_PREFIXES[result-1]
 
         """
-        if self < Byte(1):
+
+        # Use absolute value so we don't return Bit's for *everything*
+        # less than Byte(1). From github issue #55
+        if abs(self) < Byte(1):
             return Bit.from_other(self)
         else:
             if not type(self) == Byte:
@@ -488,7 +491,7 @@ prefix unit' for representation:
                                  " Must be one of NIST or SI")
 
         # Index of the string of the best prefix in the STEPS list
-        _index = int(math.log(_inst.bytes, _BASE))
+        _index = int(math.log(abs(_inst.bytes), _BASE))
 
         # Recall that the log() function returns >= 0. This doesn't
         # map to the STEPS list 1:1. That is to say, 0 is handled with
