@@ -10,7 +10,7 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 3
+%global _short_release 1
 
 Name: python-bitmath
 Summary: Aids representing and manipulating file sizes in various prefix notations
@@ -177,6 +177,9 @@ rm -f $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/NEWS.rst
 
 ######################################################################
 %changelog
+* Fri Jan  8 2016 Tim Bielawa <tbielawa@redhat.com> - 1.3.0-1
+- Fix best_prefix for negative values GitHub: #55
+
 * Tue Dec 29 2015 Tim Bielawa <tbielawa@redhat.com> - 1.2.4-3
 - Fix tests to run on koji
 - Minor packaging changes
