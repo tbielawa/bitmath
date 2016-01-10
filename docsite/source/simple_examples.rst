@@ -24,6 +24,7 @@ Operand  Description
 =======  =======================================
 
 
+.. _getting_started_arithmetic:
 
 Arithmetic
 ==========
