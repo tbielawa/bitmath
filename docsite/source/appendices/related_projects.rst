@@ -61,13 +61,11 @@ SymPy - Units
     commonly used in the sciences. Additionally, it provides the
     ``Unit`` class which allows you to define your own units.*
 
-The `Units module
-<http://docs.sympy.org/dev/modules/physics/units.html>`_ from the
-`SymPy <http://www.sympy.org/>`_ library is another option. Like
-**Magnitude**, the library is very extensible and includes around 200
-built-in units by default. While technically it supports handling
-quantities such as ``1337 PiB``, this support must be configured by
-the user.
+The **Units** module from the `SymPy <http://www.sympy.org/>`_ library
+is another option. Like **Magnitude**, the Units library is very
+extensible and includes around 200 built-in units by default. While
+technically it supports handling quantities such as ``1337 PiB``, this
+support must be configured by the user.
 
 In contrast, the bitmath module includes classes representing the full
 spectrum of byte and bit based units, out of the box. No conversion or
