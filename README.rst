@@ -146,6 +146,7 @@ Topics include:
 
   * Rules for Math
   * On Units
+  * Who uses Bitmath
   * Related Projects
 
 * NEWS
