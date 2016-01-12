@@ -2,15 +2,19 @@
 %{!?__python2:        %global __python2 /usr/bin/python2}
 %{!?python2_sitelib:  %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
 %{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
+%{!?py2_build:        %global py2_build python setup.py build}
+%{!?py2_install:      %global py2_install python setup.py install -O1 --root=$RPM_BUILD_ROOT}
 %endif
 
 %if 0%{?fedora}
 %{!?python3_version: %global python3_version %(%{__python3} -c "import sys; sys.stdout.write(sys.version[:3])")}
 %global with_python3 1
+%else
+%global with_python3 0
 %endif
 
 %global _short_name bitmath
-%global _short_release 1
+%global _short_release 2
 
 Name: python-bitmath
 Summary: Aids representing and manipulating file sizes in various prefix notations
@@ -137,15 +141,17 @@ nosetests-%{python3_version} -e 'test_FileTransferSpeed' \
 ######################################################################
 %build
 %py2_build
+%if 0%{?with_python3}
 %py3_build
+%endif
 
 ######################################################################
 %install
 %py2_install
 mv $RPM_BUILD_ROOT/%{_bindir}/bitmath $RPM_BUILD_ROOT/%{_bindir}/bitmath-2.7
 
-%py3_install
 %if 0%{?with_python3}
+%py3_install
 pushd $RPM_BUILD_ROOT/%{_bindir}/
 ln -s bitmath bitmath-%{python3_version}
 popd
@@ -177,6 +183,9 @@ rm -f $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/NEWS.rst
 
 ######################################################################
 %changelog
+* Tue Jan 12 2016 Tim Bielawa <tbielawa@redhat.com> - 1.3.0-2
+- Packaging update
+
 * Fri Jan  8 2016 Tim Bielawa <tbielawa@redhat.com> - 1.3.0-1
 - Fix best_prefix for negative values GitHub: #55
 
