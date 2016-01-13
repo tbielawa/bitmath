@@ -33,6 +33,24 @@ import bitmath
 import mock
 import struct
 
+try:
+    # Python 3.3+
+    from contextlib import ExitStack, contextmanager
+except ImportError:
+    # Python 2.x
+    from contextlib import nested
+else:
+    @contextmanager
+    def nested(*contexts):
+        """Emulation of contextlib.nested in terms of ExitStack
+
+        Has the problems for which "nested" was removed from Python; see:
+            https://docs.python.org/2/library/contextlib.html#contextlib.nested
+        But for mock.patch, these do not matter.
+        """
+        with ExitStack() as stack:
+            yield tuple(stack.enter_context(c) for c in contexts)
+
 device_file_no = mock.Mock(return_value=4)
 device = mock.MagicMock('file')
 device.fileno = device_file_no
@@ -45,10 +63,12 @@ non_device_file.name = "/home/"
 class TestQueryDeviceCapacity(TestCase):
     def test_query_device_capacity_linux_everything_is_wonderful(self):
         """query device capacity works on a happy Linux host"""
-        with mock.patch('os.stat') as os_stat,\
-                mock.patch('stat.S_ISBLK') as stat_is_block,\
-                mock.patch('platform.system') as plat_system,\
-                mock.patch('fcntl.ioctl') as ioctl:
+        with nested(
+            mock.patch('os.stat'),
+            mock.patch('stat.S_ISBLK'),
+            mock.patch('platform.system'),
+            mock.patch('fcntl.ioctl'),
+        ) as (os_stat, stat_is_block, plat_system, ioctl):
             os_stat.return_value = mock.Mock(st_mode=25008)
             stat_is_block.return_value = True
             plat_system.return_value = 'Linux'
@@ -64,10 +84,12 @@ class TestQueryDeviceCapacity(TestCase):
 
     def test_query_device_capacity_mac_everything_is_wonderful(self):
         """query device capacity works on a happy Mac OS X host"""
-        with mock.patch('os.stat') as os_stat,\
-                mock.patch('stat.S_ISBLK') as stat_is_block,\
-                mock.patch('platform.system') as plat_system,\
-                mock.patch('fcntl.ioctl') as ioctl:
+        with nested(
+            mock.patch('os.stat'),
+            mock.patch('stat.S_ISBLK'),
+            mock.patch('platform.system'),
+            mock.patch('fcntl.ioctl'),
+        ) as (os_stat, stat_is_block, plat_system, ioctl):
             # These are the struct.pack() equivalents of 244140625
             # (type: u64) and 4096 (type: u32). Multiplied together
             # they equal the number of bytes in 1 TB.
@@ -91,9 +113,11 @@ class TestQueryDeviceCapacity(TestCase):
 
     def test_query_device_capacity_device_not_block(self):
         """query device capacity aborts if a non-block-device is provided"""
-        with mock.patch('os.stat') as os_stat,\
-                mock.patch('stat.S_ISBLK') as stat_is_block,\
-                mock.patch('fcntl.ioctl') as ioctl:
+        with nested(
+            mock.patch('os.stat'),
+            mock.patch('stat.S_ISBLK'),
+            mock.patch('fcntl.ioctl'),
+        ) as (os_stat, stat_is_block, ioctl):
             os_stat.return_value = mock.Mock(st_mode=33204)
             # Force ISBLK to reject the input 'device'
             stat_is_block.return_value = False
