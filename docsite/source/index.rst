@@ -58,17 +58,36 @@ yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
 Installation
 ############
 
-The easiest way to install bitmath is via ``yum`` if you're on a
-Fedora/RHEL based distribution. bitmath is available in the main
-Fedora repositories, as well as the `EPEL6
+The easiest way to install bitmath is via ``dnf`` (or ``yum``) if
+you're on a Fedora/RHEL based distribution. bitmath is available in
+the main Fedora repositories, as well as the `EPEL6
 <http://download.fedoraproject.org/pub/epel/6/i386/repoview/epel-release.html>`_
 and `EPEL7
 <http://download.fedoraproject.org/pub/epel/7/x86_64/repoview/epel-release.html>`_
-repositories.
+repositories. There are now dual python2.x and python3.x releases
+available.
+
+
+**Python 2.x**:
 
 .. code-block:: bash
 
-   $ sudo yum install python-bitmath
+   $ sudo dnf install python2-bitmath
+
+**Python 3.x**:
+
+.. code-block:: bash
+
+   $ sudo dnf install python3-bitmath
+
+.. note::
+
+   **Upgrading**: If you have the old *python-bitmath* package
+   installed presently, you could also run ``sudo dnf update
+   python-bitmath`` instead
+
+
+**PyPi**:
 
 You could also install bitmath from `PyPi
 <https://pypi.python.org/pypi/bitmath>`_ if you like:
@@ -76,6 +95,9 @@ You could also install bitmath from `PyPi
 .. code-block:: bash
 
    $ sudo pip install bitmath
+
+
+**Source**:
 
 Or, if you want to install from source:
 
@@ -111,6 +133,7 @@ Contents
 
 
 .. _index_examples:
+
 
 Examples
 ========
