@@ -128,6 +128,7 @@ Contents
    contributing.rst
    appendices.rst
    NEWS.rst
+   contact.rst
    copyright.rst
 
 
