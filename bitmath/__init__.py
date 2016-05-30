@@ -68,6 +68,8 @@ if os.name == 'posix':
     import stat
     import fcntl
     import struct
+elif os.name == 'nt':
+    import bitmath.windows
 
 
 __all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB',
@@ -1171,15 +1173,31 @@ ioctl's for querying block device sizes:
 * http://stackoverflow.com/a/12925285/263969
 * http://stackoverflow.com/a/9764508/263969
 
-   :param file device_fd: A ``file`` object of the device to query the
-   capacity of (as in ``get_device_capacity(open("/dev/sda"))``).
+Thanks to @santa4nt from github for writing the windows ioctl
+dispatcher.
+
+* https://gist.github.com/santa4nt/11068180
+
+   :param ``device_fd``: On UNIX platforms: a ``file`` object of the
+   device to query the capacity of (as in
+   ``query_device_capacity(open("/dev/sda"))``).
+
+   On Windows platforms this parameter MUST BE a RAW STRING of the
+   device name as the Windows CreateFile function requires (ex:
+   ``r'\\.\PhysicalDrive0'``).
 
    :return: a bitmath :class:`bitmath.Byte` instance equivalent to the
    capacity of the target device in bytes.
-"""
-    if os_name() != 'posix':
-        raise NotImplementedError("'bitmath.query_device_capacity' is not supported on this platform: %s" % os_name())
 
+    """
+    ######################################################################
+    # Windows style processing:
+    if os_name() == 'nt':
+        results = bitmath.windows.query_device_capacity(device_fd)
+        return bitmath.Byte(results)
+
+    ######################################################################
+    # UNIX style processing:
     s = os.stat(device_fd.name).st_mode
     if not stat.S_ISBLK(s):
         raise ValueError("The file descriptor provided is not of a device type")
