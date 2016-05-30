@@ -404,3 +404,28 @@ Using :func:`bitmath.query_device_capacity` we can read the size of a
 storage device or a partition on a device.
 
 .. include:: example_block_devices.rst
+
+Usage is fairly straight-forward. Create an open file handle of the
+device you want to read the capacity of and then create a bitmath
+object with the ``query_device_capacity`` function. Here's an example
+where we read the capacity of device ``sda``, the first device on the
+example system.
+
+.. code-block:: python
+
+   >>> import bitmath
+   >>> fh = open('/dev/sda', 'r')
+   >>> sda_capacity = bitmath.query_device_capacity(fh)
+   >>> fh.close()
+   >>> print sda_capacity.best_prefix()
+   238.474937439 GiB
+
+We can simplify this so that the file handle is automatically closed
+for us by using the ``with`` context manager.
+
+.. code-block:: python
+
+   >>> with open('/dev/sda', 'r') as fh:
+   ...     sda_capacity = bitmath.query_device_capacity(fh)
+   >>> print sda_capacity.best_prefix()
+   238.474937439 GiB
