@@ -68,22 +68,22 @@ def _CreateFile(filename, access, mode, creation, flags):
     """
     CreateFile_Fn = windll.kernel32.CreateFileW
     CreateFile_Fn.argtypes = [
-            wintypes.LPWSTR,                    # _In_          LPCTSTR lpFileName
-            wintypes.DWORD,                     # _In_          DWORD dwDesiredAccess
-            wintypes.DWORD,                     # _In_          DWORD dwShareMode
-            LPSECURITY_ATTRIBUTES,              # _In_opt_      LPSECURITY_ATTRIBUTES lpSecurityAttributes
-            wintypes.DWORD,                     # _In_          DWORD dwCreationDisposition
-            wintypes.DWORD,                     # _In_          DWORD dwFlagsAndAttributes
-            wintypes.HANDLE]                    # _In_opt_      HANDLE hTemplateFile
+        wintypes.LPWSTR,                    # _In_          LPCTSTR lpFileName
+        wintypes.DWORD,                     # _In_          DWORD dwDesiredAccess
+        wintypes.DWORD,                     # _In_          DWORD dwShareMode
+        LPSECURITY_ATTRIBUTES,              # _In_opt_      LPSECURITY_ATTRIBUTES lpSecurityAttributes
+        wintypes.DWORD,                     # _In_          DWORD dwCreationDisposition
+        wintypes.DWORD,                     # _In_          DWORD dwFlagsAndAttributes
+        wintypes.HANDLE]                    # _In_opt_      HANDLE hTemplateFile
     CreateFile_Fn.restype = wintypes.HANDLE
 
     return wintypes.HANDLE(CreateFile_Fn(filename,
-                         access,
-                         mode,
-                         NULL,
-                         creation,
-                         flags,
-                         NULL))
+                                         access,
+                                         mode,
+                                         NULL,
+                                         creation,
+                                         flags,
+                                         NULL))
 
 
 def _DeviceIoControl(devhandle, ioctl, inbuf, inbufsiz, outbuf, outbufsiz):
@@ -94,14 +94,14 @@ def _DeviceIoControl(devhandle, ioctl, inbuf, inbufsiz, outbuf, outbufsiz):
     """
     DeviceIoControl_Fn = windll.kernel32.DeviceIoControl
     DeviceIoControl_Fn.argtypes = [
-            wintypes.HANDLE,                    # _In_          HANDLE hDevice
-            wintypes.DWORD,                     # _In_          DWORD dwIoControlCode
-            wintypes.LPVOID,                    # _In_opt_      LPVOID lpInBuffer
-            wintypes.DWORD,                     # _In_          DWORD nInBufferSize
-            wintypes.LPVOID,                    # _Out_opt_     LPVOID lpOutBuffer
-            wintypes.DWORD,                     # _In_          DWORD nOutBufferSize
-            LPDWORD,                            # _Out_opt_     LPDWORD lpBytesReturned
-            LPOVERLAPPED]                       # _Inout_opt_   LPOVERLAPPED lpOverlapped
+        wintypes.HANDLE,                    # _In_          HANDLE hDevice
+        wintypes.DWORD,                     # _In_          DWORD dwIoControlCode
+        wintypes.LPVOID,                    # _In_opt_      LPVOID lpInBuffer
+        wintypes.DWORD,                     # _In_          DWORD nInBufferSize
+        wintypes.LPVOID,                    # _Out_opt_     LPVOID lpOutBuffer
+        wintypes.DWORD,                     # _In_          DWORD nOutBufferSize
+        LPDWORD,                            # _Out_opt_     LPDWORD lpBytesReturned
+        LPOVERLAPPED]                       # _Inout_opt_   LPOVERLAPPED lpOverlapped
     DeviceIoControl_Fn.restype = wintypes.BOOL
 
     # allocate a DWORD, and take its reference
@@ -109,16 +109,16 @@ def _DeviceIoControl(devhandle, ioctl, inbuf, inbufsiz, outbuf, outbufsiz):
     lpBytesReturned = ctypes.byref(dwBytesReturned)
 
     status = DeviceIoControl_Fn(devhandle,
-                  ioctl,
-                  inbuf,
-                  inbufsiz,
-                  outbuf,
-                  outbufsiz,
-                  lpBytesReturned,
-                  None)
+                                ioctl,
+                                inbuf,
+                                inbufsiz,
+                                outbuf,
+                                outbufsiz,
+                                lpBytesReturned,
+                                None)
 
     return status, dwBytesReturned
-    
+
 
 class DeviceIoControl(object):
 
@@ -131,7 +131,7 @@ class DeviceIoControl(object):
             raise Exception('No file handle')
         if self._fhandle.value == wintypes.HANDLE(INVALID_HANDLE_VALUE).value:
             raise Exception('Failed to open %s. GetLastError(): %d' %
-                    (self.path, windll.kernel32.GetLastError()))
+                            (self.path, windll.kernel32.GetLastError()))
 
     def ioctl(self, ctl, inbuf, inbufsiz, outbuf, outbufsiz):
         self._validate_handle()
@@ -139,11 +139,11 @@ class DeviceIoControl(object):
 
     def __enter__(self):
         self._fhandle = _CreateFile(
-                self.path,
-                GENERIC_READ | GENERIC_WRITE,
-                0,
-                OPEN_EXISTING,
-                FILE_ATTRIBUTE_NORMAL)
+            self.path,
+            GENERIC_READ | GENERIC_WRITE,
+            0,
+            OPEN_EXISTING,
+            FILE_ATTRIBUTE_NORMAL)
         self._validate_handle()
         return self
 
@@ -164,17 +164,17 @@ def query_device_capacity(device=r'\\.\PhysicalDrive0'):
 
     # sample code using \\.\PhysicalDrive0
     # See: http://msdn.microsoft.com/en-us/library/windows/desktop/aa363147(v=vs.85).aspx
-    
+
     # first, define the Structure in ctypes language
     class DISK_GEOMETRY(ctypes.Structure):
         """See: http://msdn.microsoft.com/en-us/library/aa363972(v=vs.85).aspx"""
         _fields_ = [
-                ('Cylinders', wintypes.LARGE_INTEGER),
-                ('MediaType', wintypes.BYTE),   # MEDIA_TYPE
-                ('TracksPerCylinder', wintypes.DWORD),
-                ('SectorsPerTrack', wintypes.DWORD),
-                ('BytesPerSector', wintypes.DWORD)
-                ]
+            ('Cylinders', wintypes.LARGE_INTEGER),
+            ('MediaType', wintypes.BYTE),   # MEDIA_TYPE
+            ('TracksPerCylinder', wintypes.DWORD),
+            ('SectorsPerTrack', wintypes.DWORD),
+            ('BytesPerSector', wintypes.DWORD)
+        ]
 
     IOCTL_DISK_GET_DRIVE_GEOMETRY = 0x70000
 
@@ -182,9 +182,9 @@ def query_device_capacity(device=r'\\.\PhysicalDrive0'):
     p_disk_geometry = ctypes.pointer(disk_geometry)
 
     with DeviceIoControl(device) as dctl:
-        status, junk = dctl.ioctl(IOCTL_DISK_GET_DRIVE_GEOMETRY,
-                                  None, 0,                          # no input buffer
-                                  p_disk_geometry, ctypes.sizeof(DISK_GEOMETRY))
+        status, _ = dctl.ioctl(IOCTL_DISK_GET_DRIVE_GEOMETRY,
+                               None, 0,                          # no input buffer
+                               p_disk_geometry, ctypes.sizeof(DISK_GEOMETRY))
 
     if status:
         cylinders = getattr(disk_geometry, 'Cylinders')
