@@ -1,1 +1,2 @@
-../../NEWS.rst
+.. include:: ../../NEWS.rst
+
