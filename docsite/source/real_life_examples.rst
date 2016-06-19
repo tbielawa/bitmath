@@ -385,7 +385,7 @@ Creating Download Progress Bars
 *******************************
 
 
-.. literalinclude:: full_demo.py
+.. literalinclude:: ../../full_demo.py
 
 * View the the source for the `demo suite
   <https://raw.githubusercontent.com/tbielawa/bitmath/master/full_demo.py>`_
