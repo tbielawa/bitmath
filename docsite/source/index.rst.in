@@ -105,6 +105,19 @@ You could also install bitmath from `PyPi
    for more information.
 
 
+**PPA**:
+
+Ubuntu Xenial, Wily, Vivid, Trusty, and Precise users can install
+bitmath from the `launchpad PPA
+<https://launchpad.net/~tbielawa/+archive/ubuntu/bitmath>`_:
+
+.. code-block:: bash
+
+   $ sudo add-apt-repository ppa:tbielawa/bitmath
+   $ sudo apt-get update
+   $ sudo apt-get install python-bitmath
+
+
 **Source**:
 
 Or, if you want to install from source:
