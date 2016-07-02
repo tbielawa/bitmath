@@ -142,6 +142,10 @@ sdist: setup.py clean
 	@echo "#############################################"
 	python setup.py sdist
 
+deb: setup.py clean
+	git archive --format=tar --prefix=bitmath/ HEAD | gzip -9 > ../bitmath_$(VERSION).$(RPMRELEASE).orig.tar.gz
+	debuild -us -uc
+
 rpmcommon: sdist python-bitmath.spec setup.py
 	@echo "#############################################"
 	@echo "# Building (S)RPM Now"
