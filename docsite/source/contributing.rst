@@ -94,9 +94,9 @@ submitted on GitHub two automatic processes are started:
 #. `Travis-CI <https://travis-ci.org/tbielawa/bitmath>`_ clones the
    new pull request and runs the :ref:`automated test suite
    <contributing_automated_tests>`.
-#. `Coveralls <https://coveralls.io/r/tbielawa/bitmath>`_ clones the
-   new pull request and determines if the request would increase or
-   decrease the overall code test coverage.
+#. `Coveralls <https://coveralls.io/github/tbielawa/bitmath>`_ clones
+   the new pull request and determines if the request would increase
+   or decrease the overall code test coverage.
 
 Please check back shortly after submitting a pull request to verify
 that the Travis-CI process passes.
@@ -141,9 +141,9 @@ bitmath unit tests are integrated with/depend on the following items:
   commit. Integrates with GitHub to notify you if a pull request
   passes or fails all unitests.
 
-* `Coveralls <https://coveralls.io/r/tbielawa/bitmath>`_ - Free online
-  service providing code test coverage reporting. Integrates with
-  GitHub to notify you if a pull-request would improve/decrease
+* `Coveralls <https://coveralls.io/github/tbielawa/bitmath>`_ - Free
+  online service providing code test coverage reporting. Integrates
+  with GitHub to notify you if a pull-request would improve/decrease
   overall code test coverage.
 
 * `unittest <https://docs.python.org/2/library/unittest.html>`_ -

@@ -790,16 +790,16 @@ progressbar
 .. versionadded:: 1.2.1
 
 The `progressbar module
-<https://code.google.com/p/python-progressbar/>`_ is typically used to
-display the progress of a long running task, such as a file transfer
-operation. The module provides widgets for custom formatting how
-exactly the 'progress' is displayed. Some examples include: overall
-percentage complete, estimated time until completion, and an ASCII
-progress bar which fills as the operation continues.
+<https://github.com/niltonvolpato/python-progressbar>`_ is typically
+used to display the progress of a long running task, such as a file
+transfer operation. The module provides widgets for custom formatting
+how exactly the 'progress' is displayed. Some examples include:
+overall percentage complete, estimated time until completion, and an
+ASCII progress bar which fills as the operation continues.
 
 While :mod:`progressbar` already includes a widget suitable for
 displaying `file transfer rates
-<https://code.google.com/p/python-progressbar/source/browse/progressbar/widgets.py#166>`_,
+<https://github.com/niltonvolpato/python-progressbar/blob/master/progressbar/widgets.py#L165>`_,
 this widget does not support customizing its presentation, and is
 limited to only prefix units from the SI system.
 
@@ -808,7 +808,7 @@ limited to only prefix units from the SI system.
 
    The :class:`BitmathFileTransferSpeed` class is a more functional
    replacement for the upstream `FileTransferSpeed
-   <https://code.google.com/p/python-progressbar/source/browse/progressbar/widgets.py>`_
+   <https://github.com/niltonvolpato/python-progressbar/blob/master/progressbar/widgets.py>`_
    widget.
 
    While both widgets are able to calculate average transfer rates

@@ -25,7 +25,8 @@ defined by increasing powers of 2.
 
 Classes without the **'i'** character are **SI** type classes. Though
 not formally defined by any standards organization, they follow the
-`International System of Units (SI) <http://www.bipm.org/en/si/>`_
+`International System of Units (SI)
+<http://www.bipm.org/en/publications/si-brochure/chapter3.html>`_
 pattern (commonly used to abbreviate base 10 values). You may hear
 these referred to as the "Decimal" or "SI" prefixes.
 

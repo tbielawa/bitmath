@@ -44,7 +44,7 @@ ahead:
 
 **E-Mail**
  If you want to contact me directly, `clone the project
- <https://github.com/tbielawa/bitmath.git>`_ and look at any of `my
+ <https://github.com/tbielawa/bitmath>`_ and look at any of `my
  bitmath commits
  <https://github.com/tbielawa/bitmath/commits/master?author=tbielawa>`_
  to find my email address.

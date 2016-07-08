@@ -205,11 +205,9 @@ Major Updates
   <http://bitmath.readthedocs.org/en/latest/>`_
 * bitmath is now Python 3.x compatible
 * bitmath is now included in the `Extra Packages for Enterprise Linux
-  <https://fedoraproject.org/wiki/EPEL>`_ `EPEL6
-  <http://dl.fedoraproject.org/pub/epel/6/x86_64/repoview/python-bitmath.html>`_
-  and `EPEL7
-  <http://dl.fedoraproject.org/pub/epel/7/x86_64/repoview/python-bitmath.html>`_
-  repositories
+  <https://fedoraproject.org/wiki/EPEL>`_ EPEL6 and EPEL7 repositories
+  (`pkg info
+  <https://admin.fedoraproject.org/pkgdb/package/rpms/python-bitmath/>`_)
 * merged 6 `pull requests
   <https://github.com/tbielawa/bitmath/pulls?q=is%3Apr+closed%3A%3C2014-08-28>`_
   from 3 `contributors
@@ -262,7 +260,7 @@ Project
   than the previous major release (`1.0.4-1 <bitmath-1.0.4-1>`__)
 * Test suite now runs on EPEL6 and EPEL7
 * `Code coverage
-  <https://coveralls.io/r/tbielawa/bitmath?branch=master>`_ is stable
+  <https://coveralls.io/github/tbielawa/bitmath>`_ is stable
   around 95-100%
 
 
@@ -281,8 +279,8 @@ Project
 Available via:
 
 * `PyPi <https://pypi.python.org/pypi/bitmath/>`_
-* `Fedora 19 <https://admin.fedoraproject.org/updates/FEDORA-2014-4235/python-bitmath-1.0.4-1.fc19>`_
-* `Fedora 20 <https://admin.fedoraproject.org/updates/FEDORA-2014-4235/python-bitmath-1.0.4-1.fc20>`_
+* Fedora 19
+* Fedora 20
 
 bitmath had been under development for 12 days when the 1.0.4-1
 release was made available.

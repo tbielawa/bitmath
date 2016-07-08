@@ -230,6 +230,6 @@ Footnotes
        <http://www.programiz.com/python-programming/precedence-associativity>`_
 
 .. [#datamodel] `Python Datamodel Customization Methods
-                <http://docs.python.org/2.7/reference/datamodel.html#basic-customization>`_
+                <https://docs.python.org/2.7/reference/datamodel.html#basic-customization>`_
 
-.. [#significance] http://en.wikipedia.org/wiki/Significance_arithmetic
+.. [#significance] https://en.wikipedia.org/wiki/Significance_arithmetic

@@ -34,6 +34,7 @@ identify:
   by `Calle Liljeholm <https://github.com/Callero>`_. Calculating
   useable capacity in a flocker cluster
 
-* `urldl <https://github.com/dtluna/Python/blob/master/urldl/urldl>`_
+* `urldl
+  <https://github.com/dtluna/Python/tree/master/small_examples/urldl>`_
   by `Konstantin <https://github.com/dtluna>`_, an arbitrary file
   download utility

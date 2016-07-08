@@ -5,7 +5,7 @@
    :width: 77
 
 .. image:: https://coveralls.io/repos/tbielawa/bitmath/badge.png?branch=master
-   :target: https://coveralls.io/r/tbielawa/bitmath?branch=master
+   :target: https://coveralls.io/github/tbielawa/bitmath
    :align: right
    :height: 19
    :width: 77
@@ -27,7 +27,7 @@ includes:
 * Reading a device's storage capacity (Linux/OS X support only)
 * `argparse <https://docs.python.org/2/library/argparse.html>`_
   integration as a custom type
-* `progressbar <https://code.google.com/p/python-progressbar/>`_
+* `progressbar <https://github.com/niltonvolpato/python-progressbar>`_
   integration as a better file transfer speed widget
 * String parsing
 * Sorting
@@ -60,10 +60,7 @@ Installation
 
 The easiest way to install bitmath is via ``dnf`` (or ``yum``) if
 you're on a Fedora/RHEL based distribution. bitmath is available in
-the main Fedora repositories, as well as the `EPEL6
-<http://download.fedoraproject.org/pub/epel/6/i386/repoview/epel-release.html>`_
-and `EPEL7
-<http://download.fedoraproject.org/pub/epel/7/x86_64/repoview/epel-release.html>`_
+the main Fedora repositories, as well as the EPEL6 and EPEL7
 repositories. There are now dual python2.x and python3.x releases
 available.
 
