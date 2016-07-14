@@ -116,3 +116,148 @@ class TestParse(TestCase):
         self.assertEqual(
             bitmath.parse_string(u"750 GiB"),
             bitmath.GiB(750))
+
+    ######################################################################
+
+    def test_parse_unsafe_bad_input_type(self):
+        """parse_string_unsafe can identify invalid input types"""
+        with self.assertRaises(ValueError):
+            invalid_input = {'keyvalue': 'store'}
+            bitmath.parse_string_unsafe(invalid_input)
+
+    def test_parse_unsafe_invalid_input(self):
+        """parse_string_unsafe explodes when given invalid units"""
+        invalid_input_str = "kitties!"
+        with self.assertRaises(ValueError):
+            bitmath.parse_string_unsafe(invalid_input_str)
+
+        with self.assertRaises(ValueError):
+            bitmath.parse_string_unsafe('100 CiB')
+
+        with self.assertRaises(ValueError):
+            bitmath.parse_string_unsafe('100 J')
+
+    def test_parse_unsafe_good_number_input(self):
+        """parse_string_unsafe can parse unitless number inputs"""
+        number_input = 100
+        string_input = "100"
+        expected_result = bitmath.Byte(100)
+
+        self.assertEqual(
+            bitmath.parse_string_unsafe(number_input),
+            expected_result)
+
+        self.assertEqual(
+            bitmath.parse_string_unsafe(string_input),
+            expected_result)
+
+    def test_parse_unsafe_handles_SI_K_unit(self):
+        """parse_string_unsafe can parse the upper/lowercase SI 'thousand' (k)"""
+        thousand_lower = "100k"
+        thousand_upper = "100K"
+        expected_result = bitmath.kB(100)
+
+        self.assertEqual(
+            bitmath.parse_string_unsafe(thousand_lower),
+            expected_result)
+
+        self.assertEqual(
+            bitmath.parse_string_unsafe(thousand_upper),
+            expected_result)
+
+    def test_parse_unsafe_NIST_units(self):
+        """parse_string_unsafe can parse abbreviated NIST units (Gi, Ki, ...)"""
+        nist_input = "100 Gi"
+        expected_result = bitmath.GiB(100)
+
+        self.assertEqual(
+            bitmath.parse_string_unsafe(nist_input),
+            expected_result)
+
+    def test_parse_unsafe_SI(self):
+        """parse_string_unsafe can parse all accepted SI inputs"""
+        # Begin with the kilo unit because it's the most tricky (SI
+        # defines the unit as a lower-case 'k')
+        kilo_inputs = [
+            '100k',
+            '100K',
+            '100kb',
+            '100KB',
+            '100kB'
+        ]
+        expected_kilo_result = bitmath.kB(100)
+
+        for ki in kilo_inputs:
+            _parsed = bitmath.parse_string_unsafe(ki)
+            self.assertEqual(
+                _parsed,
+                expected_kilo_result)
+
+            self.assertIs(
+                type(_parsed),
+                type(expected_kilo_result))
+
+        # Now check for other easier to parse prefixes
+        other_inputs = [
+            '100g',
+            '100G',
+            '100gb',
+            '100gB',
+            '100GB'
+        ]
+
+        expected_gig_result = bitmath.GB(100)
+
+        for gi in other_inputs:
+            _parsed = bitmath.parse_string_unsafe(gi)
+            self.assertEqual(
+                _parsed,
+                expected_gig_result)
+
+            self.assertIs(
+                type(_parsed),
+                type(expected_gig_result))
+
+    def test_parse_unsafe_NIST(self):
+        """parse_string_unsafe can parse all accepted NIST inputs"""
+        # Begin with the kilo unit because it's the most tricky (SI
+        # defines the unit as a lower-case 'k')
+        kilo_inputs = [
+            '100ki',
+            '100Ki',
+            '100kib',
+            '100KiB',
+            '100kiB'
+        ]
+        expected_kilo_result = bitmath.KiB(100)
+
+        for ki in kilo_inputs:
+            _parsed = bitmath.parse_string_unsafe(ki)
+            self.assertEqual(
+                _parsed,
+                expected_kilo_result)
+
+            self.assertIs(
+                type(_parsed),
+                type(expected_kilo_result))
+
+        # Now check for other easier to parse prefixes
+        other_inputs = [
+            '100gi',
+            '100Gi',
+            '100gib',
+            '100giB',
+            '100GiB'
+        ]
+
+        expected_gig_result = bitmath.GiB(100)
+
+        for gi in other_inputs:
+            _parsed = bitmath.parse_string_unsafe(gi)
+            self.assertEqual(
+                _parsed,
+                expected_gig_result)
+
+            self.assertIs(
+                type(_parsed),
+                type(expected_gig_result))

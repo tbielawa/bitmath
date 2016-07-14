@@ -327,6 +327,82 @@ bitmath.parse_string()
    automatically.
 
 
+bitmath.parse_string_unsafe()
+=============================
+
+.. function:: parse_string_unsafe(repr)
+
+   .. versionadded:: 1.3.1
+
+   Parse a string or number into a proper bitmath object. This is the
+   less strict version of the :py:func:`bitmath.parse_string`
+   function. While :py:func:`bitmath.parse_string` only accepts SI and
+   NIST defined unit prefixes, :py:func:`bitmath.parse_string_unsafe`
+   accepts *non-standard* units such as those often displayed in
+   command-line output.
+
+   :param repr: The value to parse. May contain whitespace between the
+                value and the unit.
+   :return: A bitmath object representing ``repr``
+   :raises ValueError: if ``repr`` can not be parsed
+
+   Use of this function comes with several caveats:
+
+   * All inputs are assumed to be byte-based (as opposed to bit based)
+   * Numerical inputs (those without any units) are assumed to be a number of bytes
+   * Inputs with single letter units (``k``, ``M``, ``G``, etc) are assumed to be SI units (base 10)
+   * Inputs with an ``i`` character following the leading letter (``Ki``,
+     ``Mi``, ``Gi``) are assumed to be NIST units (base 2)
+   * Capitalization does not matter
+
+   What exactly are these *non-standard* units? Generally speaking
+   non-standard units will not include enough information to be able
+   to identify exactly which unit system is being used. This is caused
+   by mis-capitalized characters (capital ``k``'s for SI *kilo* units
+   when they should be lower case), or omitted Byte or Bit
+   suffixes. You can find examples of non-standard units in many
+   common command line functions or parameters. For example:
+
+   * The ``ls`` command will print out single-letter units when given
+     the ``-h`` option flag
+   * Running ``qemu-img info virtualdisk.img`` will also report with
+     single letter units
+   * The ``df`` command also uses single-letter units
+   * `Kubernetes
+     <http://kubernetes.io/docs/user-guide/compute-resources/>`_ will
+     display items like *memory limits* using two letter NIST units
+     (ex: ``memory: 2370Mi``)
+
+   Given those considerations, understanding exactly what values you
+   are feeding into this function is crucial to getting accurate
+   results. You can control the output of some commands with various
+   option flags. For example, you could ensure the GNU ``ls`` and
+   ``df`` commands print with SI values by providing the ``--si``
+   option flag. By default those commands will print out using NIST
+   (base 2) values.
+
+   A simple usage example:
+
+   .. code-block:: python
+
+      >>> import bitmath
+      >>> a_dvd = bitmath.parse_string("4.7 GiB")
+      >>> print type(a_dvd)
+      <class 'bitmath.GiB'>
+      >>> print a_dvd
+      4.7 GiB
+
+   .. caution::
+
+      Caution is advised if you are reading values from an unverified
+      external source, such as output from a shell command or a
+      generated file. Many applications (even ``/usr/bin/ls``) still
+      do not produce file size strings with valid (or even correct)
+      prefix units unless `specially configured to do so
+      <https://www.gnu.org/software/coreutils/manual/html_node/Block-size.html#Block-size>`_.
+
+
+
 
 bitmath.query_device_capacity()
 ===============================
