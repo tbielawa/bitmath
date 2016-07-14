@@ -381,27 +381,6 @@ bitmath.parse_string_unsafe()
    option flag. By default those commands will print out using NIST
    (base 2) values.
 
-   A simple usage example:
-
-   .. code-block:: python
-
-      >>> import bitmath
-      >>> a_dvd = bitmath.parse_string("4.7 GiB")
-      >>> print type(a_dvd)
-      <class 'bitmath.GiB'>
-      >>> print a_dvd
-      4.7 GiB
-
-   .. caution::
-
-      Caution is advised if you are reading values from an unverified
-      external source, such as output from a shell command or a
-      generated file. Many applications (even ``/usr/bin/ls``) still
-      do not produce file size strings with valid (or even correct)
-      prefix units unless `specially configured to do so
-      <https://www.gnu.org/software/coreutils/manual/html_node/Block-size.html#Block-size>`_.
-
-
 
 
 bitmath.query_device_capacity()
