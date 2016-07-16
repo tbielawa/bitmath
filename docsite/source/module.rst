@@ -349,7 +349,7 @@ bitmath.parse_string_unsafe()
    function. While :py:func:`bitmath.parse_string` only accepts SI and
    NIST defined unit prefixes, :py:func:`bitmath.parse_string_unsafe`
    accepts *non-standard* units such as those often displayed in
-   command-line output.
+   command-line output. Examples following the description.
 
    :param repr: The value to parse. May contain whitespace between the
                 value and the unit.
@@ -398,6 +398,10 @@ bitmath.parse_string_unsafe()
    ``df`` commands print with SI values by providing the ``--si``
    option flag. By default those commands will print out using NIST
    (base-2) values.
+
+
+   * TODO: Still need to fill in some examples here
+
 
 
 
