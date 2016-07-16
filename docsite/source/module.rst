@@ -327,10 +327,20 @@ bitmath.parse_string()
    automatically.
 
 
+   .. note::
+
+      If your input isn't compatible with
+      :py:func:`bitmath.parse_string` you can try using
+      :py:func:`bitmath.parse_string_unsafe`
+      instead. :py:func:`bitmath.parse_string_unsafe` is more
+      forgiving with input. Please read the documentation carefully so
+      you understand the risks you assume using the ``unsafe`` parser.
+
+
 bitmath.parse_string_unsafe()
 =============================
 
-.. function:: parse_string_unsafe(repr)
+.. function:: parse_string_unsafe(repr[, system=bitmath.SI])
 
    .. versionadded:: 1.3.1
 
@@ -343,6 +353,12 @@ bitmath.parse_string_unsafe()
 
    :param repr: The value to parse. May contain whitespace between the
                 value and the unit.
+
+   :param system: :py:func:`bitmath.parse_string_unsafe` defaults to
+                  parsing units as ``SI`` (base-10) units. Set the
+                  ``system`` parameter to :py:data:`bitmath.NIST` if
+                  you know your input is in ``NIST`` (base-2) format.
+
    :return: A bitmath object representing ``repr``
    :raises ValueError: if ``repr`` can not be parsed
 
@@ -350,9 +366,11 @@ bitmath.parse_string_unsafe()
 
    * All inputs are assumed to be byte-based (as opposed to bit based)
    * Numerical inputs (those without any units) are assumed to be a number of bytes
-   * Inputs with single letter units (``k``, ``M``, ``G``, etc) are assumed to be SI units (base 10)
+   * Inputs with single letter units (``k``, ``M``, ``G``, etc) are
+     assumed to be SI units (base-10). See the ``system`` parameter
+     description **above** to change this behavior
    * Inputs with an ``i`` character following the leading letter (``Ki``,
-     ``Mi``, ``Gi``) are assumed to be NIST units (base 2)
+     ``Mi``, ``Gi``) are assumed to be NIST units (base-2)
    * Capitalization does not matter
 
    What exactly are these *non-standard* units? Generally speaking
@@ -379,7 +397,7 @@ bitmath.parse_string_unsafe()
    option flags. For example, you could ensure the GNU ``ls`` and
    ``df`` commands print with SI values by providing the ``--si``
    option flag. By default those commands will print out using NIST
-   (base 2) values.
+   (base-2) values.
 
 
 
