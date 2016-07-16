@@ -155,6 +155,16 @@ def os_name():
     return os.name
 
 
+def capitalize_first(s):
+    """Capitalize ONLY the first letter of the input `s`
+
+* returns a copy of input `s` with the first letter capitalized
+    """
+    pfx = s[0].upper()
+    _s = s[1:]
+    return pfx + _s
+
+
 ######################################################################
 # Base class for everything else
 class Bitmath(object):
@@ -1403,10 +1413,11 @@ example `ls` may say a 2730 Byte file is '2.7K'. 2730 Bytes == 2.73 kB
 
 Note the following caveats:
 
-* All input is assumed to be in Byte based mutiples (no Bit parsing)
-* String inputs may include whitespace characters between the value and the unit
-* Input without any units (int/floats) are assumed to be Byte values.
-
+* All inputs are assumed to be byte-based (as opposed to bit based)
+* Numerical inputs (those without any units) are assumed to be a number of bytes
+* Inputs with single letter units (k, M, G, etc) are assumed to be SI units (base 10)
+* Inputs with an i character following the leading letter (Ki, Mi, Gi) are assumed to be NIST units (base 2)
+* Capitalization does not matter
     """
     if type(s) is not str and \
        type(s) is not unicode and \
@@ -1453,14 +1464,9 @@ Note the following caveats:
     # Split the string into the value and the unit
     val, unit = s[:index], s[index:]
 
-    # We don't handle BITS in the unsafe parser
-    if unit[-1] == 'b':
-        unit = unit.rstrip('b')
-        unit += 'B'
-
-    # Forgot something? Slap a Byte on the end
-    if unit[-1] != 'B':
-        unit += 'B'
+    # Don't trust anything. We'll make sure the correct 'b' is in place.
+    unit = unit.rstrip('Bb')
+    unit += 'B'
 
     # At this point we can expect `unit` to be either:
     #
@@ -1469,6 +1475,7 @@ Note the following caveats:
     #
     # A unit with any other number of chars is not a valid unit
 
+    # SI
     if len(unit) == 2:
         # Edge-case checking
         # SI 'thousand' is a lower-case K
@@ -1476,17 +1483,14 @@ Note the following caveats:
             unit = unit.replace('K', 'k')
         elif not unit.startswith('k'):
             # Otherwise, ensure the first char is capitalized
-            pfx = unit[0].upper()
-            _unit = unit[1:]
-            unit = pfx + _unit
+            unit = capitalize_first(unit)
 
         # This is an SI-type unit
         if unit[0] in SI_PREFIXES:
             unit_class = globals()[unit]
+    # NIST
     elif len(unit) == 3:
-        pfx = unit[0].upper()
-        _unit = unit[1:]
-        unit = pfx + _unit
+        unit = capitalize_first(unit)
 
         # This is a NIST-type unit
         if unit[:2] in NIST_PREFIXES:
