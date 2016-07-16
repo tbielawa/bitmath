@@ -146,7 +146,6 @@ class TestParse(TestCase):
         self.assertEqual(
             bitmath.parse_string_unsafe(number_input),
             expected_result)
-
         self.assertEqual(
             bitmath.parse_string_unsafe(string_input),
             expected_result)
@@ -160,7 +159,6 @@ class TestParse(TestCase):
         self.assertEqual(
             bitmath.parse_string_unsafe(thousand_lower),
             expected_result)
-
         self.assertEqual(
             bitmath.parse_string_unsafe(thousand_upper),
             expected_result)
@@ -189,13 +187,8 @@ class TestParse(TestCase):
 
         for ki in kilo_inputs:
             _parsed = bitmath.parse_string_unsafe(ki)
-            self.assertEqual(
-                _parsed,
-                expected_kilo_result)
-
-            self.assertIs(
-                type(_parsed),
-                type(expected_kilo_result))
+            self.assertEqual(_parsed, expected_kilo_result)
+            self.assertIs(type(_parsed), type(expected_kilo_result))
 
         # Now check for other easier to parse prefixes
         other_inputs = [
@@ -210,13 +203,8 @@ class TestParse(TestCase):
 
         for gi in other_inputs:
             _parsed = bitmath.parse_string_unsafe(gi)
-            self.assertEqual(
-                _parsed,
-                expected_gig_result)
-
-            self.assertIs(
-                type(_parsed),
-                type(expected_gig_result))
+            self.assertEqual(_parsed, expected_gig_result)
+            self.assertIs(type(_parsed), type(expected_gig_result))
 
     def test_parse_unsafe_NIST(self):
         """parse_string_unsafe can parse all accepted NIST inputs"""
@@ -233,13 +221,8 @@ class TestParse(TestCase):
 
         for ki in kilo_inputs:
             _parsed = bitmath.parse_string_unsafe(ki)
-            self.assertEqual(
-                _parsed,
-                expected_kilo_result)
-
-            self.assertIs(
-                type(_parsed),
-                type(expected_kilo_result))
+            self.assertEqual(_parsed, expected_kilo_result)
+            self.assertIs(type(_parsed), type(expected_kilo_result))
 
         # Now check for other easier to parse prefixes
         other_inputs = [
@@ -254,10 +237,66 @@ class TestParse(TestCase):
 
         for gi in other_inputs:
             _parsed = bitmath.parse_string_unsafe(gi)
-            self.assertEqual(
-                _parsed,
-                expected_gig_result)
+            self.assertEqual(_parsed, expected_gig_result)
+            self.assertIs(type(_parsed), type(expected_gig_result))
 
-            self.assertIs(
-                type(_parsed),
-                type(expected_gig_result))
+    def test_parse_string_unsafe_request_NIST(self):
+        """parse_string_unsafe can convert to NIST on request"""
+        unsafe_input = "100M"
+        _parsed = bitmath.parse_string_unsafe(unsafe_input, system=bitmath.NIST)
+        expected = bitmath.MiB(100)
+
+        self.assertEqual(_parsed, expected)
+        self.assertIs(type(_parsed), type(expected))
+
+        unsafe_input2 = "100k"
+        _parsed2 = bitmath.parse_string_unsafe(unsafe_input2, system=bitmath.NIST)
+        expected2 = bitmath.KiB(100)
+
+        self.assertEqual(_parsed2, expected2)
+        self.assertIs(type(_parsed2), type(expected2))
+
+        unsafe_input3 = "100"
+        _parsed3 = bitmath.parse_string_unsafe(unsafe_input3, system=bitmath.NIST)
+        expected3 = bitmath.Byte(100)
+
+        self.assertEqual(_parsed3, expected3)
+        self.assertIs(type(_parsed3), type(expected3))
+
+        unsafe_input4 = "100kb"
+        _parsed4 = bitmath.parse_string_unsafe(unsafe_input4, system=bitmath.NIST)
+        expected4 = bitmath.KiB(100)
+
+        self.assertEqual(_parsed4, expected4)
+        self.assertIs(type(_parsed4), type(expected4))
+
+    ######################################################################
+
+    def test_parse_string_unsafe_github_issue_60(self):
+        """parse_string_unsafe can parse the examples reported in issue #60
+
+https://github.com/tbielawa/bitmath/issues/60
+        """
+        issue_input1 = '7.5KB'
+        _parsed1 = bitmath.parse_string_unsafe(issue_input1)
+        expected_result1 = bitmath.kB(7.5)
+
+        self.assertEqual(
+            _parsed1,
+            expected_result1)
+
+        issue_input2 = '4.7MB'
+        _parsed2 = bitmath.parse_string_unsafe(issue_input2)
+        expected_result2 = bitmath.MB(4.7)
+
+        self.assertEqual(
+            _parsed2,
+            expected_result2)
+
+        issue_input3 = '4.7M'
+        _parsed3 = bitmath.parse_string_unsafe(issue_input3)
+        expected_result3 = bitmath.MB(4.7)
+
+        self.assertEqual(
+            _parsed3,
+            expected_result3)

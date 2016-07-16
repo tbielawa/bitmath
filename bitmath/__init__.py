@@ -1403,21 +1403,30 @@ the unit.
         raise ValueError("Can't parse string %s into a bitmath object" % s)
 
 
-def parse_string_unsafe(s):
+def parse_string_unsafe(s, system=SI):
     """Attempt to parse a string with ambiguous units and try to make a
 bitmath object out of it.
 
 This may produce inaccurate results if parsing shell output. For
 example `ls` may say a 2730 Byte file is '2.7K'. 2730 Bytes == 2.73 kB
-~= 2.666 KiB.
+~= 2.666 KiB. See the documentation for all of the important details.
 
 Note the following caveats:
 
 * All inputs are assumed to be byte-based (as opposed to bit based)
-* Numerical inputs (those without any units) are assumed to be a number of bytes
-* Inputs with single letter units (k, M, G, etc) are assumed to be SI units (base 10)
-* Inputs with an i character following the leading letter (Ki, Mi, Gi) are assumed to be NIST units (base 2)
+
+* Numerical inputs (those without any units) are assumed to be a
+  number of bytes
+
+* Inputs with single letter units (k, M, G, etc) are assumed to be SI
+  units (base-10). Set the `system` parameter to `bitmath.NIST` to
+  change this behavior.
+
+* Inputs with an `i` character following the leading letter (Ki, Mi,
+  Gi) are assumed to be NIST units (base 2)
+
 * Capitalization does not matter
+
     """
     if type(s) is not str and \
        type(s) is not unicode and \
@@ -1477,17 +1486,30 @@ Note the following caveats:
 
     # SI
     if len(unit) == 2:
-        # Edge-case checking
-        # SI 'thousand' is a lower-case K
-        if unit.startswith('K'):
-            unit = unit.replace('K', 'k')
-        elif not unit.startswith('k'):
-            # Otherwise, ensure the first char is capitalized
+        # Has NIST parsing been requested?
+        if system == NIST:
+            # NIST units requested. Ensure the unit begins with a
+            # capital letter and is followed by an 'i' character.
             unit = capitalize_first(unit)
-
-        # This is an SI-type unit
-        if unit[0] in SI_PREFIXES:
+            # Insert an 'i' char after the first letter
+            _unit = list(unit)
+            _unit.insert(1, 'i')
+            # Collapse the list back into a 3 letter string
+            unit = ''.join(_unit)
             unit_class = globals()[unit]
+        else:
+            # Default parsing (SI format)
+            #
+            # Edge-case checking: SI 'thousand' is a lower-case K
+            if unit.startswith('K'):
+                unit = unit.replace('K', 'k')
+            elif not unit.startswith('k'):
+                # Otherwise, ensure the first char is capitalized
+                unit = capitalize_first(unit)
+
+            # This is an SI-type unit
+            if unit[0] in SI_PREFIXES:
+                unit_class = globals()[unit]
     # NIST
     elif len(unit) == 3:
         unit = capitalize_first(unit)
