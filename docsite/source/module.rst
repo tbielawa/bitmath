@@ -254,7 +254,8 @@ bitmath.parse_string()
       generated file. Many applications (even ``/usr/bin/ls``) still
       do not produce file size strings with valid (or even correct)
       prefix units unless `specially configured to do so
-      <https://www.gnu.org/software/coreutils/manual/html_node/Block-size.html#Block-size>`_.
+      <https://www.gnu.org/software/coreutils/manual/html_node/Block-size.html#Block-size>`_. See
+      :py:func:`bitmath.parse_string_unsafe` as an alternative.
 
    To protect your application from unexpected runtime errors it is
    recommended that calls to :py:func:`bitmath.parse_string` are
