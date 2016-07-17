@@ -6,6 +6,28 @@ NEWS
    :local:
 
 
+.. _bitmath-1.3.1-1:
+
+bitmath-1.3.1-1
+***************
+
+`bitmath-1.3.1-1
+<https://github.com/tbielawa/bitmath/releases/tag/1.3.1.1>`__ was
+published on 2016-07-17.
+
+Changes
+=======
+
+**Bug Fixes**
+
+* Closed `GitHub Issue #55
+  <https://github.com/tbielawa/bitmath/issues/55>`_ "best_prefix for
+  negative values". Now :func:`bitmath.best_prefix` returns correct
+  prefix units for negative values. Thanks `mbdm
+  <https://github.com/mbdm>`_!
+
+
+
 .. _bitmath-1.3.0-1:
 
 bitmath-1.3.0-1

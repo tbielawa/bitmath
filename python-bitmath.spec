@@ -14,11 +14,11 @@
 %endif
 
 %global _short_name bitmath
-%global _short_release 2
+%global _short_release 1
 
 Name: python-bitmath
 Summary: Aids representing and manipulating file sizes in various prefix notations
-Version: 1.3.0
+Version: 1.3.1
 Release: %{_short_release}%{?dist}
 
 Group: Development/Libraries
@@ -183,6 +183,9 @@ rm -f $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/NEWS.rst
 
 ######################################################################
 %changelog
+* Sun Jul 17 2016 Tim Bielawa <tbielawa@redhat.com> - 1.3.1-1
+- New release
+
 * Tue Jan 12 2016 Tim Bielawa <tbielawa@redhat.com> - 1.3.0-2
 - Packaging update
 
