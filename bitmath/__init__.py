@@ -25,8 +25,6 @@
 # SOFTWARE.
 # pylint: disable=bad-continuation,missing-docstring,invalid-name,line-too-long
 
-# ,no-value-for-parameter,no-self-use,
-
 """Reference material:
 The bitmath homepage is located at:
 * http://bitmath.readthedocs.io/en/latest/
