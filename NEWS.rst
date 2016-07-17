@@ -18,14 +18,36 @@ published on 2016-07-17.
 Changes
 =======
 
-**Bug Fixes**
+**Added Functionality**
 
-* Closed `GitHub Issue #55
-  <https://github.com/tbielawa/bitmath/issues/55>`_ "best_prefix for
-  negative values". Now :func:`bitmath.best_prefix` returns correct
-  prefix units for negative values. Thanks `mbdm
-  <https://github.com/mbdm>`_!
+* New function: :func:`bitmath.parse_string_unsafe`, a less strict
+  version of :func:`bitmath.parse_string`. Accepts inputs using
+  *non-standard* prefix units (such as single-letter, or
+  mis-capitalized units).
 
+* Inspired by `@darkblaze69 <https://github.com/darkblaze69>`_'s
+  request in `#60 "Problems in parse_string"
+  <https://github.com/tbielawa/bitmath/issues/60>`_.
+
+
+Project
+=======
+
+**Ubuntu**
+
+* Bitmath is now available for installation via Ubuntu Xenial, Wily,
+  Vivid, Trusty, and Precise PPAs.
+
+* Ubuntu builds inspired by `@hkraal <https://github.com/hkraal>`_
+  reporting an `installation issue
+  <https://github.com/tbielawa/bitmath/issues/57>`_ on Ubuntu systems.
+
+
+**Documentation**
+
+* `Cleaned up a lot <https://github.com/tbielawa/bitmath/issues/59>`_
+  of broken or re-directing links using output from the Sphinx ``make
+  linkcheck`` command.
 
 
 .. _bitmath-1.3.0-1:
