@@ -399,9 +399,77 @@ bitmath.parse_string_unsafe()
    option flag. By default those commands will print out using NIST
    (base-2) values.
 
+   In this example let's pretend we're parsing the output of running
+   ``df -H / /boot /home`` on our filesystems. Assume the output is
+   saved into a file called ``/tmp/df-output.txt`` and looks like
+   this::
 
-   * TODO: Still need to fill in some examples here
+      Filesystem                                 Size  Used Avail Use% Mounted on
+      /dev/mapper/luks-ca8d5493-72bb-4691-afe1   107G   64G   38G  63% /
+      /dev/sda1                                  500M  391M   78M  84% /boot
+      /dev/mapper/vg_deepfryer-lv_home           129G  118G  4.7G  97% /home
 
+   Now let's read this file, parse the ``Used`` column, and then print
+   out the space used (line **7**):
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 7
+
+      >>> with open('/tmp/df-output.txt', 'r') as fp:
+      ...     # Skip parsing the 'df' header column
+      ...     _ = fp.readline()
+      ...     for line in fp.readlines():
+      ...         cols = line.split()[0:4]
+      ...         print """Filesystem: %s
+      ... - Used: %s""" % (cols[0], bitmath.parse_string_unsafe(cols[1]))
+      Filesystem: /dev/mapper/luks-ca8d5493-72bb-4691-afe1
+      - Used: 107.0 GB
+      Filesystem: /dev/sda1
+      - Used: 500.0 MB
+      Filesystem: /dev/mapper/vg_deepfryer-lv_home
+      - Used: 129.0 GB
+
+
+   If we had ran the ``df`` command with the ``-h`` option (instead of
+   ``-H``) we will get base-2 (NIST) output. That would look like
+   this::
+
+     Filesystem                                 Size  Used Avail Use% Mounted on
+     /dev/mapper/luks-ca8d5493-72bb-4691-afe1   100G   59G   36G  63% /
+     /dev/sda1                                  477M  373M   75M  84% /boot
+     /dev/mapper/vg_deepfryer-lv_home           120G  110G  4.4G  97% /home
+
+   Because we switch from ``SI`` output to ``NIST`` output the values
+   displayed are slightly different. **However** they still print
+   using the same prefix unit, ``G``. We can tell
+   :py:func:`bitmath.parse_string_unsafe` that the input is ``NIST``
+   (base-2) by giving ``bitmath.NIST`` to the ``system`` parameter
+   like this (line **8**):
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 8
+
+      >>> with open('/tmp/df-output.txt', 'r') as fp:
+      ...     # Skip parsing the 'df' header column
+      ...     _ = fp.readline()
+      ...     for line in fp.readlines():
+      ...         cols = line.split()[0:4]
+      ...         print """Filesystem: %s
+      ... - Used: %s""" % (cols[0],
+      ...                  bitmath.parse_string_unsafe(cols[1], \
+      ...                      system=bitmath.NIST))
+      Filesystem: /dev/mapper/luks-ca8d5493-72bb-4691-afe1
+      - Used: 100.0 GiB
+      Filesystem: /dev/sda1
+      - Used: 477.0 MiB
+      Filesystem: /dev/mapper/vg_deepfryer-lv_home
+      - Used: 120.0 GiB
+
+   The results printed use the proper NIST prefix unit syntax now:
+   Capital **G** followed by a lower-case **i** ending with a capital
+   **B**, ``GiB``.
 
 
 
