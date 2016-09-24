@@ -77,9 +77,9 @@ __all__ = ['Bit', 'Byte', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB',
            'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB', 'Kib',
            'Mib', 'Gib', 'Tib', 'Pib', 'Eib', 'kb', 'Mb', 'Gb', 'Tb',
            'Pb', 'Eb', 'Zb', 'Yb', 'getsize', 'listdir', 'format',
-           'format_string', 'format_plural', 'parse_string', 'ALL_UNIT_TYPES',
-           'NIST', 'NIST_PREFIXES', 'NIST_STEPS', 'SI', 'SI_PREFIXES',
-           'SI_STEPS']
+           'format_string', 'format_plural', 'parse_string', 'parse_string_unsafe',
+           'ALL_UNIT_TYPES', 'NIST', 'NIST_PREFIXES', 'NIST_STEPS',
+           'SI', 'SI_PREFIXES', 'SI_STEPS']
 
 # Python 3.x compat
 if sys.version > '3':

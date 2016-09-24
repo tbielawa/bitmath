@@ -15,8 +15,8 @@ bitmath
 #######
 
 `bitmath <http://bitmath.readthedocs.org/en/latest/>`_ simplifies many
-facets of interacting with file sizes in various units. Functionality
-includes:
+facets of interacting with file sizes in various units. Originally
+focusing on file size unit conversion, functionality now includes:
 
 * Converting between **SI** and **NIST** prefix units (``kB`` to ``GiB``)
 * Converting between units of the same type (SI to SI, or NIST to NIST)

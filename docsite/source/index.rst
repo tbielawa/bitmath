@@ -15,8 +15,8 @@ bitmath
 #######
 
 `bitmath <http://bitmath.readthedocs.org/en/latest/>`_ simplifies many
-facets of interacting with file sizes in various units. Functionality
-includes:
+facets of interacting with file sizes in various units. Originally
+focusing on file size unit conversion, functionality now includes:
 
 * Converting between **SI** and **NIST** prefix units (``kB`` to ``GiB``)
 * Converting between units of the same type (SI to SI, or NIST to NIST)
@@ -177,6 +177,8 @@ Arithmetic
 Convert Units
 -------------
 
+File size unit conversion:
+
 .. code-block:: python
 
    >>> from bitmath import *
@@ -273,6 +275,8 @@ Utility Functions
 
 **bitmath.parse_string()**
 
+Parse a string with standard units:
+
 .. code-block:: python
 
    >>> import bitmath
@@ -281,6 +285,22 @@ Utility Functions
    <class 'bitmath.GiB'>
    >>> print a_dvd
    4.7 GiB
+
+**bitmath.parse_string_unsafe()**
+
+Parse a string with ambiguous units:
+
+.. code-block:: python
+
+   >>> import bitmath
+   >>> a_gig = bitmath.parse_string_unsafe("1gb")
+   >>> print type(a_gig)
+   <class 'bitmath.GB'>
+   >>> a_gig == bitmath.GB(1)
+   True
+   >>> bitmath.parse_string_unsafe('1gb') == bitmath.parse_string_unsafe('1g')
+   True
+
 
 **bitmath.query_device_capacity()**
 
