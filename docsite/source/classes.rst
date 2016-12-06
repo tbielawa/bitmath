@@ -20,7 +20,7 @@ units from **k** through **e** (*kilo/kibi* through *exa/exbi*).
 
 Classes with **'i'** in their names are **NIST** type classes. They
 were defined by the `National Institute of Standards and Technology
-(NIST) <http://www.nist.gov/>`_ as the 'Binary Prefix Units'. They are
+(NIST) <https://www.nist.gov/>`_ as the 'Binary Prefix Units'. They are
 defined by increasing powers of 2.
 
 Classes without the **'i'** character are **SI** type classes. Though

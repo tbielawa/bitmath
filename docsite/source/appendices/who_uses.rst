@@ -15,7 +15,7 @@ identify:
   flocker storage driver
 
 * EMC's `scaleio
-  <https://github.com/emccode/flocker-drivers/blob/master/scaleio/scaleio_flocker_driver/emc_sio.py>`_
+  <https://github.com/codedellemc/flocker-drivers/blob/master/scaleio/scaleio_flocker_driver/emc_sio.py>`_
   flocker storage driver
 
 * Dell Storage's `storage center block device
@@ -33,8 +33,3 @@ identify:
 * `sizer <https://github.com/Callero/Sizer/blob/master/sizecalc.py>`_
   by `Calle Liljeholm <https://github.com/Callero>`_. Calculating
   useable capacity in a flocker cluster
-
-* `urldl
-  <https://github.com/dtluna/Python/tree/master/small_examples/urldl>`_
-  by `Konstantin <https://github.com/dtluna>`_, an arbitrary file
-  download utility

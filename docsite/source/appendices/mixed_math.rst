@@ -227,7 +227,7 @@ Footnotes
 .. [#precedence] For a less technical review of precedence and associativity,
        see `Programiz: Precedence and Associativity of Operators in
        Python
-       <http://www.programiz.com/python-programming/precedence-associativity>`_
+       <https://www.programiz.com/python-programming/precedence-associativity>`_
 
 .. [#datamodel] `Python Datamodel Customization Methods
                 <https://docs.python.org/2.7/reference/datamodel.html#basic-customization>`_

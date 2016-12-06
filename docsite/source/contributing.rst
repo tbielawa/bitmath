@@ -150,11 +150,11 @@ bitmath unit tests are integrated with/depend on the following items:
   Python unit testing framework. All bitmath tests are written using
   this framework.
 
-* `nose <https://nose.readthedocs.org/en/latest/>`_ - Per the **nose**
+* `nose <https://nose.readthedocs.io/en/latest/>`_ - Per the **nose**
   website: "`extends unittest to make testing easier`". **nose** is
   used to run our unit tests.
 
-* `coverage <http://nedbatchelder.com/code/coverage/>`_ - A tool for
+* `coverage <http://coverage.readthedocs.io/en/latest/>`_ - A tool for
   measuring code coverage of Python programs. For bitmath we require a
   minimum test coverage of **90%**. This is invoked by **nose**
   automatically.
