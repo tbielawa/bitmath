@@ -484,16 +484,16 @@ bitmath.query_device_capacity()
 
    :param file device_fd: An open file handle (``handle =
                           open('/dev/sda')``) of the target device.
-   :return: A :class:`bitmath.Byte` equal to the size of ``device_fd``
+   :return: A :class:`bitmath.Byte` equal to the size of ``device_fd``.
    :raises ValueError: if file descriptor ``device_fd`` is not of a
-                       device type
+                       device type.
    :raises IOError:
 
       * :py:exc:`IOError[13]` - If the effective **uid** of this
         process does not have access to issue raw commands to block
-        devices. I.e., this process does not have super-user rights
+        devices. I.e., this process does not have super-user rights.
       * :py:exc:`IOError[2]` - If the device ``device_fd`` points to
-        does not exist
+        does not exist.
 
 
    .. include:: query_device_capacity_warning.rst
