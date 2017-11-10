@@ -108,7 +108,7 @@ _FORMAT_REPR = '{unit_singular}({value})'
 #: Constants for referring to NIST prefix system
 NIST = int(2)
 
-#: Constants for referring to NIST prefix system
+#: Constants for referring to SI prefix system
 SI = int(10)
 
 # ##################################
