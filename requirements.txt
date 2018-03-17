@@ -1,6 +1,5 @@
 python-coveralls
 nose
-distribute
 pyflakes
 pycodestyle
 progressbar231
