@@ -6,7 +6,7 @@
 #   make sdist ---------------- produce a tarball
 #   make rpm  ----------------- produce RPMs
 #   make docs ----------------- rebuild the manpages (results are checked in)
-#   make pyflakes, make pep8 -- source code checks
+#   make pyflakes, make pycodestyle -- source code checks
 #   make test ----------------- run all unit tests (export LOG=true for /tmp/ logging)
 
 ########################################################
@@ -98,7 +98,7 @@ pypitest:
 tag:
 	git tag -s -m $(TAG) $(TAG)
 
-tests: uniquetestnames unittests pep8 pyflakes
+tests: uniquetestnames unittests pycodestyle pyflakes
 	:
 
 unittests:
@@ -112,11 +112,11 @@ clean:
 	@find . -type f \( -name "*~" -or -name "#*" \) -delete
 	@rm -fR build cover dist rpm-build MANIFEST htmlcov .coverage bitmathenv bitmathenv3 docsite/build/html/ docsite/build/doctrees/ bitmath.egg-info
 
-pep8:
+pycodestyle:
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests"
 	@echo "#############################################"
-	pep8 -v --ignore=E501 bitmath/__init__.py tests/*.py
+	pycodestyle -v --ignore=E501,E722 bitmath/__init__.py tests/*.py
 
 pyflakes:
 	@echo "#############################################"
@@ -204,7 +204,7 @@ virtualenv:
 	@echo "#############################################"
 	virtualenv $(NAME)env
 	. $(NAME)env/bin/activate && pip install -r requirements.txt
-	. $(NAME)env/bin/activate && pip install pep8 nose coverage mock
+	. $(NAME)env/bin/activate && pip install pycodestyle nose coverage mock
 
 ci-unittests:
 	@echo "#############################################"
@@ -219,11 +219,11 @@ ci-list-deps:
 	@echo "#############################################"
 	. $(NAME)env/bin/activate && pip freeze
 
-ci-pep8:
+ci-pycodestyle:
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests in virtualenv"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && pep8 -v --ignore=E501 bitmath/__init__.py tests/*.py
+	. $(NAME)env/bin/activate && pycodestyle -v --ignore=E501,E722 bitmath/__init__.py tests/*.py
 
 ci-pyflakes:
 	@echo "#################################################"
@@ -231,7 +231,7 @@ ci-pyflakes:
 	@echo "#################################################"
 	. $(NAME)env/bin/activate && pyflakes bitmath/__init__.py tests/*.py
 
-ci: clean uniquetestnames virtualenv ci-list-deps ci-pep8 ci-pyflakes ci-unittests
+ci: clean uniquetestnames virtualenv ci-list-deps ci-pycodestyle ci-pyflakes ci-unittests
 	:
 
 virtualenv3:
@@ -241,7 +241,7 @@ virtualenv3:
 	@echo "#############################################"
 	virtualenv $(NAME)env3 --python=python3
 	. $(NAME)env3/bin/activate && pip install -r requirements-py3.txt
-	. $(NAME)env3/bin/activate && pip install pep8 nose coverage nose-cover3 mock
+	. $(NAME)env3/bin/activate && pip install pycodestyle nose coverage nose-cover3 mock
 
 ci-unittests3:
 	@echo ""
@@ -258,12 +258,12 @@ ci-list-deps3:
 	@echo "#############################################"
 	. $(NAME)env3/bin/activate && pip freeze
 
-ci-pep83:
+ci-pycodestyle3:
 	@echo ""
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests in virtualenv"
 	@echo "#############################################"
-	. $(NAME)env3/bin/activate && pep8 -v --ignore=E501 bitmath/__init__.py tests/*.py
+	. $(NAME)env3/bin/activate && pycodestyle -v --ignore=E501,E722 bitmath/__init__.py tests/*.py
 
 ci-pyflakes3:
 	@echo ""
@@ -272,7 +272,7 @@ ci-pyflakes3:
 	@echo "#################################################"
 	. $(NAME)env3/bin/activate && pyflakes bitmath/__init__.py tests/*.py
 
-ci3: clean uniquetestnames virtualenv3 ci-list-deps3 ci-pep83 ci-pyflakes3 ci-unittests3
+ci3: clean uniquetestnames virtualenv3 ci-list-deps3 ci-pycodestyle3 ci-pyflakes3 ci-unittests3
 	:
 
 ci-all: ci ci3

@@ -49,7 +49,7 @@ be accepted. There is one consistent exception to this rule:
 **E501**
    Line too long
 
-The ``pep8`` tests for bitmath include a ``--ignore`` option to
+The ``pycodestyle`` tests for bitmath include a ``--ignore`` option to
 automatically exclude **E501** errors from the tests.
 
 
@@ -159,7 +159,7 @@ bitmath unit tests are integrated with/depend on the following items:
   minimum test coverage of **90%**. This is invoked by **nose**
   automatically.
 
-* `pep8 <https://pypi.python.org/pypi/pep8>`_ - A tool to check Python
+* `pycodestyle <https://pypi.python.org/pypi/pycodestyle>`_ - A tool to check Python
   code against some of the style conventions in :pep:`0008`.
 
 * `pyflakes <https://pypi.python.org/pypi/pyflakes>`_ - A simple
@@ -184,19 +184,19 @@ think of these `targets` as pre-defined commands coded in a
 makefile. bitmath testing targets include:
 
 * ``ci`` - Run the tests exactly how they are ran in Travis-CI. The
-  ``ci`` target automatically calls the ``pep8``, ``pyflakes``,
+  ``ci`` target automatically calls the ``pycodestyle``, ``pyflakes``,
   ``uniquetestnames``, and ``unittests`` targets.
 * ``ci3`` - Is the same as the ``ci`` target, except it runs using the
   Python 3.x interpreter.
 * ``unittests`` - Run the functional test suite.
-* ``pep8`` - Run :pep:`0008` syntax checks.
+* ``pycodestyle`` - Run :pep:`0008` syntax checks.
 * ``pyflakes`` - Run `pyflakes` error checks.
 * ``clean`` - Remove temporary files and build artifacts from the
   checked-out repository.
 * ``uniquetestnames`` - Ensures no unit tests have the same name.
 * ``tests`` - A quicker version of ``ci``. Different from ``ci`` in
   that ``tests`` uses libraries installed on the local development
-  workstation. ``tests`` runs the ``unittests``, ``pep8``,
+  workstation. ``tests`` runs the ``unittests``, ``pycodestyle``,
   ``uniquetestnames``, and ``pyflakes`` tests automatically.
 
 To ensure the highest degree of confidence in test results you should

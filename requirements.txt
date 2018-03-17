@@ -2,5 +2,5 @@ python-coveralls
 nose
 distribute
 pyflakes
-pep8
+pycodestyle
 progressbar231
