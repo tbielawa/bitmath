@@ -1238,7 +1238,7 @@ ioctl's for querying block device sizes:
                 # Per <linux/fs.h>, the BLKGETSIZE64 request returns a
                 # 'u64' sized value. This is an unsigned 64 bit
                 # integer C type. This means to correctly "buffer" the
-                # result we need 64 bits, or 8 bytes, or memory.
+                # result we need 64 bits, or 8 bytes, of memory.
                 #
                 # The struct module documentation include a reference
                 # chart relating formatting characters to native C
