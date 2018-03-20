@@ -174,7 +174,7 @@ class Bitmath(object):
     """The base class for all the other prefix classes"""
 
     # All the allowed input types
-    valid_types = [int, float, long]
+    valid_types = (int, float, long)
 
     def __init__(self, value=0, bytes=None, bits=None):
         """Instantiate with `value` by the unit, in plain bytes, or
@@ -256,15 +256,15 @@ type.
    :param number value: The input value to be normalized
    :raises ValueError: if the input value is not a type of real number
 """
-        if type(value) not in self.valid_types:
+        if isinstance(value, self.valid_types):
+            self._byte_value = value * self._unit_value
+            self._bit_value = self._byte_value * 8.0
+        else:
             raise ValueError("Initialization value '%s' is of an invalid type: %s. "
                              "Must be one of %s" % (
                                  value,
                                  type(value),
-                                 ", ".join([str(x) for x in self.valid_types])))
-        else:
-            self._byte_value = value * self._unit_value
-            self._bit_value = self._byte_value * 8.0
+                                 ", ".join(str(x) for x in self.valid_types)))
 
     ##################################################################
     # Properties
