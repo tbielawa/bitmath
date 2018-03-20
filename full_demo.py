@@ -11,6 +11,7 @@ import os
 import tempfile
 import atexit
 import random
+from functools import reduce
 
 # Files of various sizes to use in the demo.
 #
