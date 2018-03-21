@@ -9,7 +9,7 @@ after_success:
 matrix:
   include:
     - python: "2.7"
-      env: CI=ci
+      env: CI=ci2
     - python: "3.3"
       env: CI=ci3
 script: make $CI

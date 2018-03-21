@@ -198,40 +198,40 @@ rpm: rpmcommon
 	@find rpm-build -maxdepth 2 -name '$(PKGNAME)*.rpm' | awk '{print "    " $$1}'
 	@echo "#############################################"
 
-virtualenv:
+virtualenv2:
 	@echo "#############################################"
 	@echo "# Creating a virtualenv"
 	@echo "#############################################"
-	virtualenv $(NAME)env
-	. $(NAME)env/bin/activate && pip install -r requirements.txt
-	. $(NAME)env/bin/activate && pip install pycodestyle nose coverage mock
+	virtualenv $(NAME)env2 --python=python2
+	. $(NAME)env2/bin/activate && pip install -r requirements.txt
+	. $(NAME)env2/bin/activate && pip install pycodestyle nose coverage mock
 
-ci-unittests:
+ci-unittests2:
 	@echo "#############################################"
 	@echo "# Running Unit Tests in virtualenv"
-	@echo "# Using python: $(shell ./bitmathenv/bin/python --version 2>&1)"
+	@echo "# Using python: $(shell ./bitmathenv2/bin/python --version 2>&1)"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && export PYVER=PY2X && nosetests -v --with-coverage --cover-html --cover-min-percentage=90 --cover-package=bitmath tests/
+	. $(NAME)env2/bin/activate && export PYVER=PY2X && nosetests -v --with-coverage --cover-html --cover-min-percentage=90 --cover-package=bitmath tests/
 
-ci-list-deps:
+ci-list-deps2:
 	@echo "#############################################"
 	@echo "# Listing all pip deps"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && pip freeze
+	. $(NAME)env2/bin/activate && pip freeze
 
-ci-pycodestyle:
+ci-pycodestyle2:
 	@echo "#############################################"
 	@echo "# Running PEP8 Compliance Tests in virtualenv"
 	@echo "#############################################"
-	. $(NAME)env/bin/activate && pycodestyle -v --ignore=E501,E722 bitmath/__init__.py tests/*.py
+	. $(NAME)env2/bin/activate && pycodestyle -v --ignore=E501,E722 bitmath/__init__.py tests/*.py
 
-ci-pyflakes:
+ci-pyflakes2:
 	@echo "#################################################"
 	@echo "# Running Pyflakes Compliance Tests in virtualenv"
 	@echo "#################################################"
-	. $(NAME)env/bin/activate && pyflakes bitmath/__init__.py tests/*.py
+	. $(NAME)env2/bin/activate && pyflakes bitmath/__init__.py tests/*.py
 
-ci: clean uniquetestnames virtualenv ci-list-deps ci-pycodestyle ci-pyflakes ci-unittests
+ci2: clean uniquetestnames virtualenv2 ci-list-deps2 ci-pycodestyle2 ci-pyflakes2 ci-unittests2
 	:
 
 virtualenv3:
@@ -275,4 +275,7 @@ ci-pyflakes3:
 ci3: clean uniquetestnames virtualenv3 ci-list-deps3 ci-pycodestyle3 ci-pyflakes3 ci-unittests3
 	:
 
-ci-all: ci ci3
+ci: ci2
+	:
+
+ci-all: ci2 ci3
