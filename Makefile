@@ -204,7 +204,6 @@ virtualenv2:
 	@echo "#############################################"
 	virtualenv $(NAME)env2 --python=python2
 	. $(NAME)env2/bin/activate && pip install -r requirements.txt
-	. $(NAME)env2/bin/activate && pip install pycodestyle nose coverage mock
 
 ci-unittests2:
 	@echo "#############################################"
@@ -241,7 +240,6 @@ virtualenv3:
 	@echo "#############################################"
 	virtualenv $(NAME)env3 --python=python3
 	. $(NAME)env3/bin/activate && pip install -r requirements-py3.txt
-	. $(NAME)env3/bin/activate && pip install pycodestyle nose coverage nose-cover3 mock
 
 ci-unittests3:
 	@echo ""
