@@ -16,22 +16,7 @@ Issue Reporting
 ***************
 
 If you are encounter an issue with the bitmath library, please use the
-following template when describing your issue::
-
-
-   Description of the issue (include full error messages):
-
-   How to reproduce the issue:
-
-   How reproducible (every time? intermittently?):
-
-   Version of bitmath effected (git hashes are OK):
-
-   Your operating system and Python release-version:
-
-   What you expected to happen:
-
-   What actually happened:
+provided template.
 
 * `Open a new issue <https://github.com/tbielawa/bitmath/issues/new>`_
 * `View open issues <https://github.com/tbielawa/bitmath/issues>`_
