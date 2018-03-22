@@ -1,4 +1,5 @@
 python-coveralls
+coverage
 mock
 nose
 pyflakes
