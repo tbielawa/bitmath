@@ -146,3 +146,39 @@ manager. There is a separate test suite for that: test_context_manager"""
         one_Byte = bitmath.Byte(1.0)
         actual_result = one_Byte.format(fmt_str)
         self.assertEqual(expected_result, actual_result)
+
+    def test_inline_format(self):
+        """Inline string formatting interpolates default format_string values"""
+        expected_result = 'size: 3.1215 MiB'
+        size = bitmath.MiB(3.1215)
+        actual_result = 'size: {size}'.format(size=size)
+        self.assertEqual(expected_result, actual_result) 
+
+    def test_inline_format_customized(self):
+        """Inline formats obey inline format specifications"""
+        expected_result = 'size: 3.1 MiB'
+        size = bitmath.MiB(3.1215)
+        actual_result = 'size: {size:.1f}'.format(size=size)
+        self.assertEqual(expected_result, actual_result) 
+
+    def test_inline_format_override(self):
+        """Inline formats use module defaults, overriding only format spec"""
+        orig_fmt_str = bitmath.format_string
+        bitmath.format_string = "{unit} {value:.3f}"
+        expected_result = 'size: MiB 3.1'
+        size = bitmath.MiB(3.1215)
+        actual_result = 'size: {size:.1f}'.format(size=size)
+        self.assertEqual(expected_result, actual_result) 
+        bitmath.format_string = orig_fmt_str
+
+    def test_inline_format_cant_override(self):
+        """Inline formats use module defaults, changing nothing if no {value} component"""
+        orig_fmt_str = bitmath.format_string
+        bitmath.format_string = "{power} {binary}"
+        expected_result = 'size: 20 0b1100011111000110101001111'
+        size = bitmath.MiB(3.1215)
+        # will not obey instant formatting, because global format_string doesn't allow that;
+        # obeys the global format_string instead
+        actual_result = 'size: {size:.1f}'.format(size=size)
+        self.assertEqual(expected_result, actual_result) 
+        bitmath.format_string = orig_fmt_str
