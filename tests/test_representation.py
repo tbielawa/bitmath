@@ -152,14 +152,14 @@ manager. There is a separate test suite for that: test_context_manager"""
         expected_result = 'size: 3.1215 MiB'
         size = bitmath.MiB(3.1215)
         actual_result = 'size: {size}'.format(size=size)
-        self.assertEqual(expected_result, actual_result) 
+        self.assertEqual(expected_result, actual_result)
 
     def test_inline_format_customized(self):
         """Inline formats obey inline format specifications"""
         expected_result = 'size: 3.1 MiB'
         size = bitmath.MiB(3.1215)
         actual_result = 'size: {size:.1f}'.format(size=size)
-        self.assertEqual(expected_result, actual_result) 
+        self.assertEqual(expected_result, actual_result)
 
     def test_inline_format_override(self):
         """Inline formats use module defaults, overriding only format spec"""
@@ -168,7 +168,7 @@ manager. There is a separate test suite for that: test_context_manager"""
         expected_result = 'size: MiB 3.1'
         size = bitmath.MiB(3.1215)
         actual_result = 'size: {size:.1f}'.format(size=size)
-        self.assertEqual(expected_result, actual_result) 
+        self.assertEqual(expected_result, actual_result)
         bitmath.format_string = orig_fmt_str
 
     def test_inline_format_cant_override(self):
@@ -180,5 +180,5 @@ manager. There is a separate test suite for that: test_context_manager"""
         # will not obey instant formatting, because global format_string doesn't allow that;
         # obeys the global format_string instead
         actual_result = 'size: {size:.1f}'.format(size=size)
-        self.assertEqual(expected_result, actual_result) 
+        self.assertEqual(expected_result, actual_result)
         bitmath.format_string = orig_fmt_str
