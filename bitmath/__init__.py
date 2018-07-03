@@ -413,6 +413,19 @@ interpreter"""
         global format_string
         return self.format(format_string)
 
+    def __format__(self, format_spec):
+        """String representation of this object with custom formatting, such as specified number of digits."""
+        global format_string
+        try:
+            # replace any format spec added into global format_string with the format_spec used in this invocation
+            value_end = format_string.index('{value') + 6
+            brace_index = format_string.index('}', value_end)
+            format_string_custom = format_string[:value_end] + ':' + format_spec + format_string[brace_index:]
+        except ValueError:
+            # no {value} found in format_string, so cannot customize; fall back to global format_string
+            format_string_custom = format_string
+        return self.format(format_string_custom)
+
     def format(self, fmt):
         """Return a representation of this instance formatted with user
 supplied syntax"""
