@@ -11,7 +11,9 @@ matrix:
   include:
     - python: "2.7"
       env: CI=ci2
-    - python: "3.3"
+    - python: "3.4"
+      env: CI=ci3
+    - python: "3.5"
       env: CI=ci3
     - python: "3.6"
       env: CI=ci3
