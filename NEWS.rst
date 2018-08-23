@@ -6,6 +6,60 @@ NEWS
    :local:
 
 
+.. _bitmath-1.3.3-1:
+
+bitmath-1.3.3-1
+***************
+
+`bitmath-1.3.3-1
+<https://github.com/tbielawa/bitmath/releases/tag/1.3.3.1>`__ was
+published on 2018-08-23.
+
+
+Project
+=======
+
+Version 1.3.3 is a minor update primarily released to synchronize
+versions across platforms. Additionally there are small packaging
+updates to keep up with changing standards.
+
+Minor bug fixes and documentation tweaks are included as well.
+
+The project now has an official `Code of Conduct
+<https://github.com/tbielawa/bitmath/blob/master/CODE_OF_CONDUCT.md>`_,
+as well as issue and pull request templates.
+
+
+What happened to bitmath 1.3.2? It only ever existed as an idea in
+source control.
+
+
+Changes
+=======
+
+**Bug Fixes**
+
+`Alexander Kapshuna <https://github.com/kapsh>`_ has submitted
+`several fixes
+<https://github.com/tbielawa/bitmath/pulls?q=is%3Apr+author%3Akapsh>`_
+since the last release. Thanks!
+
+* Packaging requirements fixes
+* Python 3 compatibility
+* Subclassing and Type checking fixes/improvements
+
+`Marcus Kazmierczak <https://github.com/mkaz>`_ submitted `a fix
+<https://github.com/tbielawa/bitmath/pull/75>`_ for some broken
+documentation links.
+
+And `Dawid Gosławski <https://github.com/alkuzad>`_ make sure our
+`documentation <https://github.com/tbielawa/bitmath/pull/62/files>`_
+is accurate.
+
+
+Thanks to all the bitmath contributors over the years!
+
+
 .. _bitmath-1.3.1-1:
 
 bitmath-1.3.1-1

@@ -35,7 +35,7 @@ pypi_notice = open('README.rst', 'r').read()
 
 setup(
     name='bitmath',
-    version='1.3.2.1',
+    version='1.3.3.1',
     description='Pythonic module for representing and manipulating file sizes with different prefix notations (file size unit conversion)',
     long_description=pypi_notice,
     maintainer='Tim Bielawa',
@@ -62,6 +62,10 @@ setup(
         'Programming Language :: Python :: 3.1',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python',
         'Topic :: Scientific/Engineering :: Mathematics',
         'Topic :: Software Development :: Libraries :: Python Modules',

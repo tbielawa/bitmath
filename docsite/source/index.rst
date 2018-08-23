@@ -14,7 +14,7 @@
 bitmath
 #######
 
-`bitmath <http://bitmath.readthedocs.io/en/latest/>`_ simplifies many
+`bitmath <http://bitmath.readthedocs.org/en/latest/>`_ simplifies many
 facets of interacting with file sizes in various units. Originally
 focusing on file size unit conversion, functionality now includes:
 

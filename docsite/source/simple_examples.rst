@@ -146,7 +146,7 @@ Rich Comparison
 
 Rich Comparison (as per the `Python Basic Customization
 <https://docs.python.org/2.7/reference/datamodel.html#basic-customization>`_
-magic methods): ``<``, ``<=``, ``==``, ``!=``, ``>``, ``>=`` is fully
+magic methods) ``<``, ``<=``, ``==``, ``!=``, ``>``, ``>=`` is fully
 supported:
 
 .. code-block:: python
@@ -178,13 +178,13 @@ Sorting
 bitmath natively supports sorting.
 
 Let's make a list of the size (in bytes) of all the files in the
-present working directory (lines **7** and **8**) and then print them
-out sorted by increasing magnitude (lines **13** and **14**, and
-**18** and **19**):
+present working directory (lines **4** and **5**) and then print them
+out sorted by increasing magnitude (lines **10** and **11**, and
+**13** → **15**):
 
 .. code-block:: python
    :linenos:
-   :emphasize-lines: 7,8,13,14,18,19
+   :emphasize-lines: 4,5,10,11,13,14,15
 
    >>> from bitmath import *
    >>> import os

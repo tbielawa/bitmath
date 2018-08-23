@@ -27,10 +27,10 @@ Source0: https://github.com/tbielawa/bitmath/archive/%{version}.%{_short_release
 Url: https://github.com/tbielawa/bitmath
 
 BuildArch: noarch
-BuildRequires:  python-mock
-BuildRequires:  python-nose
-BuildRequires:  python-progressbar
-BuildRequires:  python-setuptools
+BuildRequires:  python2-mock
+BuildRequires:  python2-nose
+BuildRequires:  python2-progressbar
+BuildRequires:  python2-setuptools
 BuildRequires:  python2-devel
 %if 0%{?with_python3}
 BuildRequires:  python3-devel
@@ -183,6 +183,9 @@ rm -f $RPM_BUILD_ROOT/%{_docdir}/%{name}/docs/NEWS.rst
 
 ######################################################################
 %changelog
+* Thu Aug 23 2018 Tim Bielawa <tbielawa@redhat.com> - 1.3.3-1
+ - New release
+
 * Sat Mar 17 2018 Tim Bielawa <tbielawa@redhat.com> - 1.3.2-1
 - New release
 
