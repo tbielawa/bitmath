@@ -476,10 +476,10 @@ prefix unit' for representation:
         if abs(self) < Byte(1):
             return Bit.from_other(self)
         else:
-            if not type(self) == Byte:
-                _inst = Byte.from_other(self)
-            else:
+            if type(self) is Byte:  # pylint: disable=unidiomatic-typecheck
                 _inst = self
+            else:
+                _inst = Byte.from_other(self)
 
         # Which table to consult? Was a preferred system provided?
         if system is None:
@@ -1399,7 +1399,7 @@ String inputs may include whitespace characters between the value and
 the unit.
     """
     # Strings only please
-    if type(s) is not str and type(s) is not unicode:
+    if not isinstance(s, (str, unicode)):
         raise ValueError("parse_string only accepts string inputs but a %s was given" %
                          type(s))
 
@@ -1459,8 +1459,7 @@ Note the following caveats:
 * Capitalization does not matter
 
     """
-    if type(s) is not str and \
-       type(s) is not unicode and \
+    if not isinstance(s, (str, unicode)) and \
        not isinstance(s, numbers.Number):
         raise ValueError("parse_string_unsafe only accepts string/number inputs but a %s was given" %
                          type(s))
@@ -1475,7 +1474,7 @@ Note the following caveats:
         return Byte(s)
 
     # Test case: a number pretending to be a string
-    if isinstance(s, str) or isinstance(s, unicode):
+    if isinstance(s, (str, unicode)):
         try:
             # Can we turn it directly into a number?
             return Byte(float(s))
