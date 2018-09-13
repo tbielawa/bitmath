@@ -535,6 +535,17 @@ This section describes all of the `context managers
 <https://docs.python.org/2/reference/datamodel.html#context-managers>`_
 provided by the bitmath class.
 
+.. warning::
+
+   It is a known limitation that the bitmath context managers are
+   **not thread-safe**. You may get unexpected results or errors using
+   these in a threaded environment.
+
+   The suggested workaround is to apply formatting to each object
+   instance directly. See the instance :ref:`format
+   <instances_format>` method docs for additional reference.
+
+
 .. note::
 
    For a bit of background, a *context manager* (specifically, the
