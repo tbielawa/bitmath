@@ -51,7 +51,7 @@ class TestInit(TestCase):
         }
 
         with self.assertRaises(ValueError):
-                bitmath.Byte(**multi_kwargs)
+            bitmath.Byte(**multi_kwargs)
 
     def test___init__valid_inputs(self):
         """__init__: accepts valid inputs"""
