@@ -26,4 +26,10 @@
 
 # Kept for backward compatibilty
 from .argparse import BitmathType
-from .progressbar import BitmathFileTransferSpeed
+
+try:
+    from .progressbar import BitmathFileTransferSpeed
+except ModuleNotFoundError:
+    # Ignore missing dependency as argparse integration will fail if
+    # progressbar is not installed (#86).
+    pass
