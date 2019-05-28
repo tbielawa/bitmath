@@ -30,7 +30,7 @@ Test the progressbar 'FileTransferSpeed' integration
 
 from . import TestCase
 import bitmath
-from bitmath.integrations import BitmathFileTransferSpeed
+from bitmath.integrations.bmprogressbar import BitmathFileTransferSpeed
 import mock
 import progressbar
 

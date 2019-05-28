@@ -211,6 +211,9 @@ ci-unittests2:
 	@echo "# Using python: $(shell ./bitmathenv2/bin/python --version 2>&1)"
 	@echo "#############################################"
 	. $(NAME)env2/bin/activate && export PYVER=PY2X && nosetests -v --with-coverage --cover-html --cover-min-percentage=90 --cover-package=bitmath tests/
+	@echo "Testing argparse integration without progressbar dependency (#86)"
+	. $(NAME)env2/bin/activate && pip uninstall -y progressbar231
+	. $(NAME)env2/bin/activate && export PYVER=PY2X && nosetests -v --with-coverage --cover-html --cover-min-percentage=90 --cover-package=bitmath tests/test_argparse_type.py
 
 ci-list-deps2:
 	@echo "#############################################"
@@ -248,6 +251,9 @@ ci-unittests3:
 	@echo "# Using python: $(shell ./bitmathenv3/bin/python --version 2>&1)"
 	@echo "#############################################"
 	. $(NAME)env3/bin/activate && export PYVER=PY3X && nosetests -v --with-coverage --cover-html --cover-package=bitmath tests/
+	@echo "Testing argparse integration without progressbar dependency (#86)"
+	. $(NAME)env3/bin/activate && pip uninstall -y progressbar33
+	. $(NAME)env3/bin/activate && export PYVER=PY3X && nosetests -v --with-coverage --cover-html --cover-package=bitmath tests/test_argparse_type.py
 
 ci-list-deps3:
 	@echo ""

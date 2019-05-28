@@ -430,17 +430,17 @@ Formatting
 ``argparse`` Integration
 ------------------------
 
-Example script using ``bitmath.integrations.BitmathType`` as an
+Example script using ``bitmath.integrations.bmargparse.BitmathType`` as an
 argparser argument type:
 
 .. code-block:: python
 
    import argparse
-   import bitmath
+   from bitmath.integrations.bmargparse import BitmathType
    parser = argparse.ArgumentParser(
        description="Arg parser with a bitmath type argument")
    parser.add_argument('--block-size',
-                       type=bitmath.integrations.BitmathType,
+                       type=BitmathType,
                        required=True)
 
    results = parser.parse_args()
@@ -459,7 +459,7 @@ If ran as a script the results would be similar to this:
 ``progressbar`` Integration
 ---------------------------
 
-Use ``bitmath.integrations.BitmathFileTransferSpeed`` as a
+Use ``bitmath.integrations.bmprogressbar.BitmathFileTransferSpeed`` as a
 ``progressbar`` file transfer speed widget to monitor download speeds:
 
 .. code-block:: python
@@ -467,12 +467,12 @@ Use ``bitmath.integrations.BitmathFileTransferSpeed`` as a
    import requests
    import progressbar
    import bitmath
-   import bitmath.integrations
+   from bitmath.integrations.bmprogressbar import BitmathFileTransferSpeed
 
    FETCH = 'https://www.kernel.org/pub/linux/kernel/v3.0/patch-3.16.gz'
    widgets = ['Bitmath Progress Bar Demo: ', ' ',
               progressbar.Bar(marker=progressbar.RotatingMarker()), ' ',
-              bitmath.integrations.BitmathFileTransferSpeed()]
+              BitmathFileTransferSpeed()]
 
    r = requests.get(FETCH, stream=True)
    size = bitmath.Byte(int(r.headers['Content-Length']))
