@@ -27,6 +27,8 @@ focusing on file size unit conversion, functionality now includes:
 * Reading a device's storage capacity (Linux/OS X support only)
 * `argparse <https://docs.python.org/2/library/argparse.html>`_
   integration as a custom type
+* `click <https://click.palletsprojects.com/>`_
+  integration as a custom parameter type
 * `progressbar <https://github.com/niltonvolpato/python-progressbar>`_
   integration as a better file transfer speed widget
 * String parsing
@@ -410,6 +412,28 @@ If ran as a script the results would be similar to this:
    $ python ./bmargparse.py --block-size 100MiB
    Parsed in: 100.0 MiB; Which looks like 819200.0 Kib as a Kibibit
 
+``click`` Integration
+---------------------
+
+Example script using ``bitmath.integrations.bmclick.BitmathType`` as an
+click parameter type:
+
+.. code-block:: python
+
+   import click
+   from bitmath.integrations.bmclick import BitmathType
+
+   @click.command()
+   @click.argument('size', type=BitmathType())
+   def best_prefix(size):
+      click.echo(size.best_prefix())
+
+If ran as a script the results should be similar to this:
+
+.. code-block:: bash
+
+   $ python ./bestprefix.py "1024 KiB"
+   1.0 MiB
 
 ``progressbar`` Integration
 ---------------------------
