@@ -1,5 +1,5 @@
 python-coveralls
-coverage
+coverage==4.0.3
 mock
 nose
 pyflakes
