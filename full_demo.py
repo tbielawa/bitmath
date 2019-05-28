@@ -3,7 +3,8 @@ from __future__ import print_function
 import logging
 import time
 import bitmath
-import bitmath.integrations
+from bitmath.integrations.bmargparse import BitmathType
+from bitmath.integrations.bmprogressbar import BitmathFileTransferSpeed
 import argparse
 import requests
 import progressbar
@@ -30,7 +31,7 @@ REMOTES = [
 ######################################################################
 p = argparse.ArgumentParser(description='bitmath demo suite')
 p.add_argument('-d', '--down', help="Download Rate",
-               type=bitmath.integrations.BitmathType,
+               type=BitmathType,
                default=bitmath.MiB(4))
 
 p.add_argument('-s', '--slowdown',
@@ -60,7 +61,7 @@ for f in REMOTES:
                progressbar.Percentage(), ' ',
                progressbar.Bar(marker=progressbar.RotatingMarker()), ' ',
                progressbar.ETA(), ' ',
-               bitmath.integrations.BitmathFileTransferSpeed()]
+               BitmathFileTransferSpeed()]
 
     # The 'stream' keyword lets us http GET files in
     # chunks. http://docs.python-requests.org/en/latest/user/quickstart/#raw-response-content

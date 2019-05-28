@@ -25,10 +25,10 @@
 # SOFTWARE.
 
 # Kept for backward compatibilty
-from .argparse import BitmathType
+from .bmargparse import BitmathType
 
 try:
-    from .progressbar import BitmathFileTransferSpeed
+    from .bmprogressbar import BitmathFileTransferSpeed
 except ImportError:
     # Ignore missing dependency as argparse integration will fail if
     # progressbar is not installed (#86).

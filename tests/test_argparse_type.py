@@ -30,7 +30,7 @@ Test the argparse 'BitmathType' integration
 
 from . import TestCase
 import bitmath
-from bitmath.integrations.argparse import BitmathType
+from bitmath.integrations.bmargparse import BitmathType
 import argparse
 import shlex
 
