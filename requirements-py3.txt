@@ -6,3 +6,4 @@ nose-cover3
 pyflakes
 pycodestyle
 progressbar33
+click
