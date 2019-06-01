@@ -60,6 +60,11 @@ most of the time what you're really seeing are the base-2 sizes/rates.
 And did we mention there's almost 200 unittests? `Check them out for
 yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
 
+Running the tests should be as simple as calling the ``ci-all`` target
+in the Makefile: ``make ci-all``.
+
+
+
 
 Installation
 ============
