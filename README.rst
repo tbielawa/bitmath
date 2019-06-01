@@ -61,7 +61,8 @@ And did we mention there's almost 200 unittests? `Check them out for
 yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
 
 Running the tests should be as simple as calling the ``ci-all`` target
-in the Makefile: ``make ci-all``.
+in the Makefile: ``make ci-all``. Please file a bug report if you run
+into issues.
 
 
 
