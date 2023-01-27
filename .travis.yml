@@ -8,15 +8,15 @@ after_success:
     - coveralls
 matrix:
   include:
-    - python: "2.7"
-      env: CI=ci2
-    - python: "3.4"
-      env: CI=ci3
-    - python: "3.5"
-      env: CI=ci3
     - python: "3.6"
-      env: CI=ci3
-    - python: "3.7-dev"
-      env: CI=ci3
+      env: CI=ci
+    - python: "3.7"
+      env: CI=ci
+    - python: "3.7"
+      env: CI=ci
+    - python: "3.8"
+      env: CI=ci
+    - python: "3.9"
+      env: CI=ci
 script: make $CI
 install: ""
