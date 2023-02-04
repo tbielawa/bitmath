@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Python CI
 
 on: [push, pull_request]
 
@@ -16,4 +16,16 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip virtualenv 
+          python -m pip install --upgrade pip python-coveralls coverage mock nose nose-cover3 pyflakes pycodestyle
+      - name: Ensure that code is poppin fresh (Check Code Style)
+        run: |
+          pycodestyle -v --ignore=E501,E722 bitmath/__init__.py tests/*.py
+      - name: Flakey or Crunchy (Run PyFlakes)
+        run: |
+          pyflakes bitmath/__init__.py tests/*.py
+      - name: Verify Test Case Names Unique
+        run: |
+          ./tests/test_unique_testcase_names.sh
+      - name: Run Unit Tests
+        run: |
+          nosetests -v --with-coverage --cover-package=bitmath tests/
