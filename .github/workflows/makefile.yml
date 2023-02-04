@@ -28,4 +28,4 @@ jobs:
           ./tests/test_unique_testcase_names.sh
       - name: Run Unit Tests
         run: |
-          nosetests -v --with-coverage --cover-package=bitmath tests/
+          nosetests -v tests/
