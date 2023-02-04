@@ -16,7 +16,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip python-coveralls coverage mock nose nose-cover3 pyflakes pycodestyle
+          python -m pip install --upgrade pip python-coveralls coverage mock nose pyflakes pycodestyle
       - name: Ensure that code is poppin fresh (Check Code Style)
         run: |
           pycodestyle -v --ignore=E501,E722 bitmath/__init__.py tests/*.py
