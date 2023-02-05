@@ -1,14 +1,6 @@
-.. image:: https://api.travis-ci.org/tbielawa/bitmath.png
-   :target: https://travis-ci.org/tbielawa/bitmath/
-   :align: right
-   :height: 19
-   :width: 77
+.. image:: https://github.com/tbielawa/bitmath/actions/workflows/python.yml/badge.svg
+   :target: https://github.com/tbielawa/bitmath/actions/workflows/python.yml
 
-.. image:: https://coveralls.io/repos/tbielawa/bitmath/badge.png?branch=master
-   :target: https://coveralls.io/r/tbielawa/bitmath?branch=master
-   :align: right
-   :height: 19
-   :width: 77
 
 .. image:: https://readthedocs.org/projects/bitmath/badge/?version=latest
    :target: http://bitmath.rtfd.org/
@@ -31,14 +23,10 @@ focusing on file size unit conversion, functionality now includes:
 * Rich comparison operations (``1024 Bytes == 1KiB``)
 * bitwise operations (``<<``, ``>>``, ``&``, ``|``, ``^``)
 * Reading a device's storage capacity (Linux/OS X support only)
-* `argparse <https://docs.python.org/2/library/argparse.html>`_
-  integration as a custom type
-* `click <https://click.palletsprojects.com/>`_
-  integration as a custom parameter type
-* `progressbar <https://code.google.com/p/python-progressbar/>`_
-  integration as a better file transfer speed widget
 * String parsing
 * Sorting
+* `argparse <https://docs.python.org/3/library/argparse.html>`_
+  integration as a custom type
 
 
 In addition to the conversion and math operations, `bitmath` provides
@@ -46,7 +34,7 @@ human readable representations of values which are suitable for use in
 interactive shells as well as larger scripts and applications. The
 format produced for these representations is customizable via the
 functionality included in stdlibs `string.format
-<https://docs.python.org/2/library/string.html>`_.
+<https://docs.python.org/3/library/string.html>`_.
 
 In discussion we will refer to the NIST units primarily. I.e., instead
 of "megabyte" we will refer to "mebibyte". The former is ``10^3 =
@@ -60,9 +48,9 @@ most of the time what you're really seeing are the base-2 sizes/rates.
 And did we mention there's almost 200 unittests? `Check them out for
 yourself <https://github.com/tbielawa/bitmath/tree/master/tests>`_.
 
-Running the tests should be as simple as calling the ``ci-all`` target
-in the Makefile: ``make ci-all``. Please file a bug report if you run
-into issues.
+Running the tests should be as simple as calling the ``ci`` target in
+the Makefile: ``make ci``. Please file a bug report if you run into
+issues.
 
 
 
@@ -72,32 +60,14 @@ Installation
 
 The easiest way to install bitmath is via ``dnf`` (or ``yum``) if
 you're on a Fedora/RHEL based distribution. bitmath is available in
-the main Fedora repositories, as well as the `EPEL6
-<http://download.fedoraproject.org/pub/epel/6/i386/repoview/epel-release.html>`_
-and `EPEL7
-<http://download.fedoraproject.org/pub/epel/7/x86_64/repoview/epel-release.html>`_
-repositories. There are now dual python2.x and python3.x releases
-available.
+the main Fedora repositories, as well as EPEL Repositories. As of 2023
+bitmath is only developed, tested, and supported for `currently
+supported <https://devguide.python.org/versions/>`_ Python releases.
 
-
-**Python 2.x**:
-
-.. code-block:: bash
-
-   $ sudo dnf install python2-bitmath
-
-**Python 3.x**:
 
 .. code-block:: bash
 
    $ sudo dnf install python3-bitmath
-
-
-.. note::
-
-   **Upgrading**: If you have the old *python-bitmath* package
-   installed presently, you could also run ``sudo dnf update
-   python-bitmath`` instead
 
 
 **PyPi**:
@@ -117,18 +87,6 @@ You could also install bitmath from `PyPi
    <https://github.com/tbielawa/bitmath/issues/57#issuecomment-227018168>`_
    for more information.
 
-
-**PPA**:
-
-Ubuntu Xenial, Wily, Vivid, Trusty, and Precise users can install
-bitmath from the `launchpad PPA
-<https://launchpad.net/~tbielawa/+archive/ubuntu/bitmath>`_:
-
-.. code-block:: bash
-
-   $ sudo add-apt-repository ppa:tbielawa/bitmath
-   $ sudo apt-get update
-   $ sudo apt-get install python-bitmath
 
 
 **Source**:
@@ -161,8 +119,6 @@ Topics include:
   * Context Managers
   * Module Variables
   * ``argparse`` integration
-  * ``click`` integration
-  * ``progressbar`` integration
 
 * The ``bitmath`` command-line Tool
 
@@ -463,64 +419,3 @@ If ran as a script the results would be similar to this:
 
    $ python ./bmargparse.py --block-size 100MiB
    Parsed in: 100.0 MiB; Which looks like 819200.0 Kib as a Kibibit
-
-``click`` Integration
----------------------
-
-Example script using ``bitmath.integrations.bmclick.BitmathType`` as an
-click parameter type:
-
-.. code-block:: python
-
-   import click
-   from bitmath.integrations.bmclick import BitmathType
-
-   @click.command()
-   @click.argument('size', type=BitmathType())
-   def best_prefix(size):
-      click.echo(size.best_prefix())
-
-If ran as a script the results should be similar to this:
-
-.. code-block:: bash
-
-   $ python ./bestprefix.py "1024 KiB"
-   1.0 MiB
-
-``progressbar`` Integration
----------------------------
-
-Use ``bitmath.integrations.bmprogressbar.BitmathFileTransferSpeed`` as a
-``progressbar`` file transfer speed widget to monitor download speeds:
-
-.. code-block:: python
-
-   import requests
-   import progressbar
-   import bitmath
-   from bitmath.integrations.bmprogressbar import BitmathFileTransferSpeed
-
-   FETCH = 'https://www.kernel.org/pub/linux/kernel/v3.0/patch-3.16.gz'
-   widgets = ['Bitmath Progress Bar Demo: ', ' ',
-              progressbar.Bar(marker=progressbar.RotatingMarker()), ' ',
-              BitmathFileTransferSpeed()]
-
-   r = requests.get(FETCH, stream=True)
-   size = bitmath.Byte(int(r.headers['Content-Length']))
-   pbar = progressbar.ProgressBar(widgets=widgets, maxval=int(size),
-                                  term_width=80).start()
-   chunk_size = 2048
-   with open('/dev/null', 'wb') as fd:
-       for chunk in r.iter_content(chunk_size):
-           fd.write(chunk)
-           if (pbar.currval + chunk_size) < pbar.maxval:
-               pbar.update(pbar.currval + chunk_size)
-   pbar.finish()
-
-
-If ran as a script the results would be similar to this:
-
-.. code-block:: bash
-
-   $ python ./smalldl.py
-   Bitmath Progress Bar Demo:  ||||||||||||||||||||||||||||||||||||||||| 1.58 MiB/s
